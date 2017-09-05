@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CryptoCurrency calculator</title>
+      <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />        
+    
+    <meta name="description" content="CryptoCurrency,BITCOIN,FIAT calculator , live chat, news and more" />
+    <meta property="og:title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
+    <meta name="description" content="Calculator tool to convert between fiat and cryptocurrencies" />
+    <meta property="og:description" content="CryptoCurrency calculator , live chat, news and more" />  
+  @html.block('meta')  
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
+    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/javascripts/underscore-min.js"></script>
+    <script type="text/javascript" src="/javascripts/numeral.min.js"></script>
+    <script type="text/javascript" src="/javascripts/index.js"></script>
+       @html.block('js')  
+</head>
+<body>
+    <!-- navigation -->
+   <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-target="#navbar" data-toggle="collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">coin9.info</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+           
+          <li><a href="/chat/">Live Chat</a></li>
+         
+           <li><a href="#" data-toggle="modal" data-target="#donate">Donate</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+             <li>
+                        <a>
+                            <span class="total_market_cap_usd"></span>
+                        </a>
+                     </li>
+             <li>
+                <a>
+                   <span class="bitcoin_percentage_of_market_cap"></span>
+         </a>
+             </li>
+              
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<!-- navigation end-->
+<!-- content -->
+ <div class="container-fluid" style="margin-top:10px;">
+    
+  <div class="row">
+    <div class="col-sm-3" style="background-color:none;">
+        <div>
+         @html.block('left')
+         </div>
+    </div>
+    <div class="col-sm-6" style="background-color:none;">
+          
+            @html.block('content')
+          
+    </div>
+    <div class="col-sm-3" style="background-color:none;">
+      
+          @html.block('right')  
+    </div>
+  </div>
+</div>
+<!-- contentend -->
+<!-- footer -->
+<footer id="footer-navigation" class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container-fluid container-footer">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    
+                      <li>
+                <a>
+                    <span class="total_24h_volume_usd"></span>
+                </a>
+             </li>
+                   
+                     
+                   
+                    <li><div style="text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">
+                        <a href="http://coinmarketcap.com?utm_medium=widget&amp;utm_campaign=cmcwidget&amp;utm_source=coin-converter-navs23.c9users.io&amp;utm_content=bitcoin" 
+                        target="_blank" 
+                        style="text-decoration: none; color: rgb(66, 139, 202);">Powered by CoinMarketCap</a>
+                        </div></li>
+                </ul>
+                 
+            </div>
+        </div>
+    </footer>
+
+</body>
+<div id="donate" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-success">Support the developer</h3>
+      </div>
+      <div class="container">
+      <div class="row">
+        
+          <div class="col-md-3">
+                <h4 class="text-info">BTC</h4>
+                <strong>323iShCfAGbGqAje9L6tY9dwFCdypzsKyU</strong>
+             <img 
+             src='https://chart.googleapis.com/chart?cht=qr&chl=323iShCfAGbGqAje9L6tY9dwFCdypzsKyU&chs=180x180&choe=UTF-8&chld=L|2' 
+             rel='nofollow' alt='qr code'/>
+                     
+              
+          </div>
+          
+          <div class="col-md-3">
+               <h4 class="text-info">LTC</h4>
+               <strong>384eiK9gQxHjSd7DBfBtdtce3giYfSxY15</strong>
+             <img src='https://chart.googleapis.com/chart?cht=qr&chl=384eiK9gQxHjSd7DBfBtdtce3giYfSxY15&chs=180x180&choe=UTF-8&chld=L|2' alt=''/>
+          </div>
+          
+         
+          </div>
+         
+          
+     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>&nbsp;
+       
+      </div>
+    </div>
+
+  </div>
+</div>
+</html>
+<script>
+
+
+
+
+/* global $
+*/
+/*
+ var socket = io.connect('http://localhost:8080');
+  
+  socket.on('connect', function(data) {
+    
+    socket.emit('join', 'Hello World from client');
+
+
+ });
+
+socket.on('data', function(data) {
+    $('h3.socket-msg').text(data);                
+
+        });
+*/
+
+/*
+{
+    "total_market_cap_usd": 166150169145.0, 
+    "total_24h_volume_usd": 6641227536.0, 
+    "bitcoin_percentage_of_market_cap": 45.67, 
+    "active_currencies": 866, 
+    "active_assets": 228, 
+    "active_markets": 5369
+}
+*/
+$(document).ready(function(){
+  /* numeral
+  */
+  // helper.getGlobalData();  
+   
+  
+  
+  
+});
+
+ 
+   (function(b,i,t,C,O,I,N) {
+    window.addEventListener('load',function() {
+      if(b.getElementById(C))return;
+      I=b.createElement(i),N=b.getElementsByTagName(i)[0];
+      I.src=t;I.id=C;N.parentNode.insertBefore(I, N);
+    },false)
+  })(document,'script','https://widgets.bitcoin.com/widget.js','btcwdgt');
+</script>

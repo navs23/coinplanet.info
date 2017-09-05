@@ -1,0 +1,129 @@
+
+@html.extend('layout', function(model) {
+ @html.block('meta', function(model) {
+    <meta name="description" content="CryptoCurrency live chat, news and more" />
+    <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
+    <meta property="description" content="chat,share,exchange and learn from fellow crypto currency enthusiast" /> 
+    })
+
+    @html.block('js', function(model) {
+        
+    })
+   @html.block('left', function(model) {
+   
+    <div class="row">
+          <div class="col-md-12">
+              
+           <div class="btcwdgt-news-ticker"></div>
+           <div class="btcwdgt-news" bw-entries="10"></div>
+
+           </div>
+           
+       </div>
+    <div class="row">
+          <div class="col-md-12">
+              
+            <hr/>
+                
+           </div>
+           
+       </div>
+    <div class="row">
+           <div class="col-md-12">
+            
+
+           </div>
+       </div>
+   
+   })
+   @html.block('content', function(model) {
+   <div class="row">
+         <div class="chat-footer">
+             
+             <p><i>Share, exchange and learn from fellow crypto currency enthusiast like yourself.</i></p>
+               <i>If you find this useful and got some free coins, hit the donate button to share your wealth</i>
+             </div>
+             
+   </div>
+   <div class="row">
+          <div class="col-md-12">
+            
+  <iframe src="https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin" 
+               class="iframe_fullHeight"
+               width="500px !important" 
+               height="500px;" 
+               frameborder="0" 
+               allowtransparency="true" 
+               scrolling="no">
+               
+           </iframe>
+   </div>
+   </div>
+   
+    
+})  
+    @html.block('right', function(model) {
+    <div class="row">
+          <div class="col-md-12">
+         <div class="btcwdgt-chart"></div>
+</div>
+</div>
+
+               
+          
+          
+   })
+})
+
+<script type="text/javascript">
+
+/* global $
+       
+*/
+  
+  
+  $(document).ready(function(){
+  
+  setTimeout(function() {
+      
+     // alert($('#bitcoin_widget_news > li:nth-child(1) > a').find('a').length);
+  $('.btcwdgt-news-ticker').find('a').each(function(){
+     
+      $(this).attr('target',"_blank");
+  });
+  //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1) > a
+  $('.btcwdgt-news').find('a').each(function(){
+      $(this).attr('target',"_blank");
+  });
+      
+  }, 5*1000);
+  refresh();
+  setInterval(function(){
+    refresh();
+    
+  },5* 1000)
+  });
+  
+  
+  function refresh(){
+      var url ='api/getCryptoGloabl/';
+        
+         $.ajax(url ).then(function(data,status){
+         
+            $('.total_market_cap_usd').text('Total market cap USD - ' + numeral(data.total_market_cap_usd).format('($ 0.00 a)'));
+            
+            
+            $('.total_24h_volume_usd').text('Total 24h volume USD - ' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)'));
+            
+            $('.bitcoin_percentage_of_market_cap').text('BTC % of market cap - ' + numeral(data.bitcoin_percentage_of_market_cap).format('00.00'));
+            
+            
+
+         });
+  }
+</script>
+
+
+
+ 
+           

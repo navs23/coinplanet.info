@@ -1,0 +1,521 @@
+
+@html.extend('layout', function(model) {
+    @html.block('meta', function(model) {
+        
+    })
+     @html.block('js', function(model) {
+        
+    })
+   @html.block('left', function(model) {
+   
+    <div class="row">
+          <div class="col-md-12">
+              
+            <div id="bitcoin_widget_container"></div>
+             <div class="btcwdgt-news" bw-cur="usd"></div>   
+           </div>
+           
+       </div>
+    <div class="row">
+          <div class="col-md-12">
+              
+            <hr/>
+                
+           </div>
+           
+       </div>
+    <div class="row">
+           <div class="col-md-12">
+            
+
+           </div>
+       </div>
+   
+   })
+   @html.block('content', function(model) {
+   <div class="row">
+       <div class="col-md-12">
+           <div class="span12">
+        <h3 class="align-middle">Your Crypto Currency Calculator</h3>
+        </div>
+        </div>
+   </div>
+    <div class="row">
+         <div class="col-md-12">
+              <i>The CryptoCurrency Calculator tool allows you to caclulate any amount between Fiat currencies and Crypto currencies, with conversion rates based on the live CoinMarketCap.com Price Index.</i>
+        </div>
+   </div>
+   <div class="row">
+       <div class="col-md-6">
+                <!--<div class="fiatPrice-grid"></div>   -->
+                <div class="column">
+                <div class="fiatPrice-grid">
+                     <div class="column" data-ccy="USD">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">USD</span>
+                        <input class="ccy-fiat form-control" id="USD" type="number" data-ccy="USD" data-priceusd="1" value="1" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="AUD">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">AUD</span>
+                        <input class="ccy-fiat form-control" id="AUD" type="number" data-ccy="AUD" data-priceusd="1.2602" value="1.2602" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="CAD">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">CAD</span>
+                        <input class="ccy-fiat form-control" id="CAD" type="number" data-ccy="CAD" data-priceusd="1.2441" value="1.2441" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="CHF">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">CHF</span>
+                        <input class="ccy-fiat form-control" id="CHF" type="number" data-ccy="CHF" data-priceusd="0.95982" value="0.95982" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="CNY">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">CNY</span>
+                        <input class="ccy-fiat form-control" id="CNY" type="number" data-ccy="CNY" data-priceusd="6.5591" value="6.5591" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="GBP">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">GBP</span>
+                        <input class="ccy-fiat form-control" id="GBP" type="number" data-ccy="GBP" data-priceusd="0.77244" value="0.77244" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="INR">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">INR</span>
+                        <input class="ccy-fiat form-control" id="INR" type="number" data-ccy="INR" data-priceusd="64.034" value="64.034" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="JPY">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">JPY</span>
+                        <input class="ccy-fiat form-control" id="JPY" type="number" data-ccy="JPY" data-priceusd="110.14" value="110.14" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="SEK">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">SEK</span>
+                        <input class="ccy-fiat form-control" id="SEK" type="number" data-ccy="SEK" data-priceusd="7.9512" value="7.9512" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        
+                     <div class="column" data-ccy="EUR">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">EUR</span>
+                        <input class="ccy-fiat form-control" id="EUR" type="number" data-ccy="EUR" data-priceusd="0.83893" value="0.83893" onchange="helper.calculate(this,'fiat');">
+                    
+                        </div>
+                       </div>
+                        </div>   
+       </div>
+       </div>
+       <div class="col-md-6">
+                <!--<div class="price-grid"></div>   -->
+                <div class="column">
+                <div class="price-grid">
+                        <div class="column search-item" data-ccy="BTC">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/BTC-32.png" /> -->
+                        BTC
+                        </span>
+                        <input class="ccy-crypto form-control" id="BTC" type="number" data-ccy="BTC" data-priceusd="4708.02" data-pricebtc="1.0" data-baseurl="/api/cryptopricefeed/" value="1.0" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="ETH">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/ETH-32.png" /> -->
+                        ETH
+                        </span>
+                        <input class="ccy-crypto form-control" id="ETH" type="number" data-ccy="ETH" data-priceusd="360.322" data-pricebtc="0.0763786" data-baseurl="/api/cryptopricefeed/" value="0.0763786" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="BCH">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/BCH-32.png" /> -->
+                        BCH
+                        </span>
+                        <input class="ccy-crypto form-control" id="BCH" type="number" data-ccy="BCH" data-priceusd="595.406" data-pricebtc="0.126379" data-baseurl="/api/cryptopricefeed/" value="0.126379" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="XRP">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/XRP-32.png" /> -->
+                        XRP
+                        </span>
+                        <input class="ccy-crypto form-control" id="XRP" type="number" data-ccy="XRP" data-priceusd="0.230868" data-pricebtc="0.00004894" data-baseurl="/api/cryptopricefeed/" value="0.00004894" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="LTC">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/LTC-32.png" /> -->
+                        LTC
+                        </span>
+                        <input class="ccy-crypto form-control" id="LTC" type="number" data-ccy="LTC" data-priceusd="78.9847" data-pricebtc="0.0167427" data-baseurl="/api/cryptopricefeed/" value="0.0167427" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="XEM">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/XEM-32.png" /> -->
+                        XEM
+                        </span>
+                        <input class="ccy-crypto form-control" id="XEM" type="number" data-ccy="XEM" data-priceusd="0.308621" data-pricebtc="0.00006542" data-baseurl="/api/cryptopricefeed/" value="0.00006542" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="DASH">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/DASH-32.png" /> -->
+                        DASH
+                        </span>
+                        <input class="ccy-crypto form-control" id="DASH" type="number" data-ccy="DASH" data-priceusd="366.85" data-pricebtc="0.0777623" data-baseurl="/api/cryptopricefeed/" value="0.0777623" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="MIOTA">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/MIOTA-32.png" /> -->
+                        MIOTA
+                        </span>
+                        <input class="ccy-crypto form-control" id="MIOTA" type="number" data-ccy="MIOTA" data-priceusd="0.743495" data-pricebtc="0.00015781" data-baseurl="/api/cryptopricefeed/" value="0.00015781" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="XMR">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/XMR-32.png" /> -->
+                        XMR
+                        </span>
+                        <input class="ccy-crypto form-control" id="XMR" type="number" data-ccy="XMR" data-priceusd="129.622" data-pricebtc="0.0274765" data-baseurl="/api/cryptopricefeed/" value="0.0274765" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div>
+                        <div class="column search-item" data-ccy="NEO">
+                        <div class="input-group margin-bottom-sm">
+                        <span class="input-group-addon" type="input">
+                       <!-- <img src="http://capfeed.com/images/currencyicons/NEO-32.png" /> -->
+                        NEO
+                        </span>
+                        <input class="ccy-crypto form-control" id="NEO" type="number" data-ccy="NEO" data-priceusd="33.0754" data-pricebtc="0.00702048" data-baseurl="/api/cryptopricefeed/" value="0.00702048" onchange="helper.calculate(this,'crypto');">
+                        </div>
+                       </div></div>   
+       </div>
+       </div>
+   </div>
+   
+   
+    
+})  
+    @html.block('right', function(model) {
+   
+    <div class="row">
+           <div class="col-sm-12">
+                <div class="widget_header"><span id="CCN_header">Live chat</span></div>
+           </div>
+   </div>
+   <div class="row">
+          <div class="col-md-12">
+       <div id="divchat" style="width: auto;height: auto;background: #fff;padding: 0 !important; margin-top:0px;">
+          
+               <iframe src="" 
+               class="frame-chat"
+               width="100% !important" 
+               height="500px" 
+               frameborder="0" 
+               allowtransparency="true" 
+               scrolling="no">
+               
+           </iframe>
+          
+           </div>
+       </div>
+           
+       </div>
+   
+   })
+})
+<!-- Modal -->
+<div id="configure" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-success">Configure Your View</h3>
+      </div>
+      <div class="container">
+      <div class="row">
+        
+          <div class="col-md-3">
+                <h4 class="text-info">Available Fiat Currencies</h4>
+              <select class="fiat-all" multiple ></select>
+              
+          </div>
+          
+          <div class="col-md-3">
+               <h4 class="text-info">Selected Fiat Currencies</h4>
+              <select class="fiat-selected" multiple></select>
+          </div>
+          </div>
+         
+          <div class="row">
+            <br/>
+          <div class="col-md-3">
+               <h4 class="text-info">Available Crypto Currencies</h4>
+              <select class="crypto-all" multiple></select>
+          </div>
+          <div class="col-md-3">
+               <h4 class="text-info">Selected Crypto Currencies</h4>
+              <select class="crypto-selected" multiple></select>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="configure-message text-danger"></div>
+          </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>&nbsp;
+        <button type="button" class="btn btn-success btn-save" data-dismiss="modal">Save</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cryptocoinsnews.com/widget/bitcoin_widget.js.php" type="text/javascript"></script>
+<script type="text/javascript">
+
+/* global $
+        _
+        localStorage
+        helper
+*/
+  
+    helper.configureLocalStorage();
+  $(document).ready(function(){
+  
+    helper.showAll(3);
+     //helper.getGlobalData();  
+    $('.ccy-price').on('change',function(){
+    
+    });
+    
+    
+    $('.base-ccy').on('change',function(e){
+    
+    var $baseCCY = (this.value);
+    var $usdPrice = $('#' + $baseCCY).data('price');
+    var $toBasePrice = 1/$usdPrice;
+    
+    $('.ccy-price').each(function(item){
+    
+    var $temp= $(this).data('price') * $toBasePrice ;
+    
+    $(this).val($temp);
+    
+    
+    });
+    
+    
+    
+    });
+    
+    
+    $("#search").keyup(function() {
+    var value = this.value.toLowerCase();
+    
+
+});
+
+  $('a.fiat-configure').on('click',function(e){
+      
+   
+      
+  });
+  
+   $('a.live-chat').on('click',function(e){
+      
+        
+         $('div.divchat').css({"top":"0","bottom":"0","left":"0","right":"0","position":"absolute"});
+    
+  });
+  
+  $('a.most-popular').on('click',function(e){
+      
+   
+      
+  });
+  
+  $('a.top20').on('click',function(e){
+   
+   helper.renderCryptoData({baseUrl:'/api/getTop20ByVolume/',index:1},null);
+   return false;
+      
+  });
+  
+  $('a.showAll').on('click',function(e){
+        return helper.showAll(1);
+      
+  });
+  //
+  
+  $('.fiat-all').on('change',function() {
+    
+   helper.swapItems(this, $('.fiat-selected'));
+  
+  
+  });
+  
+   $('.fiat-selected').on('change',function() {
+    
+   helper.swapItems(this, $('.fiat-all'));
+  
+  
+  });
+  
+   $('.crypto-all').on('change',function() {
+    
+   helper.swapItems(this, $('.crypto-selected'));
+  
+  
+  });
+  
+   $('.crypto-selected').on('change',function() {
+    
+   helper.swapItems(this, $('.crypto-all'));
+  
+  
+  });
+  
+  $('button.btn-save').on('click',function(e){
+      
+      var data={};
+      data.fiat=[];
+      data.digital=[];
+      
+      delete data.fiat;
+      delete data.digital;
+      data.fiat=[];
+      data.digital=[];
+      
+      $('.fiat-selected').find('option').each(function(){
+         
+          data.fiat.push($(this).text());
+      });
+      
+      $('.crypto-selected').find('option').each(function(){
+         
+          data.digital.push($(this).text());
+      });
+      
+      var bsave=true;
+      alert(data.fiat.length);
+      alert(data.digital.length);
+      
+      if (data.fiat.length !=10)
+      {
+        $('.configure-message').text('Please select 10 fiat currency symbols');
+        bsave=false;
+      }
+      else if (data.digital.length !=10)
+       {
+        $('.configure-message').text('Please select 10 crypto currency symbols');
+        bsave=false;
+      }
+     
+     if (bsave)
+     {
+         delete localStorage.topTenCrypto;
+         delete localStorage.topTenFiat;
+         
+         localStorage.topTenFiat =JSON.stringify(data.fiat);
+         localStorage.topTenCrypto =JSON.stringify(data.digital);
+         helper.showAll(3);
+         return true;
+     }
+      else
+      return false;
+  });
+  
+  
+  // clean up
+  $('#bitcoin_widget_container > div > div.get_widget_link_container').empty();
+  $('#bitcoin_widget_container > div > div.widget_row2 > span > a:nth-child(1)').text('');
+  $('#bitcoin_widget_container').find('style').empty();
+  
+  setTimeout(function() {
+      
+     // alert($('#bitcoin_widget_news > li:nth-child(1) > a').find('a').length);
+  $('#bitcoin_widget_news').find('a').each(function(){
+     
+      $(this).attr('target',"_blank");
+  });
+  //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1) > a
+  $('.btcwdgt-news').find('a').each(function(){
+      $(this).attr('target',"_blank");
+  });
+      
+  }, 5*1000);
+  
+  
+  setInterval(function(){
+    var url ='api/getCryptoGloabl/';
+         $.ajax(url ).then(function(data,status){
+         
+            $('span.total_market_cap_usd').text('Total market cap USD - ' + numeral(data.total_market_cap_usd).format('($ 0.00 a)'));
+            
+            
+            $('span.total_24h_volume_usd').text('Total 24h volume USD - ' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)'));
+            
+            $('span.bitcoin_percentage_of_market_cap').text('BTC % of market cap - ' + numeral(data.bitcoin_percentage_of_market_cap).format('00.00'));
+            
+            
+
+         });
+    
+  },5* 1000)
+  });
+  
+ 
+  (function(){
+         
+         $('iframe.frame-chat').attr('src',helper.chatlink);
+     }());
+   
+</script>
+
+
+
+
+ 
+           
