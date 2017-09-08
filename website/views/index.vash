@@ -27,7 +27,7 @@
     <div class="row">
            <div class="col-md-12">
             
-
+<iframe width="360" height="215" src="https://www.youtube.com/embed/J0LRyAQ8WD0" frameborder="0" allowfullscreen></iframe>
            </div>
        </div>
    
@@ -35,15 +35,15 @@
    @html.block('content', function(model) {
    <div class="row">
        <div class="col-md-12">
-           <div class="span12">
-        <h3 class="align-middle">Your Crypto Currency Calculator</h3>
+        <div style="display:inline">
+           <h3>Your Crypto Currency Calculator <a href="#" class="btn btn-xs btn-info" id="aConfigure" data-toggle="modal" data-target="#configure">Settings</a></h3>
         </div>
-        </div>
+       </div>
    </div>
     <div class="row">
          <div class="col-md-12">
-              <i>The CryptoCurrency Calculator tool allows you to caclulate any amount between Fiat currencies and Crypto currencies, with conversion rates based on the live CoinMarketCap.com Price Index.</i>
-             <p>  <a href="#" class="btn btn-sm btn-info" id="aConfigure" data-toggle="modal" data-target="#configure">Settings</a></p>
+              <i>Enter an amount in any Fiat or Crypto currency and its equivilant values will be displayed based upon live CoinMarketCap.com currency rates.</i>
+             <p>  </p>
         </div>
    </div>
    <div class="row">
