@@ -9,6 +9,7 @@
     "bitcoinaverage": "^0.1.4",
     "body-parser": "~1.17.1",
     "bootstrap": "^3.3.7",
+    "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "cryptofetch": "^0.1.1",
     "debug": "~2.6.3",

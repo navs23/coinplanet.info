@@ -1,8 +1,9 @@
 (function(home){
 
 var service = require("./../../service/currentPrice");
+var data = require("./../../service/data");
 var _=require("underscore");
-
+var news = require("./../helper/news.js");
 
 home.init= function(router){
 	
@@ -18,11 +19,22 @@ home.init= function(router){
    
   
 });    
-    	router.get('/chat/', function(req, res, next) {
-   res.render('chat', {title: 'Live chat' });
+    	
+    router.get('/chat/', function(req, res, next) {
+        res.render('chat', {title: 'Live chat' });
    
   
-});    
+});   
+
+	 router.get('/resources/', function(req, res, next) {
+	 	
+	 
+	 
+	 res.render('resources', {title: 'Resources',resources:data.getData("resources")});
+	   
+	  
+	});   
+
 	router.get('/api/cryptopricefeed/:searchstr?/:pageIndex?', function(req, res, next) {
     
     	var data;
@@ -105,6 +117,25 @@ home.init= function(router){
     	
   
 }); 
+
+	router.get('/api/news/', function(req, res, next) {
+    
+	
+	news.getCryptocoinsNews().then(function(newsItems){
+	   
+	   	res.send(newsItems);
+	    
+	})
+	.catch(function(e){
+	    
+	   	res.send([]);
+	});
+	    	
+    
+    	
+  
+	}); 
+
 	function getPaginatedItems(items, page) {
 	var page = page || 1,
 	    per_page = 500,

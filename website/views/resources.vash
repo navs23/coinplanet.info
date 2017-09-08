@@ -36,28 +36,26 @@
    
    })
    @html.block('content', function(model) {
+   <h3>Here is the list of some very useful websites and resources about Bitcoin and Cryptocurrencies</h3>
    <div class="row">
-         
-             <span style="text-align:middle;"><h3>Cryptocoin chat</h3>
-             <i>Talk, share, exchange and learn from fellow crypto currency enthusiast like yourself about all cyrptocurrencies.</i>
-             <strong>If you enoy being here and got some free coins, hit the donate button to share your wealth</strong>
-               </span>
-         
-             
-   </div>
-   <div class="row">
-          <div class="col-md-12">
-            
-  <iframe src="https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin" 
-               class="fullscreen"
-              
-               frameborder="0" 
-               allowtransparency="true" 
-               scrolling="no">
-               
-           </iframe>
-   </div>
-   </div>
+       <table class="table table-border">
+           
+   @model.resources.forEach(function(item){
+   <tr>
+       <td>
+  
+             <h4>
+             <a href="@item.link" target="_blank">@item.item</a>
+             </h4>
+            </td>
+  
+    </tr>
+   })
+    </table>
+    </div>
+  
+  
+  
    
     
 })  

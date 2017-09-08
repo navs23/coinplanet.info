@@ -16,19 +16,6 @@ page{
   background-color: gray;
 }
 
-.pagination {
-    display: inline-block;
-}
-
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-    font-size: 22px;
-}
 
 .pagination a.active {
     background-color: #4CAF50;
@@ -39,39 +26,37 @@ page{
 input[type='number']{
   
  padding-top:10px;
-  height: 6rem !important;
-  font-size:1.1em;
+  height: 4rem !important;
+  font-size:1em;
+  font-weight:bold;
+  width:155px !important;
 }
 
 span[type='input']{
-  font-size:1em;
-  width:10px important;
-  border:none;
-  padding-right:10px;
-  
+  width:75px !important;
+  font-size:1.1em;
+  font-weight:bold;
 }
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
-.ccy-crypto  .ccy-fiat
-{
-    width:220px !important;
-   font-size: 10px !important;
-    background-repeat: no-repeat;
-    background-position: left center;
-    background-origin: content-box;
-   
-}
+
 
 .input-group-addon:first-child {
     border-right: 0;
-    width: 90px;
+    width: 10px;
     border-bottom: 1px solid #ccc;
+    height:20px;
 }
-.configure{
-    
+div#configure{
+    width:450px;
     display: none;
     margin:0px !important;
 }
+select {
+    
+    width:150px;
+}
+
 .navbar-fixed-top
 {
     background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2c3742),color-stop(100%,#28303a));
@@ -161,11 +146,7 @@ div {
     text-align:center;
     
 }
-.configure-dialog{
-    
-    width: 100% !important;
-    background-color: gray;
-}
+
 
 
 #bitcoin_widget_container{
@@ -259,20 +240,17 @@ color:black!important;font-size:16px!important;text-decoration:none !important;}
 }
 
 .fullscreen{
-    z-index: 9999; 
-    width: 100%; 
-    height: 100%; 
+   
+    width: 50%; 
+    height: 60%; 
     position: fixed; 
-    top: 0; 
-    left: 0; 
+   
+    align:middle;
+    border:1px solid black;
+    background-color: gray;
+    
  }
- iframe.live-chat{
-             width:"100% !important" ;
-               height:"600px"; 
-               frameborder:"0"; 
-               allowtransparency:"true" ;
-               scrolling:"no";
-}
+ 
 
 .ccy-name{
     
@@ -282,4 +260,13 @@ height: 20px !important;
 
 .ccy-group{
     height: 20px !important;
+}
+
+.fullscreen > body {
+    
+    background-color: black;
+}
+.total_market_cap_usd{
+
+color:#00B62;
 }

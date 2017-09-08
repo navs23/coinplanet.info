@@ -30,7 +30,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">coin9.info</a>
+          <a class="navbar-brand" href="/">coinplanet.info</a>
         </div>
         <div class="navbar-collapse collapse" id="navbar">
           <ul class="nav navbar-nav">
@@ -39,6 +39,7 @@
           <li><a href="/chat/">Live Chat</a></li>
          
            <li><a href="#" data-toggle="modal" data-target="#donate">Donate</a></li>
+           <li><a href="/resources/" >Resources</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li>
@@ -190,15 +191,31 @@ $(document).ready(function(){
    
   
   
-  
 });
 
- 
-   (function(b,i,t,C,O,I,N) {
+ setInterval(function(){
+    var url ='/api/getCryptoGloabl/';
+         $.ajax(url ).then(function(data,status){
+         //alert(1);
+            $('span.total_market_cap_usd').html('Total market cap USD - <i font-color:red !important;>' + numeral(data.total_market_cap_usd).format('($ 0.00 a)') + '</i>');
+            
+            
+            $('span.total_24h_volume_usd').html('Total 24h volume USD - <i font-color:red !important;>' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)') + '</i>');
+            
+            $('span.bitcoin_percentage_of_market_cap').html('BTC % of market cap -  <i font-color:red !important;>'+ numeral(data.bitcoin_percentage_of_market_cap).format('00.00')+ '</i>');
+            
+            
+
+         });
+    
+  },5* 1000);
+
+ (function(b,i,t,C,O,I,N) {
     window.addEventListener('load',function() {
       if(b.getElementById(C))return;
       I=b.createElement(i),N=b.getElementsByTagName(i)[0];
       I.src=t;I.id=C;N.parentNode.insertBefore(I, N);
     },false)
   })(document,'script','https://widgets.bitcoin.com/widget.js','btcwdgt');
+  
 </script>

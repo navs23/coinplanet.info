@@ -3,8 +3,11 @@ global localStorage
 numeral
 $
 */
+
 var helper=helper || {};
+
 helper.chatlink='https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin';
+
 helper.renderCryptoData=function(param,e){
  
  
@@ -14,44 +17,24 @@ helper.renderCryptoData=function(param,e){
         param =$(e).data('json');
         param.index=($(e).text());
         param.baseUrl=$(e).data('baseurl');
-        //alert(JSON.stringify(param));
+       
     }
    
-   
-   //if (!param.index)
-   //param.index=($(e).text() !=''?$(e).text():param.index);
-   
     var baseUrl = param.baseUrl || '/api/cryptopricefeed/' ;
-    
-    
     var searchstr = $("#search").text() || "all";
     var url = baseUrl + searchstr +'/' + (param.index);
-    
-    //alert(url);
+   alert(url);
     $.ajax(url ).then(function(result,status){
-        //alert(JSON.stringify(result));
+      
         $('.price-grid').empty();
-        if (e ==null)    
-        {
-           
-            // first time in 
-            var pagerItems=[];
-            pagerItems.push("Prev");
-            for (var i =1;i<=result.total_pages;i++)
-            {
-                pagerItems.push(i);
-                if (i==5) break;
-            }
-            pagerItems.push("Next");
-            var params = {pagerItems:pagerItems,total_pages:result.total_pages,baseUrl:baseUrl};
-           //renderPagination(params);
-           // $('div.pagination > a:nth-child(2)').addClass('active');
-        }
-         var ctr=1;
+        
+        
          var temp='';
          var _userSelectedCrypo=JSON.parse(localStorage.topTenCrypto);
+       
          
             result.data.map(function(item){
+                
                  if (_.contains(_userSelectedCrypo,item.symbol)) {
                     
                     temp = `
@@ -75,28 +58,17 @@ helper.renderCryptoData=function(param,e){
                         />
                         </div>
                        </div>`
-                
                      $('.price-grid').append(temp);
-                    $('select.crypto-selected').append(`<option value ="${item.symbol}">${item.symbol}</option>`);  
-             
-                   ctr++;
+                   
                  }
-                 else
-                  
-                  $('select.crypto-all').append(`<option value ="${item.symbol}">${item.symbol}</option>`);
+                
             });
                 
               
              
     });
     
-    if(e)
-    {
-        
-        $('a.active').removeClass('active');
-        
-        $(e).addClass('active');
-    }
+    
    return false;
     
   
@@ -136,42 +108,29 @@ helper.renderPagination=function(params){
      
 }
 
-
 helper.getFiatRates=function(){
   
-  // fiat rates
-     $('select.fiat-all').empty();
-     
-     //localStorage.rates.push("USD");
-    // alert(localStorage.rates.length);
     var url ='api/fiatpricefeed/';
+    var selectedCurrencies = JSON.parse(localStorage.topTenFiat);
      $.ajax(url ).then(function(result,status){
 
       $('.fiatPrice-grid').empty();
-        var ctr=1;
         
          var temp=``;
          var rates=[];
          rates.push({key:'USD',val:1});
-         $('select.fiat-selected').append(`<option value="USD">USD</option>`);
-         
-         var topten = JSON.parse(localStorage.topTenFiat);
          
           _.mapObject(result.rates,function(val,key){
               
-              if (_.contains(topten,key)) {
-                  
+              if (_.contains(selectedCurrencies,key)) {
                     rates.push({key:key,val:val});
-                    $('select.fiat-selected').append(`<option value="${key}">${key}</option>`);
+                  
               }
-              else
-                $('select.fiat-all').append(`<option value="${key}">${key}</option>`);
               
-              
-             
           });
-        
-     rates.map(function(rate){
+            
+            temp=``;
+            rates.map(function(rate){
          
                  temp = `
                      <div class="column" data-ccy="${rate.key}">
@@ -191,7 +150,7 @@ helper.getFiatRates=function(){
                         `;
                 
                     $('.fiatPrice-grid').append(temp);
-                    ctr++;
+                    
               
             });
          
@@ -307,6 +266,7 @@ helper.navigate2=function(e){
     return false;
 }
 
+
 helper.showAll=function(mode){
 var fiatccy=[];
 var param={};
@@ -329,23 +289,25 @@ else  if (mode==3)
 return false;
 }
 
-helper.swapItems=function($source,$target){
+helper.swapItems=function(source,target){
+ 
+
    
-if($($target).children().length == 10)
-{
-    $('.configure-message').text('Only ten items can be configured');
-    return;
-}
+// if($(target).children().length > 10 || $(target).children().length < 10)
+// {
+//     $('.message').text('please select ten currencies.');
+//     alert('cancel swap');
+//     return;
+// }
  $('.configure-message').text('');
-  var vals = $($source).val();
+ 
+  var vals = $(source).val();
         vals.map(function(item){
-            // add to the target list
-            
-            
-           $($source)
+          
+          $(source)
             .find('option[value="' + item + '"]')
             .fadeOut(200, function(){ 
-                  $target.append(
+                  $(target).append(
                 `
                 <option value ="${item}">${item}</option>
               `);
@@ -353,14 +315,10 @@ if($($target).children().length == 10)
                 
                 
             })
-           .end();
-           
+          .end();
           
-           
-      
         });
   
-
 }
 
 helper.configureLocalStorage=function(){
@@ -406,21 +364,74 @@ alert('local storage is not supported');
   
 }
 
-helper.populateCurrencies=function(){
+helper.populateCurrenciesDropDown=function(dd){
 
-helper.cleanNewsHtml=function(){
-   
-  
-
-     
-      
- 
- 
-}
-
-helper.getGlobalData=function (){
-     
+    var $ddAll,$ddSelected,url ,selectedCurrencies;
+    //alert('populateCurrenciesDropDown = ' +dd);
+    if (dd=='fiat'){
+         $ddAll = $('select.fiat-all');
+         $ddSelected = $('select.fiat-selected');
+         $ddSelected.append(`<option value="USD">USD</option>`);
+         url ='api/fiatpricefeed/';
+         selectedCurrencies = JSON.parse(localStorage.topTenFiat);
+         $ddAll.empty();
+         $ddSelected.empty();
+          $.ajax(url ).then(function(result,status){
+           
+              _.mapObject(result.rates || result.data,function(val,key){
+                  
+                  var option =`<option value="${key}">${key}</option>`;
+                 // alert(option);
+                  
+                  if (_.contains(selectedCurrencies,key)) 
+                  {
+                      $ddSelected.append(option);
+                        
+                  }
+                  else
+                  {
+                      $ddAll.append(option);
+                        
+                  }
+                  
+              });
+                
+         });
+    }
+ else if (dd =='crypto')
+    {
+        $ddAll=$('select.crypto-all');
+        $ddSelected=$('select.crypto-selected');
+        url='/api/cryptopricefeed/all/1';
+       // alert($ddAll.children().length);
+        selectedCurrencies = JSON.parse(localStorage.topTenCrypto);
+        $ddAll.empty();
+        $ddSelected.empty();
+         $.ajax(url ).then(function(result,status){
+           
+              result.data.map(function(item){
+                  
+                  var option =`<option value="${item.symbol}">${item.symbol}</option>`;
+                 // alert(option);
+                  
+                  if (_.contains(selectedCurrencies,item.symbol)) 
+                  {
+                      $ddSelected.append(option);
+                        
+                  }
+                  else
+                  {
+                      $ddAll.append(option);
+                        
+                  }
+                  
+              });
+                
+         });
         
-  }
+    }
   
+       
+        
+       
 }

@@ -12,7 +12,7 @@
           <div class="col-md-12">
               
             <div id="bitcoin_widget_container"></div>
-             <div class="btcwdgt-news" bw-cur="usd"></div>   
+             <div class="btcwdgt-news"></div>   
            </div>
            
        </div>
@@ -43,9 +43,11 @@
     <div class="row">
          <div class="col-md-12">
               <i>The CryptoCurrency Calculator tool allows you to caclulate any amount between Fiat currencies and Crypto currencies, with conversion rates based on the live CoinMarketCap.com Price Index.</i>
+             <p>  <a href="#" class="btn btn-sm btn-info" id="aConfigure" data-toggle="modal" data-target="#configure">Settings</a></p>
         </div>
    </div>
    <div class="row">
+      
        <div class="col-md-6">
                 <!--<div class="fiatPrice-grid"></div>   -->
                 <div class="column">
@@ -263,56 +265,49 @@
 })
 <!-- Modal -->
 <div id="configure" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
+     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h3 class="modal-title text-success">Configure Your View</h3>
       </div>
-      <div class="container">
-      <div class="row">
+   <div class="container">
+        <table class="" style="border:1;width:300px;">
+        <th>
+            <tr>
+                <td><span class="spn-all">Avaiable</span></td>
+                <td>&nbsp;</td>
+                <td><span class="spn-selected">Selected</span></td>
+                </tr>
+        </th>
+        <tbody>
+            <tr>
+                <td><select class="fiat-all" multiple></select></td>
+                <td><button class="btn btn-info" data-direction="fiat-sel" name="btnMove">&gt;</button>
+                <button class="btn btn-info" name="btnMove" data-direction="fiat-all">&lt;</button>
+                </td>
+                <td><select class="fiat-selected" multiple></select></td>
+                </tr>
+                  <tr>
+                <td><select class="crypto-all" multiple></select></td>
+                <td><button class="btn btn-info" name="btnMove" data-direction="crypto-sel">&gt;</button>
+                <button class="btn btn-info" name="btnMove" data-direction="crypto-all">&lt;</button>
+                </td>
+                <td><select class="crypto-selected" multiple></select></td>
+                </tr>
+                <tr><td colspan="3">
+                    <div class="message"></div>
+                    
+                </td></tr>
+        </tbody>
         
-          <div class="col-md-3">
-                <h4 class="text-info">Available Fiat Currencies</h4>
-              <select class="fiat-all" multiple ></select>
-              
-          </div>
-          
-          <div class="col-md-3">
-               <h4 class="text-info">Selected Fiat Currencies</h4>
-              <select class="fiat-selected" multiple></select>
-          </div>
-          </div>
-         
-          <div class="row">
-            <br/>
-          <div class="col-md-3">
-               <h4 class="text-info">Available Crypto Currencies</h4>
-              <select class="crypto-all" multiple></select>
-          </div>
-          <div class="col-md-3">
-               <h4 class="text-info">Selected Crypto Currencies</h4>
-              <select class="crypto-selected" multiple></select>
-          </div>
-      </div>
-      <div class="row">
-          <div class="col-md-6">
-              <div class="configure-message text-danger"></div>
-          </div>
-      </div>
-      </div>
-      <div class="modal-footer">
+    </table>
+   </div>
+  <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>&nbsp;
         <button type="button" class="btn btn-success btn-save" data-dismiss="modal">Save</button>
       </div>
     </div>
-
-  </div>
-</div>
-
-<script src="https://cryptocoinsnews.com/widget/bitcoin_widget.js.php" type="text/javascript"></script>
+ </div>
 <script type="text/javascript">
 
 /* global $
@@ -323,6 +318,8 @@
   
     helper.configureLocalStorage();
   $(document).ready(function(){
+  
+    // $('div[hideOnLoad="yes"]').hide();
   
     helper.showAll(3);
      //helper.getGlobalData();  
@@ -357,8 +354,12 @@
 
 });
 
-  $('a.fiat-configure').on('click',function(e){
+  $('#aConfigure').on('click',function(e){
       
+   
+   helper.populateCurrenciesDropDown('fiat');
+   helper.populateCurrenciesDropDown('crypto');
+   
    
       
   });
@@ -389,33 +390,49 @@
   });
   //
   
-  $('.fiat-all').on('change',function() {
+ 
+  
+   $('button[name="btnMove"]').on('click',function() {
     
-   helper.swapItems(this, $('.fiat-selected'));
-  
-  
+    var action = $(this).data('direction');
+    var ddSource,ddTarget;
+    
+    if (action =="fiat-sel")
+    {
+        ddSource='.fiat-all';
+        ddTarget='.fiat-selected';
+    }
+    else if (action =="fiat-all")
+    {
+        ddSource='.fiat-selected';
+        ddTarget='.fiat-all';
+    }
+    if (action =="cryto-sel")
+    {
+        ddSource='.crypto-all';
+        ddTarget='.crypto-selected';
+    }
+    else if (action =="crypto-all")
+    {
+        ddSource='.crypto-selected';
+        ddTarget='.crypto-all';
+    }
+    
+    alert('action = ' + action);
+    alert('source = ' + ddSource);
+    alert('source = ' + ddTarget);
+    
+   helper.swapItems(ddSource, ddTarget);
+   
+    $('span.spn-all').find('i').remove();
+    $('span.spn-selected').find('i').remove();
+    
+    $('span.spn-all').append('<i> fiat' + $('.fiat-all option').length + '</i>');
+    $('span.spn-selected').append('<i> fiat' + $('.fiat-selected option').length + '</i>');
+
   });
   
-   $('.fiat-selected').on('change',function() {
-    
-   helper.swapItems(this, $('.fiat-all'));
   
-  
-  });
-  
-   $('.crypto-all').on('change',function() {
-    
-   helper.swapItems(this, $('.crypto-selected'));
-  
-  
-  });
-  
-   $('.crypto-selected').on('change',function() {
-    
-   helper.swapItems(this, $('.crypto-all'));
-  
-  
-  });
   
   $('button.btn-save').on('click',function(e){
       
@@ -425,15 +442,16 @@
       
       delete data.fiat;
       delete data.digital;
+      
       data.fiat=[];
       data.digital=[];
       
-      $('.fiat-selected').find('option').each(function(){
+      $('select.fiat-selected').find('option').each(function(){
          
           data.fiat.push($(this).text());
       });
       
-      $('.crypto-selected').find('option').each(function(){
+      $('select.crypto-selected').find('option').each(function(){
          
           data.digital.push($(this).text());
       });
@@ -459,7 +477,9 @@
          delete localStorage.topTenFiat;
          
          localStorage.topTenFiat =JSON.stringify(data.fiat);
+         alert('local top 10 Fiat = ' + localStorage.topTenFiat);
          localStorage.topTenCrypto =JSON.stringify(data.digital);
+         alert('local top 10 Crypto = ' + localStorage.topTenCrypto);
          helper.showAll(3);
          return true;
      }
@@ -468,14 +488,9 @@
   });
   
   
-  // clean up
-  $('#bitcoin_widget_container > div > div.get_widget_link_container').empty();
-  $('#bitcoin_widget_container > div > div.widget_row2 > span > a:nth-child(1)').text('');
-  $('#bitcoin_widget_container').find('style').empty();
-  
   setTimeout(function() {
       
-     // alert($('#bitcoin_widget_news > li:nth-child(1) > a').find('a').length);
+     
   $('#bitcoin_widget_news').find('a').each(function(){
      
       $(this).attr('target',"_blank");
@@ -484,26 +499,33 @@
   $('.btcwdgt-news').find('a').each(function(){
       $(this).attr('target',"_blank");
   });
-      
-  }, 5*1000);
-  
-  
-  setInterval(function(){
-    var url ='api/getCryptoGloabl/';
-         $.ajax(url ).then(function(data,status){
+
+  $.ajax('api/news/' ).then(function(data,status){
          
-            $('span.total_market_cap_usd').text('Total market cap USD - ' + numeral(data.total_market_cap_usd).format('($ 0.00 a)'));
-            
-            
-            $('span.total_24h_volume_usd').text('Total 24h volume USD - ' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)'));
-            
-            $('span.bitcoin_percentage_of_market_cap').text('BTC % of market cap - ' + numeral(data.bitcoin_percentage_of_market_cap).format('00.00'));
-            
+          for(var i =0;i<data.length;i++){
+              //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1)
+              console.log('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
+              $('div.btcwdgt-body > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
+              
+          }
             
 
          });
+    //$('div.btcwdgt-header').remove();
     
-  },5* 1000)
+  //  $('div.btcwdgt-news').find('a').each(function(a){
+        
+   // $('ul#bitcoin_widget_news').append('<li><a href="' + $(this).attr('href') +'" target="_blank">'+ $(this).text() +'</a></li>');
+        
+        
+   // });
+    
+    //$('div[hideOnLoad="yes"]').empty();
+    $('.btcwdgt-footer').empty();
+  }, 2*1000);
+  
+  
+ 
   });
   
  
@@ -512,6 +534,11 @@
          $('iframe.frame-chat').attr('src',helper.chatlink);
      }());
    
+   // clean up
+  $('#bitcoin_widget_container > div > div.get_widget_link_container').empty();
+  $('#bitcoin_widget_container > div > div.widget_row2 > span > a:nth-child(1)').text('');
+  $('#bitcoin_widget_container').find('style').empty();
+  
 </script>
 
 
@@ -519,3 +546,4 @@
 
  
            
+   
