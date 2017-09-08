@@ -418,9 +418,7 @@
         ddTarget='.crypto-all';
     }
     
-    alert('action = ' + action);
-    alert('source = ' + ddSource);
-    alert('source = ' + ddTarget);
+    
     
    helper.swapItems(ddSource, ddTarget);
    
@@ -457,8 +455,7 @@
       });
       
       var bsave=true;
-      alert(data.fiat.length);
-      alert(data.digital.length);
+      
       
       if (data.fiat.length !=10)
       {
@@ -477,9 +474,9 @@
          delete localStorage.topTenFiat;
          
          localStorage.topTenFiat =JSON.stringify(data.fiat);
-         alert('local top 10 Fiat = ' + localStorage.topTenFiat);
+         
          localStorage.topTenCrypto =JSON.stringify(data.digital);
-         alert('local top 10 Crypto = ' + localStorage.topTenCrypto);
+         
          helper.showAll(3);
          return true;
      }

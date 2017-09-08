@@ -23,7 +23,7 @@ helper.renderCryptoData=function(param,e){
     var baseUrl = param.baseUrl || '/api/cryptopricefeed/' ;
     var searchstr = $("#search").text() || "all";
     var url = baseUrl + searchstr +'/' + (param.index);
-   alert(url);
+   
     $.ajax(url ).then(function(result,status){
       
         $('.price-grid').empty();
