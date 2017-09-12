@@ -73,7 +73,9 @@ select {
     font-size: 16px;
 }
 .navbar-brand{
-    color: #fcc118 !important;;
+    color: #fcc118 !important;
+    font-size:1.75em !important;
+   font-variant: small-caps;
 }
 .navbar-inverse {
     /* min-height: 48px; */
@@ -157,47 +159,63 @@ div {
 }
 .the_widget{
     background:none repeat scroll 0 0 #f4f4f4;
-margin:0 0 10px 3px;
-box-shadow:0 0 5px rgba(89,89,88,.25)
-;padding-bottom:10px;font-family:Arial;border-radius:5px;
--webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;
+    margin:0 0 10px 3px;
+    box-shadow:0 0 5px rgba(89,89,88,.25)
+    ;padding-bottom:10px;font-family:Arial;border-radius:5px;
+    -webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;
         
     }
-    #bitcoin_price_last,.bitcoin_price_label{
-        font-weight:700;
-        font-size:25px;
-        height:30px;
-        line-height:30px;
-        
-    }
+#bitcoin_price_last,.bitcoin_price_label{
+    font-weight:700;
+    font-size:25px;
+    height:30px;
+    line-height:30px;
+    
+}
 .get_widget_link{
     color:#504e47 !important;font-size:9px;text-decoration:none !important; 
     
 }
 .get_widget_link:hover{color:#969696 !important;}
-.get_widget_link_container{width:100%;text-align:center;margin-top:10px;}
-.latest_news_label{margin-top:0px!important;padding-right:90px;}
-.latest_news_label a:hover{color:#969696 !important;}
-.latest_news_label a{
-color:black!important;font-size:16px!important;text-decoration:none !important;}
+
+
             
-        #btc-logo{
-            float:left;margin:2px 5px 0 0;width:25px;height:25px;background-size:contain;
-            background-repeat:no-repeat;background-image:url(https://www.cryptocoinsnews.com/wp-content/uploads/2014/09/btclogo.png);
-            
-        }
-        #bitcoin_price_high,.bitcoin_price_high_label{color:green;font-size:12px !important;line-height:12px!important;}
-        #bitcoin_price_low,.bitcoin_price_low_label{color:red;font-size:12px !important;line-height:12px!important;}
-        .rss_img{float:left;margin-right:5px;width:16px;height:16px;background-size:contain;background-repeat:no-repeat;background-image:url(https://www.cryptocoinsnews.com/wp-content/uploads/2014/09/rss1.png);}
-        .widget_row{padding:17px 10px 0;margin-bottom:10px;}.widget_row2{padding:1px 10px 0;}
-        .CCN_header{}
-        .widget_header{background:linear-gradient(to bottom,#a1a1a1 0,#505050 100%) repeat scroll 0 0 rgba(0,0,0,0);font-size:14px;font-weight:700;line-height:25px;color:#fff;border-top-left-radius:5px;-moz-border-top-left-radius:5px;-o-border-top-left-radius:5px;-webkit-border-top-left-radius:5px;border-top-right-radius:5px;-moz-border-top-right-radius:5px;-webkit-border-top-right-radius:5px;-o-border-top-right-radius:5px;text-align:center}
-        .widget_row_left{float:left;display:block;width:60% !important;color:#000;}.widget_row_right{float:left;margin-left:2px;height:10px!important;}
-        ul#bitcoin_widget_news{margin-top:9px;margin-bottom:0;margin-left:15px!important;padding-left:0;}
-        ul#bitcoin_widget_news li{border-style: none;border-bottom-style: none;background:none !important;margin-top:2px;padding-left:0;line-height:12px!important;list-style-type:disc!important;list-style-position:outside!important;}
-        ul#bitcoin_widget_news li a{color:#504e47;text-decoration:none !important;font-size:12px;line-height:12px!important;}
-        ul#bitcoin_widget_news li a:hover{color:#969696;}
-        
+#btc-logo{
+    float:left;margin:2px 5px 0 0;width:25px;height:25px;background-size:contain;
+    background-repeat:no-repeat;background-image:url(https://www.cryptocoinsnews.com/wp-content/uploads/2014/09/btclogo.png);
+    
+}
+#bitcoin_price_high,.bitcoin_price_high_label{color:green;font-size:12px !important;line-height:12px!important;}
+#bitcoin_price_low,.bitcoin_price_low_label{color:red;font-size:12px !important;line-height:12px!important;}
+
+ul#bitcoin_news{
+    margin-top:9px;
+    margin-bottom:0;
+    margin-left:15px!important;
+    padding-left:0;
+    
+}
+ul#bitcoin_news li{
+    list-style-type: none;
+    border-style: none;
+    border-bottom-style: none;
+   
+    margin-top:2px;
+    padding-left:10;
+    line-height:12px!important;
+    list-style-type:disc!important;
+    list-style-position:outside!important;
+    
+}
+ul#bitcoin_news li a{
+    color:black;
+    text-decoration:none !important;
+    font-size:.85em;
+    line-height:12px!important;
+    
+}
+ul#bitcoin_news li a:hover{color:#969696;}
+
         
 .chat-select-container        {
     
@@ -223,20 +241,8 @@ color:black!important;font-size:16px!important;text-decoration:none !important;}
     width:100%;
 }
 
-.btcwdgt {
-    display: block !important;
-   /* background-color: #3c3c3c !important;*/
-   background-color: none !important;
-    color: #aaa !important;
-    width: auto !important;
-    min-width: 240px !important;
-    max-width: 640px !important;
-    /* margin: 10px !important; */
-    box-shadow: 0 0 10px #ccc !important;
-    font-size: 16px !important;
-    font-family: 'museo-sans-rounded', Helvetica, Arial, sans-serif !important;
-    font-weight: 700 !important;
-    line-height: 1.0em !important;
+.btc-news {
+   
 }
 
 .fullscreen{
@@ -270,3 +276,10 @@ height: 20px !important;
 
 color:#00B62;
 }
+.fiatPrice-grid, .price-grid
+{
+    
+    padding-left: 20px;
+    text-align: middle;
+}
+

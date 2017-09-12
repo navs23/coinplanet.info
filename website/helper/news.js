@@ -4,41 +4,50 @@ var cheerio = require('cheerio');
 
 (function(news){
 
-    news.getCryptocoinsNews=function(){
-        var newsItems=[];
+    news.getCryptocoinsNews=function(param){
+         param.newsItems=param.newsItems || [];
         return new Promise((resolve,reject)=>{
-         var data;
-          var url ='https://cryptocoinsnews.com/widget/bitcoin_widget.js.php';
-          https.get(url,function(res){
-                
+        var data;
+        var selector = param.selector;
+        var url =param.url;
+        var newslink;
+        var img;
+        https.get(url,function(res){
                  res.on('data', (chunk) => { data += chunk; });
   
                 res.on('end', () => {
-                    
+                  
                       var $ = cheerio.load(data);
     
-                        $('li>a').each(function(i,item){
+                        $(selector).each(function(i,item){
+                           
+                            newslink = ($(this).closest('a').attr('href') || $(this).find('a').attr('href'));
                             
-                            newsItems.push( 
+                            param.newsItems.push( 
                                 {
-                                    item:$(this).text(),
-                                    newsLink:$(this).attr('href')
                                     
+                                    item:$(this).text(),
+                                    newsLink:newslink
+                                  
                                 });
                             
                             
                         });
                     
-                        resolve(newsItems);
+                         resolve(param.newsItems);
                       
                      });     
             }).on('error', (e) => {
             reject(e);
             
-        });
+            });
+        
       
-  
+           
+       
         });
+        
+    
     }
   
 }(module.exports))

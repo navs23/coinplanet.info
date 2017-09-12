@@ -23,7 +23,7 @@ helper.renderCryptoData=function(param,e){
     var baseUrl = param.baseUrl || '/api/cryptopricefeed/' ;
     var searchstr = $("#search").text() || "all";
     var url = baseUrl + searchstr +'/' + (param.index);
-   
+  
     $.ajax(url ).then(function(result,status){
       
         $('.price-grid').empty();
@@ -41,7 +41,7 @@ helper.renderCryptoData=function(param,e){
                         <div class="column search-item" data-ccy="${item.symbol}">
                         <div class="input-group margin-bottom-sm" >
                         <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/${item.symbol}-32.png" /> -->
+                     
                         ${item.symbol}
                         </span>
                         <input  class="ccy-crypto form-control"

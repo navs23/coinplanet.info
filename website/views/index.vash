@@ -11,8 +11,12 @@
     <div class="row">
           <div class="col-md-12">
               
-            <div id="bitcoin_widget_container"></div>
-             <div class="btcwdgt-news"></div>   
+             <div class="btc-news">
+              <h2 class="widget_header">Latest News</h2>
+              <ul id="bitcoin_news">
+               <i>loading latest news, please wait...</i>
+              </ul>
+             </div>   
            </div>
            
        </div>
@@ -25,241 +29,49 @@
            
        </div>
     <div class="row">
-           <div class="col-md-12">
-            
-<iframe width="360" height="215" src="https://www.youtube.com/embed/J0LRyAQ8WD0" frameborder="0" allowfullscreen></iframe>
+           <div class="col-md-12" style="background-color:none;">
+             <h2 class="widget_header">Bitcoin videos</h2>
+<iframe width="100%" height="250px" src="https://www.youtube.com/embed/J0LRyAQ8WD0" frameborder="0" allowfullscreen></iframe>
            </div>
        </div>
    
    })
    @html.block('content', function(model) {
-   <div class="row">
-       <div class="col-md-12">
-        <div style="display:inline">
-           <h3>Your Crypto Currency Calculator <a href="#" class="btn btn-xs btn-info" id="aConfigure" data-toggle="modal" data-target="#configure">Settings</a></h3>
-        </div>
+  <div class="row">
+       <div class="col-sm-8">
+           <h2 class="widget_header">Your Crypto Currency Calculator</h3>
+           <a href="#" class="btn btn-xs btn-info" id="aConfigure" data-toggle="modal" data-target="#configure">Settings</a>
+        
        </div>
-   </div>
-    <div class="row">
-         <div class="col-md-12">
-              <i>Enter an amount in any Fiat or Crypto currency and its equivilant values will be displayed based upon live CoinMarketCap.com currency rates.</i>
-             <p>  </p>
-        </div>
    </div>
    <div class="row">
-      
-       <div class="col-md-6">
-                <!--<div class="fiatPrice-grid"></div>   -->
-                <div class="column">
-                <div class="fiatPrice-grid">
-                     <div class="column" data-ccy="USD">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">USD</span>
-                        <input class="ccy-fiat form-control" id="USD" type="number" data-ccy="USD" data-priceusd="1" value="1" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="AUD">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">AUD</span>
-                        <input class="ccy-fiat form-control" id="AUD" type="number" data-ccy="AUD" data-priceusd="1.2602" value="1.2602" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="CAD">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">CAD</span>
-                        <input class="ccy-fiat form-control" id="CAD" type="number" data-ccy="CAD" data-priceusd="1.2441" value="1.2441" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="CHF">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">CHF</span>
-                        <input class="ccy-fiat form-control" id="CHF" type="number" data-ccy="CHF" data-priceusd="0.95982" value="0.95982" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="CNY">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">CNY</span>
-                        <input class="ccy-fiat form-control" id="CNY" type="number" data-ccy="CNY" data-priceusd="6.5591" value="6.5591" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="GBP">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">GBP</span>
-                        <input class="ccy-fiat form-control" id="GBP" type="number" data-ccy="GBP" data-priceusd="0.77244" value="0.77244" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="INR">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">INR</span>
-                        <input class="ccy-fiat form-control" id="INR" type="number" data-ccy="INR" data-priceusd="64.034" value="64.034" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="JPY">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">JPY</span>
-                        <input class="ccy-fiat form-control" id="JPY" type="number" data-ccy="JPY" data-priceusd="110.14" value="110.14" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="SEK">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">SEK</span>
-                        <input class="ccy-fiat form-control" id="SEK" type="number" data-ccy="SEK" data-priceusd="7.9512" value="7.9512" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        
-                     <div class="column" data-ccy="EUR">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">EUR</span>
-                        <input class="ccy-fiat form-control" id="EUR" type="number" data-ccy="EUR" data-priceusd="0.83893" value="0.83893" onchange="helper.calculate(this,'fiat');">
-                    
-                        </div>
-                       </div>
-                        </div>   
-       </div>
-       </div>
-       <div class="col-md-6">
-                <!--<div class="price-grid"></div>   -->
-                <div class="column">
-                <div class="price-grid">
-                        <div class="column search-item" data-ccy="BTC">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/BTC-32.png" /> -->
-                        BTC
-                        </span>
-                        <input class="ccy-crypto form-control" id="BTC" type="number" data-ccy="BTC" data-priceusd="4708.02" data-pricebtc="1.0" data-baseurl="/api/cryptopricefeed/" value="1.0" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="ETH">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/ETH-32.png" /> -->
-                        ETH
-                        </span>
-                        <input class="ccy-crypto form-control" id="ETH" type="number" data-ccy="ETH" data-priceusd="360.322" data-pricebtc="0.0763786" data-baseurl="/api/cryptopricefeed/" value="0.0763786" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="BCH">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/BCH-32.png" /> -->
-                        BCH
-                        </span>
-                        <input class="ccy-crypto form-control" id="BCH" type="number" data-ccy="BCH" data-priceusd="595.406" data-pricebtc="0.126379" data-baseurl="/api/cryptopricefeed/" value="0.126379" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="XRP">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/XRP-32.png" /> -->
-                        XRP
-                        </span>
-                        <input class="ccy-crypto form-control" id="XRP" type="number" data-ccy="XRP" data-priceusd="0.230868" data-pricebtc="0.00004894" data-baseurl="/api/cryptopricefeed/" value="0.00004894" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="LTC">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/LTC-32.png" /> -->
-                        LTC
-                        </span>
-                        <input class="ccy-crypto form-control" id="LTC" type="number" data-ccy="LTC" data-priceusd="78.9847" data-pricebtc="0.0167427" data-baseurl="/api/cryptopricefeed/" value="0.0167427" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="XEM">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/XEM-32.png" /> -->
-                        XEM
-                        </span>
-                        <input class="ccy-crypto form-control" id="XEM" type="number" data-ccy="XEM" data-priceusd="0.308621" data-pricebtc="0.00006542" data-baseurl="/api/cryptopricefeed/" value="0.00006542" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="DASH">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/DASH-32.png" /> -->
-                        DASH
-                        </span>
-                        <input class="ccy-crypto form-control" id="DASH" type="number" data-ccy="DASH" data-priceusd="366.85" data-pricebtc="0.0777623" data-baseurl="/api/cryptopricefeed/" value="0.0777623" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="MIOTA">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/MIOTA-32.png" /> -->
-                        MIOTA
-                        </span>
-                        <input class="ccy-crypto form-control" id="MIOTA" type="number" data-ccy="MIOTA" data-priceusd="0.743495" data-pricebtc="0.00015781" data-baseurl="/api/cryptopricefeed/" value="0.00015781" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="XMR">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/XMR-32.png" /> -->
-                        XMR
-                        </span>
-                        <input class="ccy-crypto form-control" id="XMR" type="number" data-ccy="XMR" data-priceusd="129.622" data-pricebtc="0.0274765" data-baseurl="/api/cryptopricefeed/" value="0.0274765" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div>
-                        <div class="column search-item" data-ccy="NEO">
-                        <div class="input-group margin-bottom-sm">
-                        <span class="input-group-addon" type="input">
-                       <!-- <img src="http://capfeed.com/images/currencyicons/NEO-32.png" /> -->
-                        NEO
-                        </span>
-                        <input class="ccy-crypto form-control" id="NEO" type="number" data-ccy="NEO" data-priceusd="33.0754" data-pricebtc="0.00702048" data-baseurl="/api/cryptopricefeed/" value="0.00702048" onchange="helper.calculate(this,'crypto');">
-                        </div>
-                       </div></div>   
-       </div>
+       <div class="col-sm-8">
+    <p>Enter an amount in any Fiat or Crypto currency and its equivilant values will be displayed based upon live CoinMarketCap.com currency rates.</p>
+        
        </div>
    </div>
+    
+   <div class="row" >
+            
+             <div class="col-sm-4">
+              <h4 class="text-center">Fiat CCY(Base:USD)</h4>
+               <div class="fiatPrice-grid"></div>
+               </div>
+               
+               <div class="col-sm-4">
+                <h4 class="text-center">Crypto CCY(Base:BTC)</h4>
+                <div class="price-grid"></div>
+               </div>
+       </div>
+     
+   
    
    
     
 })  
     @html.block('right', function(model) {
    
-    <div class="row">
-           <div class="col-sm-12">
-                <div class="widget_header"><span id="CCN_header">Live chat</span></div>
-           </div>
-   </div>
-   <div class="row">
-          <div class="col-md-12">
-       <div id="divchat" style="width: auto;height: auto;background: #fff;padding: 0 !important; margin-top:0px;">
-          
-               <iframe src="" 
-               class="frame-chat"
-               width="100% !important" 
-               height="500px" 
-               frameborder="0" 
-               allowtransparency="true" 
-               scrolling="no">
-               
-           </iframe>
-          
-           </div>
-       </div>
-           
-       </div>
+   
    
    })
 })
@@ -487,38 +299,17 @@
   
   setTimeout(function() {
       
-     
-  $('#bitcoin_widget_news').find('a').each(function(){
-     
-      $(this).attr('target',"_blank");
-  });
-  //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1) > a
-  $('.btcwdgt-news').find('a').each(function(){
-      $(this).attr('target',"_blank");
-  });
-
   $.ajax('api/news/' ).then(function(data,status){
-         
+          $('div.btc-news > ul').empty();
           for(var i =0;i<data.length;i++){
-              //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1)
-              console.log('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
-              $('div.btcwdgt-body > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
+              
+              $('div.btc-news > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
               
           }
             
 
          });
-    //$('div.btcwdgt-header').remove();
-    
-  //  $('div.btcwdgt-news').find('a').each(function(a){
-        
-   // $('ul#bitcoin_widget_news').append('<li><a href="' + $(this).attr('href') +'" target="_blank">'+ $(this).text() +'</a></li>');
-        
-        
-   // });
-    
-    //$('div[hideOnLoad="yes"]').empty();
-    $('.btcwdgt-footer').empty();
+   
   }, 2*1000);
   
   
