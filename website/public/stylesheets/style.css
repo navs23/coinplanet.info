@@ -48,9 +48,8 @@ span[type='input']{
     height:20px;
 }
 div#configure{
-    width:450px;
-    display: none;
-    margin:0px !important;
+    width:auto;
+    border:1px solid red;
 }
 select {
     
