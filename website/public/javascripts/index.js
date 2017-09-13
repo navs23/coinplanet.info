@@ -290,10 +290,7 @@ return false;
 }
 
 helper.swapItems=function(source,target){
- 
-
-   
-// if($(target).children().length > 10 || $(target).children().length < 10)
+ // if($(target).children().length > 10 || $(target).children().length < 10)
 // {
 //     $('.message').text('please select ten currencies.');
 //     alert('cancel swap');
@@ -302,6 +299,7 @@ helper.swapItems=function(source,target){
  $('.configure-message').text('');
  
   var vals = $(source).val();
+  
         vals.map(function(item){
           
           $(source)
@@ -371,11 +369,14 @@ helper.populateCurrenciesDropDown=function(dd){
     if (dd=='fiat'){
          $ddAll = $('select.fiat-all');
          $ddSelected = $('select.fiat-selected');
-         $ddSelected.append(`<option value="USD">USD</option>`);
-         url ='api/fiatpricefeed/';
-         selectedCurrencies = JSON.parse(localStorage.topTenFiat);
          $ddAll.empty();
          $ddSelected.empty();
+         
+         $ddSelected.append(`<option value="USD">USD</option>`);
+         
+         url ='api/fiatpricefeed/';
+         selectedCurrencies = JSON.parse(localStorage.topTenFiat);
+         
           $.ajax(url ).then(function(result,status){
            
               _.mapObject(result.rates || result.data,function(val,key){

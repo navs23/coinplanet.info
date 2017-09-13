@@ -27,15 +27,17 @@ input[type='number']{
   
  padding-top:10px;
   height: 4rem !important;
-  font-size:1em;
+  font-size:.75em;
   font-weight:bold;
-  width:155px !important;
+  width:85px !important;
 }
 
 span[type='input']{
-  width:75px !important;
-  font-size:1.1em;
+    min-width: 75px;
+  
+  font-size:1em;
   font-weight:bold;
+  padding:3px;
 }
 .pagination a:hover:not(.active) {background-color: #ddd;}
 
@@ -192,25 +194,23 @@ ul#bitcoin_news{
     margin-bottom:0;
     margin-left:15px!important;
     padding-left:0;
-    
+    list-style: none;
+  
 }
 ul#bitcoin_news li{
-    list-style-type: none;
-    border-style: none;
-    border-bottom-style: none;
    
-    margin-top:2px;
-    padding-left:10;
-    line-height:12px!important;
-    list-style-type:disc!important;
-    list-style-position:outside!important;
-    
+  
+    margin-top:5px;
+    padding:5px;
+   
+   
+   
 }
 ul#bitcoin_news li a{
     color:black;
     text-decoration:none !important;
     font-size:.85em;
-    line-height:12px!important;
+    color:black;
     
 }
 ul#bitcoin_news li a:hover{color:#969696;}
@@ -222,7 +222,7 @@ ul#bitcoin_news li a:hover{color:#969696;}
      background-color: red !important;
 }
 .widget_header {
-    background: linear-gradient(to bottom,#a1a1a1 0,#505050 100%) repeat scroll 0 0 rgba(0,0,0,0);
+    background-color:#fab915;
     font-size: 16px;
     font-weight: 700;
     line-height: 35px;
@@ -241,7 +241,7 @@ ul#bitcoin_news li a:hover{color:#969696;}
 }
 
 .btc-news {
-   
+    background-color:none;
 }
 
 .fullscreen{

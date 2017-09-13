@@ -28,41 +28,37 @@
            </div>
            
        </div>
-    <div class="row">
-           <div class="col-md-12" style="background-color:none;">
-             <h2 class="widget_header">Bitcoin videos</h2>
-<iframe width="100%" height="250px" src="https://www.youtube.com/embed/J0LRyAQ8WD0" frameborder="0" allowfullscreen></iframe>
-           </div>
-       </div>
+    
    
    })
    @html.block('content', function(model) {
   <div class="row">
-       <div class="col-sm-8">
+       <div class="col-md-12">
            <h2 class="widget_header">Your Crypto Currency Calculator</h3>
            <div class="container">
            <a href="#" class="btn btn-xs btn-info" id="aConfigure" data-toggle="modal" data-target="#myModal">Settings</a>
-           <!-- Modal -->
-
+          
            </div>
        </div>
    </div>
    <div class="row">
-       <div class="col-sm-8">
-    <p>Enter an amount in any Fiat or Crypto currency and its equivilant values will be displayed based upon live CoinMarketCap.com currency rates.</p>
+       <div class="col-md-12">
+    <p><strong></strong>
+        Enter an amount in any Fiat or Crypto currency and its equivilant values will be displayed based upon live 
+    CoinMarketCap.com currency rates.</p>
         
        </div>
    </div>
     
-   <div class="row" >
+   <div class="row centred" style="background-color:none;padding:20px;" >
             
-             <div class="col-sm-4">
-              <h4 class="text-center">Fiat CCY(Base:USD)</h4>
+             <div class="col-md-6">
+              <i>Fiat (Base:USD)</i>
                <div class="fiatPrice-grid"></div>
                </div>
                
-               <div class="col-sm-4">
-                <h4 class="text-center">Crypto CCY(Base:BTC)</h4>
+               <div class="col-md-6">
+                <i>Crypto (Base:BTC)</i>
                 <div class="price-grid"></div>
                </div>
        </div>
@@ -74,7 +70,12 @@
 })  
     @html.block('right', function(model) {
    
-   
+   <div class="row">
+           <div class="col-md-12" style="background-color:none;">
+             <h2 class="widget_header">Bitcoin videos</h2>
+<iframe width="100%" height="250px" src="https://www.youtube.com/embed/J0LRyAQ8WD0" frameborder="0" allowfullscreen></iframe>
+           </div>
+       </div>
    
    })
 })
@@ -111,10 +112,10 @@
                 <td><select class="crypto-selected" multiple></select></td>
                 </tr>
                 <tr><td colspan="3">
-                    <div class="message"></div>
+                    <div class="configure-message"></div>
                     
                 </td></tr>
-        
+            
         
     </table>
         </div>
@@ -225,8 +226,9 @@
         ddSource='.fiat-selected';
         ddTarget='.fiat-all';
     }
-    if (action =="cryto-sel")
+    if (action =="crypto-sel")
     {
+      
         ddSource='.crypto-all';
         ddTarget='.crypto-selected';
     }
@@ -236,8 +238,8 @@
         ddTarget='.crypto-all';
     }
     
-    
-    
+   
+     
    helper.swapItems(ddSource, ddTarget);
    
     $('span.spn-all').find('i').remove();
@@ -273,7 +275,7 @@
       });
       
       var bsave=true;
-      
+     // alert(data.fiat.length);
       
       if (data.fiat.length !=10)
       {
@@ -296,6 +298,7 @@
          localStorage.topTenCrypto =JSON.stringify(data.digital);
          
          helper.showAll(3);
+         
          return true;
      }
       else

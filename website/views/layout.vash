@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CryptoCurrency calculator</title>
+    <title>CoinPlanet.info</title>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />        
     
@@ -24,8 +24,12 @@
    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
+          
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img src="/images/coinplanet-logo.png" /></a>
+            </div>
           <button class="navbar-toggle collapsed" aria-expanded="false" aria-controls="navbar" type="button" data-target="#navbar" data-toggle="collapse">
-            <span class="sr-only">Toggle navigation</span>
+            <span class="sr-only"><a class="navbar-brand" href="/"><span >coinplanet.info</span></a></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -35,7 +39,7 @@
        
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav navbar-left">
-            <li><a class="navbar-brand" href="/"><span >coinplanet.info</span></a></li>
+            <li></li>
           
           </ul>
           <ul class="nav navbar-nav">
@@ -72,7 +76,7 @@
          @html.block('left')
          </div>
     </div>
-    <div class="col-md-6" style="background-color:none;">
+    <div class="col-md-4" style="background-color:none;">
           
             @html.block('content')
           
