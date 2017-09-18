@@ -1,0 +1,7 @@
+pull sql server docker image for linux
+docker pull microsoft/mssql-server-linux
+run sql server
+docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=Lond@n01' -e 'MSSQL_PID=Developer' --cap-add SYS_PTRACE -p 1401:1433 -d microsoft/mssql-server-linux
+
+
+sudo docker exec -it 1d62df62e560907dc5231adad9ef80563220f444977cf106b542e5b18e77c8d5 "bash"

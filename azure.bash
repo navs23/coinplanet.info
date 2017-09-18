@@ -1,0 +1,1 @@
+ssh -i ./rsa.key azureuser@52.168.15.121

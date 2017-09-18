@@ -1,0 +1,130 @@
+
+@html.extend('layout', function(model) {
+ @html.block('meta', function(model) {
+    <meta name="description" content="CryptoCurrency live chat, news and more" />
+    <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
+    <meta property="description" content="chat,share,exchange and learn from fellow crypto currency enthusiast" /> 
+    })
+
+    @html.block('js', function(model) {
+        
+    })
+   @html.block('left', function(model) {
+   
+    <div class="row">
+          <div class="col-md-4">
+              
+          
+
+           </div>
+           
+       </div>
+   
+   
+   
+   })
+   @html.block('content', function(model) {
+   <h2>Getting started with bitcoins</h2>
+   <div class="row">
+        <div class="col-md-12">
+       <div>
+       <h3><a href='#step1'>Step 1: Create a Bitcoin wallet/address</a></h3>
+     <p>
+         Having a Bitcoin wallet is like having a Bank account. This is where your bitcoin balance is held. 
+There are two parts to the bitcoin wallet     </p>
+
+<h4>Public key</h4>
+<ul>
+    <li>can be shared</li>
+    <li>used to lookup your bitcoin balance</li>
+    <li>read-only access to your wallet</li>
+    <li>anyone can deposit bitcoin into your wallet</li>
+    
+</ul>
+
+<h4>Private Key</h4>
+<ul>
+    <li>only you should have access to the private key of your bitcoin wallet</li>
+    <li>giving away your private key is like giving your house keys</li>
+    <li>take extra care to store private keys</li>
+    
+</ul>
+<h4>Sites for creating wallets </h4>
+
+<ul>
+    <li><a href='http://blockchain.info' target='blank'>blockchain.info</a></li>
+    <li><a href='http://bitaddress.org' target='blank'>bitaddress.org</a></li>
+    
+</ul>
+
+    </div>
+    <div>
+    <h3><a href='#step2'>Step 2: Add Bitcoin to your wallet</a></h3>
+    <p>Depending upon your country of residence, there are many exchanges/platforms that allow you to convert your local currency into bitcoins.</p>
+    
+    <h4>Here are some exchanges that you can use to buy bitcoins</h4>
+    <ul>
+    <li><a href='http://blockchain.info'>blockchain.info</a></li>
+    <li><a href='http://coinofwalls.com'>coinofwalls.com</a></li>
+    <li><a href='http://localbitcoins.com'>localbitcoins.com</a></li>
+    <li><a href='http://bittylicious.com'>bittylicious.com</a></li>
+    <li><a href='http://coinbase.com'>coinbase.com</a></li>
+    
+    
+    </ul>
+    
+    
+    </div>
+     <div>
+    <h3><a href='#step3'>Step 3: Send and Receive Bitcoin</a></h3>
+    <p>As mentioned in the first step, transacting bitcoins is very easy process.</p>
+    
+    <h4>Send/receiving bitcoins</h4>
+    <ul>
+    <li>To receive bitcoin all you have to do is share your public address with the sender</li>
+    <li>Sending bitcoin requires a few more steps and since bitcoin transactions are irreversible, it is important to pay attention when sending. </li>
+    <li>Overall, the process for sending bitcoin is actually quite easy:</li>
+    <li>Copy the receiver’s public Bitcoin address (or scan QR code)</li>
+    <li>Open your wallet and navigate to its “Send” feature,  paste the receiver’s address into the appropriate field</li>
+    <li>Specify the amount you want to send (for help converting fiat currency into bitcoin visit our Bitcoin Tools page.)</li>
+    <li>Confirm that the address and amount are both correct</li>
+    <li class="text-success">Send</li>
+    </ul>
+    
+    
+    </div>
+    </div>
+    </div>
+})  
+    @html.block('right', function(model) {
+    <div class="row">
+          <div class="col-md-12">
+        
+</div>
+</div>
+
+               
+          
+          
+   })
+})
+
+<script type="text/javascript">
+
+
+  $(document).ready(function(){
+ 
+  
+  
+  
+  
+            
+
+         });
+  
+</script>
+
+
+
+ 
+           

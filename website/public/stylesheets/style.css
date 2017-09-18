@@ -1,7 +1,7 @@
 
 body {
-  padding: 50px;
-  font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 3px;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -58,25 +58,12 @@ select {
     width:150px;
 }
 
-.navbar-fixed-top
-{
-    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2c3742),color-stop(100%,#28303a));
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(44, 55, 66)), to(rgb(40, 48, 58)));
-    background-position-x: initial;
-    background-position-y: initial;
-    background-size: initial;
-    background-repeat-x: initial;
-    background-repeat-y: initial;
-    background-attachment: initial;
-    background-origin: initial;
-    background-clip: initial;
-    background-color: initial;
-    font-size: 16px;
-}
+
 .navbar-brand{
     color: #fcc118 !important;
-    font-size:1.75em !important;
+    font-size:1.25em !important;
    font-variant: small-caps;
+  
 }
 .navbar-inverse {
     /* min-height: 48px; */
@@ -113,10 +100,11 @@ select {
 }
 
 .navbar {
+    height:60px;
     position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
+   
+    margin-bottom: 10px;
+    border: 1px solid red;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, 
@@ -127,6 +115,7 @@ select {
 }
 .navbar-inverse .navbar-nav>li>a {
     color: #9d9d9d;
+    font-size: 1.5em;
 }
 div {
     display: block;
@@ -269,11 +258,11 @@ height: 20px !important;
 
 .fullscreen > body {
     
-    background-color: black;
+    background-color: none;
 }
-.total_market_cap_usd{
-
-color:#00B62;
+.total_market_cap_usd,.bitcoin_percentage_of_market_cap,.total_24h_volume_usd{
+font-size:14px !important;
+color:#fab915;
 }
 .fiatPrice-grid, .price-grid
 {
@@ -282,3 +271,7 @@ color:#00B62;
     text-align: middle;
 }
 
+table#tblResources > a
+{
+    font-size:14px;
+}

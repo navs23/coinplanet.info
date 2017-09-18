@@ -26,11 +26,9 @@ home.init= function(router){
   
 });   
 
-	 router.get('/resources/', function(req, res, next) {
-	 	
+	router.get('/resources/', function(req, res, next) {
 	 
-	 
-	 res.render('resources', {title: 'Resources',resources:data.getData("resources")});
+	res.render('resources', {title: 'Resources',resources:data.getData("resources")});
 	   
 	  
 	});   
@@ -163,6 +161,13 @@ home.init= function(router){
     	
   
 	}); 
+	
+	router.get('/gettingstarted/', function(req, res, next) {
+	 
+	res.render('getting-started', {title: 'Getting started with bitcoin'});
+	   
+	  
+	});  
 
 	function getPaginatedItems(items, page) {
 	var page = page || 1,

@@ -1,5 +1,6 @@
 
 @html.extend('layout', function(model) {
+
  @html.block('meta', function(model) {
     <meta name="description" content="CryptoCurrency live chat, news and more" />
     <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
@@ -35,23 +36,49 @@
        </div>
    
    })
+   
    @html.block('content', function(model) {
-   <h3>Here is the list of some very useful websites and resources about Bitcoin and Cryptocurrencies</h3>
+   
+   <h4>Here is the list of some very useful websites and resources about Bitcoin and Cryptocurrencies</h4>
    <div class="row">
-       <table class="table table-border">
+       <table class="table table-border" id="tblResources">
            
-   @model.resources.forEach(function(item){
-   <tr>
-       <td>
-  
-             <h4>
-             <a href="@item.link" target="_blank">@item.item</a>
-             </h4>
-            </td>
-  
-    </tr>
-   })
-    </table>
+           <tr><td><i class="fa fa-graduation-cap fa-2x " aria-hidden="true"></i><h3>Education</h3></td><td><h3>Business</h3></td></tr>
+           <tr>
+               <td><ul>
+                   @model.resources.education.forEach(function(item){
+                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   })
+                   
+               </ul></td>
+           <td>
+               <ul>
+                   @model.resources.business.forEach(function(item){
+                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   })
+                   
+               </ul>
+           </td>
+           </tr>
+             <tr><td><h3>News</h3></td><td><h3>Others</h3></td></tr>
+           <tr>
+               <td><ul>
+                   @model.resources.news.forEach(function(item){
+                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   })
+                   
+               </ul></td>
+           <td>
+               <ul>
+                   @model.resources.others.forEach(function(item){
+                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   })
+                   
+               </ul>
+           </td>
+           </tr>
+   </table>
+    
     </div>
  
    
@@ -59,70 +86,26 @@
 })  
     @html.block('right', function(model) {
     <div class="row">
-          <div class="col-md-12">
-        
-</div>
-</div>
-
-               
-          
+          <div class="col-md-12"></div>
+    </div>
+      
           
    })
+   
+   
 })
 
 <script type="text/javascript">
 
-/* global $
-       
-*/
-  $('iframe').on("load", function() {
-     
-    $('iframe').contents().find("head")
-      .append($("<style type='text/css'> .ch-item-text{background-color:red !important; font-size:12px !important;}  </style>"));
-});
+
   
   $(document).ready(function(){
  
   
   
   
-  setTimeout(function() {
-      
-     // alert($('#bitcoin_widget_news > li:nth-child(1) > a').find('a').length);
-  $('.btcwdgt-news-ticker').find('a').each(function(){
-     
-      $(this).attr('target',"_blank");
-  });
-  //body > div.container-fluid > div > div:nth-child(1) > div > div:nth-child(1) > div > div.btcwdgt-news.btcwdgt.btcwdgt-headlines.btcwdgt-clean > div.btcwdgt-body > ul > li:nth-child(1) > a
-  $('.btcwdgt-news').find('a').each(function(){
-      $(this).attr('target',"_blank");
-  });
-      
-  }, 5*1000);
-  refresh();
-  setInterval(function(){
-    refresh();
-    
-  },5* 1000)
-  });
+});
   
-  
-  function refresh(){
-      var url ='api/getCryptoGloabl/';
-        
-         $.ajax(url ).then(function(data,status){
-         
-            $('.total_market_cap_usd').text('Total market cap USD - ' + numeral(data.total_market_cap_usd).format('($ 0.00 a)'));
-            
-            
-            $('.total_24h_volume_usd').text('Total 24h volume USD - ' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)'));
-            
-            $('.bitcoin_percentage_of_market_cap').text('BTC % of market cap - ' + numeral(data.bitcoin_percentage_of_market_cap).format('00.00'));
-            
-            
-
-         });
-  }
 </script>
 
 

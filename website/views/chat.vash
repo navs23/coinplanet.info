@@ -13,8 +13,7 @@
    
     <div class="row">
           <div class="col-md-12">
-              
-          
+               
 
            </div>
            
@@ -36,38 +35,29 @@
    
    })
    @html.block('content', function(model) {
-   <div class="row">
-         
-             <span style="text-align:middle;"><h3>Cryptocoin chat</h3>
-             <i>Talk, share, exchange and learn from fellow crypto currency enthusiast like yourself about all cyrptocurrencies.</i>
-             <strong>If you enoy being here and got some free coins, hit the donate button to share your wealth</strong>
-               </span>
-         
-             
-   </div>
-   <div class="row">
-          <div class="col-md-12">
+    <h4>Cryptocoin chat</h4>
+             <i>Share, exchange and learn from fellow crypto currency enthusiast.</i>
             
-  <iframe src="https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin" 
-               class="fullscreen"
               
-               frameborder="0" 
-               allowtransparency="true" 
-               scrolling="no">
+  <iframe 
+  border="0"
+  width="100%" height="400px"
+  style="padding-bottom:5px;margin:5px;border:3px solid #fab915;"
+  src="https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin" 
+  >
                
            </iframe>
-   </div>
-   </div>
-   
-    
+        
 })  
     @html.block('right', function(model) {
-    <div class="row">
+   
+<div class="row">
           <div class="col-md-12">
-        
-</div>
-</div>
+               
 
+           </div>
+           
+       </div>
                
           
           

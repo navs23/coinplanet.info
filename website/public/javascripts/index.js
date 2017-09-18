@@ -151,6 +151,8 @@ helper.getFiatRates=function(){
                 
                     $('.fiatPrice-grid').append(temp);
                     
+                   
+                    
               
             });
          
