@@ -15,19 +15,18 @@ page{
 
 input[type='number']{
   
- padding-top:10px;
+ padding-top:5px;
   height: 4rem !important;
-  font-size:.75em;
+  font-size:1.15em;
   font-weight:bold;
-  width:85px !important;
+  width:155px !important;
 }
 
 span[type='input']{
     min-width: 75px;
-  
-  font-size:1em;
-  font-weight:bold;
-  padding:3px;
+   font-size:1em;
+   font-weight:bold;
+   padding:3px;
 }
 
 .input-group-addon:first-child {
@@ -196,7 +195,7 @@ ul#bitcoin_news li a:hover{color:#969696;}
 
 .ccy-name{
     
-font-size: 10px !important;
+
 height: 20px !important;
 }
 

@@ -48,7 +48,7 @@
        </div>
    </div>
     
-   <div class="row centred" style="background-color:none;padding:10px;overflow-x: hidden;;height:auto;" >
+   <div class="row centred" style="background-color:none;padding:10px;overflow-x: showAll;;height:auto;" >
           
              <div class="col-md-6">
                  
@@ -357,10 +357,7 @@
      }());
    
    // clean up
-  $('#bitcoin_widget_container > div > div.get_widget_link_container').empty();
-  $('#bitcoin_widget_container > div > div.widget_row2 > span > a:nth-child(1)').text('');
-  $('#bitcoin_widget_container').find('style').empty();
-  
+
 </script>
 
 

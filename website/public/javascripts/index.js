@@ -170,16 +170,16 @@ helper.calculate=function(e,ccy){
   
   $item.$totalbtc = ( $item.$pricebtc * $item.$newValue);
   
+  
   if (ccy=='crypto')
-    $item.$totalusd = ( $item.$priceusd * $item.$totalbtc);
+    $item.$totalusd = ( $item.$priceusd *  $item.$newValue);
+    
   else
   {
    
     $item.$totalusd = ( 1/$item.$priceusd * $item.$newValue);
   }
   
-  
-
 
 $('.ccy-crypto').not(e).each(function(item){
    var $temp;
@@ -202,6 +202,8 @@ $('.ccy-crypto').not(e).each(function(item){
   
   
 });
+
+
 }
 
 helper.navigate2=function(e){
@@ -388,8 +390,7 @@ helper.populateCurrenciesDropDown=function(dd){
               _.mapObject(result.rates || result.data,function(val,key){
                   
                   var option =`<option value="${key}">${key}</option>`;
-                 // alert(option);
-                  
+                 
                   if (_.contains(selectedCurrencies,key)) 
                   {
                       $ddSelected.append(option);
