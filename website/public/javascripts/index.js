@@ -163,6 +163,7 @@ helper.calculate=function(e,ccy){
   
   var $item={};
   $item.$priceusd=($(e).data('priceusd')||0.00);
+  
   $item.$pricebtc=($(e).data('pricebtc')||0.00);
   
   $item.$newValue = $(e).val() || 0.00;
@@ -172,7 +173,10 @@ helper.calculate=function(e,ccy){
   if (ccy=='crypto')
     $item.$totalusd = ( $item.$priceusd * $item.$totalbtc);
   else
-    $item.$totalusd = ( $item.$priceusd * $item.$newValue);
+  {
+   
+    $item.$totalusd = ( 1/$item.$priceusd * $item.$newValue);
+  }
   
   
 

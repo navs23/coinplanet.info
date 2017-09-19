@@ -54,15 +54,18 @@
                  
                  <table class="table tblcalc" border="0" >
                      <th>
-                         <i>Fiat (Base:USD)</i></th>
-                        <th><i>Crypto (Base:BTC)</i></th>
+                         Fiat (Base:<i class="fa fa-usd fa-1x" aria-hidden="true" ></i>)</th>
+                        <th>
+                            Crypto (Base:):<i class="fa fa-btc fa-1x" aria-hidden="true" ></i>)</th>
                      
                      <tbody>
                           <tr>
                               <td conspan="2">
                                   
-                                  <a href="#" class="fa fa-cog btn btn-xs btn-info" id="aConfigure" style="color:black;" 
-                                        data-toggle="modal" data-target="#myModal">Settings</a>
+                                  <a href="#" class="btn btn-xs btn-info" id="aConfigure" style="color:none;" data-toggle="modal" data-target="#myModal">
+                                      <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
+                                      
+                                  </a>
                               </td>
                           </tr>
                          <tr>
@@ -326,7 +329,7 @@
   });
   
   
-  setTimeout(function() {
+  setInterval(function() {
       
   $.ajax('api/news/' ).then(function(data,status){
           $('div.btc-news > ul').empty();
@@ -336,10 +339,12 @@
               
           }
             
-
+        $('div.btc-news > ul').append('<li><i>Last refreshed @@'+new Date()+'</i></li>');
          });
+         
    
-  }, 2*1000);
+    
+  }, 5*1000);
   
   
  

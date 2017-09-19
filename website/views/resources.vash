@@ -39,39 +39,43 @@
    
    @html.block('content', function(model) {
    
-   <h4>Here is the list of some very useful websites and resources about Bitcoin and Cryptocurrencies</h4>
+   <h4>List of useful Bitcoin websites</h4>
    <div class="row">
        <table class="table table-border" id="tblResources">
            
-           <tr><td><i class="fa fa-graduation-cap fa-2x " aria-hidden="true"></i><h3>Education</h3></td><td><h3>Business</h3></td></tr>
+           <tr><td><i class="fa fa-graduation-cap fa-2x" aria-hidden="true"></i><h3>Education</h3></td>
+           <td><i class="fa fa-shopping-bag fa-2x" aria-hidden="true"></i><h3>Business</h3></td>
+           
+           </tr>
            <tr>
                <td><ul>
                    @model.resources.education.forEach(function(item){
-                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   <li><a class="text-info text-capitalize h4 resource-link" href='#' data-link="@item.link" >@item.item</a></li>
                    })
                    
                </ul></td>
            <td>
                <ul>
                    @model.resources.business.forEach(function(item){
-                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   <li><a class="text-info text-capitalize h4 resource-link" href='#' data-link="@item.link" >@item.item</a></li>
                    })
                    
                </ul>
            </td>
            </tr>
-             <tr><td><h3>News</h3></td><td><h3>Others</h3></td></tr>
+             <tr><td><i class="fa fa-newspaper-o fa-2x" aria-hidden="true"></i><h3>News</h3></td>
+             <td><i class="fa fa-handshake-o fa-2x" aria-hidden="true"></i><h3>Others</h3></td></tr>
            <tr>
                <td><ul>
                    @model.resources.news.forEach(function(item){
-                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   <li><a class="text-info text-capitalize h4 resource-link resource-link" href='#' data-link="@item.link" >@item.item</a></li>
                    })
                    
                </ul></td>
            <td>
                <ul>
                    @model.resources.others.forEach(function(item){
-                   <li><a class="text-info text-capitalize h4" href='@item.item' target="blank">@item.item</a></li>
+                   <li><a class="text-info text-capitalize h4 resource-link" href='#' data-link="@item.link" >@item.item</a></li>
                    })
                    
                </ul>
@@ -101,13 +105,21 @@
   
   $(document).ready(function(){
  
+  $('.resource-link').on('click',function(e){
   
+   url=$(this).data('link');
+   
+   
+ var id = window.open(url, 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=324,height=288,left = 350,top = 240');;
+
+   return false;
+  });
   
   
 });
   
 </script>
-
+ 
 
 
  

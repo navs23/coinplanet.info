@@ -17,8 +17,8 @@ var resourcesJson=
     {"item":"Merchant tools","link":"https://en.bitcoin.it/wiki/Category:Shopping_Cart_Interfaces"},
     ]
 ,"news":[
-   {"item":"coinmap.org","link":"https://coinmap.org/"},
-   {"item":"Projects","link":"http://www.bitcoinprojects.net/"},
+{"item":"coinmap.org","link":"https://coinmap.org/"},
+{"item":"Projects","link":"http://www.bitcoinprojects.net/"},
 {"item":"CoinTelegraph","link":"http://cointelegraph.com/"},
 {"item":"CoinDesk","link":"http://www.coindesk.com"},
 {"item":"Bitcoin Magazine","link":"https://bitcoinmagazine.com"},

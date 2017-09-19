@@ -11,17 +11,7 @@ page{
     
     margin-top: 10px;
 }
-.header{
-  
-  background-color: gray;
-}
 
-
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
-}
 
 input[type='number']{
   
@@ -39,9 +29,6 @@ span[type='input']{
   font-weight:bold;
   padding:3px;
 }
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
-
 
 .input-group-addon:first-child {
     border-right: 0;
@@ -65,26 +52,8 @@ select {
    font-variant: small-caps;
   
 }
-.navbar-inverse {
-    /* min-height: 48px; */
-    /* margin-bottom: 0; */
-    /* border-radius: 0; */
-    /* border-bottom: 1px solid #191e23; */
-    /* background: #2c3742; */
-   background: -moz-linear-gradient(top,#2c3742 0%,#28303a 100%);
-    background-color: #fcc118;
-    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#2c3742),color-stop(100%,#28303a));
-    /* background: -webkit-linear-gradient(top,#2c3742 0%,#28303a 100%); */
-    background: -o-linear-gradient(top,#2c3742 0%,#28303a 100%);
-    background: -ms-linear-gradient(top,#2c3742 0%,#28303a 100%);
-    /* background: linear-gradient(to bottom,#2c3742 0%,#28303a 100%); */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2c3742',endColorstr='#28303a',GradientType=0);
-}
 
-.navbar-inverse {
-    /* background-color: #222; */
-    /* border-color: #080808; */
-}
+
 
 .navbar-fixed-top {
     top: 0;
@@ -99,20 +68,6 @@ select {
  
 }
 
-.navbar {
-    height:60px;
-    position: relative;
-   
-    margin-bottom: 10px;
-    border: 1px solid red;
-}
-
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, 
-.navbar-inverse .navbar-nav>.active>a:hover {
-    color: #fff;
-    
-  
-}
 .navbar-inverse .navbar-nav>li>a {
     color: #9d9d9d;
     font-size: 1.5em;
@@ -147,14 +102,7 @@ div {
     margin-top:10px;
     
 }
-.the_widget{
-    background:none repeat scroll 0 0 #f4f4f4;
-    margin:0 0 10px 3px;
-    box-shadow:0 0 5px rgba(89,89,88,.25)
-    ;padding-bottom:10px;font-family:Arial;border-radius:5px;
-    -webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;
-        
-    }
+
 #bitcoin_price_last,.bitcoin_price_label{
     font-weight:700;
     font-size:25px;
@@ -241,7 +189,7 @@ ul#bitcoin_news li a:hover{color:#969696;}
    
     align:middle;
     border:1px solid black;
-    background-color: gray;
+    
     
  }
  
@@ -256,10 +204,7 @@ height: 20px !important;
     height: 20px !important;
 }
 
-.fullscreen > body {
-    
-    background-color: none;
-}
+
 .total_market_cap_usd,.bitcoin_percentage_of_market_cap,.total_24h_volume_usd{
 font-size:14px !important;
 color:#fab915;
@@ -267,11 +212,11 @@ color:#fab915;
 .fiatPrice-grid, .price-grid
 {
     
-    padding-left: 20px;
+    padding-left: 0px;
     text-align: middle;
 }
 
-table#tblResources > a
-{
-    font-size:14px;
-}
+
+
+
+
