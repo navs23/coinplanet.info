@@ -72,7 +72,9 @@
                              <td><div class="fiatPrice-grid"></div></td>
                              <td><div class="price-grid"></div></td>
                              </tr>
-                           
+                           <tr><td colspan="2">
+                               <div id="calcMsg" class="text-danger"></div>
+                           </td></tr>
                      </tbody>
                     
                  </table>
@@ -156,17 +158,26 @@
         _
         localStorage
         helper
+        numeral
 */
   
     helper.configureLocalStorage();
   $(document).ready(function(){
-  
-    // $('div[hideOnLoad="yes"]').hide();
-  
+      
+  $.fn.extend({formatNumber :  function(){
+      return this.each(function() {
+            var t=$(this).val();
+             $(this).val(numeral(t).format('0,0.000'));    
+          
+      });
+      
+  }});
+   
     helper.showAll(3);
-     //helper.getGlobalData();  
-    $('.ccy-price').on('change',function(){
+     
+    $('input[name="ccy"').on('change',function(){
     
+   
     });
     
     

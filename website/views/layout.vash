@@ -73,28 +73,19 @@
 <!-- contentend -->
 <!-- footer -->
 <footer id="footer-navigation" class="navbar navbar-inverse navbar-fixed-bottom">
-        <div class="container-fluid container-footer">
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-left">
-                      <li><button class="btn btn-sm btn-warning" style="color:black;font-weight:bold;" href="#" data-toggle="modal" data-target="#donate">
-                          
-                          
-                          Donate</button></li>
-                </ul>
-               
-                <ul class="nav navbar-nav navbar-right">
-                    
-                      <li><a href='#'><span class="total_24h_volume_usd"></span></a></li>
-                   
-                   
-                   
-                    <li><div style="text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">
-                        <a href="http://coinmarketcap.com?utm_medium=widget&amp;utm_campaign=cmcwidget&amp;utm_source=coin-converter-navs23.c9users.io&amp;utm_content=bitcoin" 
-                        target="_blank" 
-                        style="text-decoration: none; color: rgb(66, 139, 202);">Powered by CoinMarketCap</a>
-                        </div></li>
-                </ul>
-                 
+        <div class="row">
+            <div class="col-md-4">
+                
+                <a class="btn btn-warning" style="text-align:center;margin:10px;clear:both;font-size:12px;font-weight:bold;padding:5px;color:black;" href="#" data-toggle="modal" data-target="#donate">
+                    <i class="fa fa-btc fa-1x" aria-hidden="true"></i>
+                    &nbsp;Donate&nbsp;
+                    </a>
+            </div>
+            <div class="col-md-4">
+                <a href='#' style="text-align:center;clear:both;font-size:10px;color:white;font-style:italic;padding:5px 0;">© 2017 coinplanet.info</a>
+            </div>
+            <div class="col-md-4">
+                <a href='#'><span class="total_24h_volume_usd"></span></a>&nbsp;|&nbsp;<a href="http://www.coinmarketcap.com" target="_blank" style="text-decoration: none; color: rgb(66, 139, 202);text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">Powered by CoinMarketCap</a>
             </div>
         </div>
     </footer>

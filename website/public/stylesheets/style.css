@@ -13,13 +13,13 @@ page{
 }
 
 
-input[type='number']{
+input[name='ccy']{
   
  padding-top:5px;
   height: 4rem !important;
   font-size:1.15em;
   font-weight:bold;
-  width:155px !important;
+  min-width:85px !important;
 }
 
 span[type='input']{
@@ -205,7 +205,7 @@ height: 20px !important;
 
 
 .total_market_cap_usd,.bitcoin_percentage_of_market_cap,.total_24h_volume_usd{
-font-size:14px !important;
+font-size:12px !important;
 color:#fab915;
 }
 .fiatPrice-grid, .price-grid

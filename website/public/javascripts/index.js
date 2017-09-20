@@ -44,9 +44,11 @@ helper.renderCryptoData=function(param,e){
                      
                         ${item.symbol}
                         </span>
-                        <input  class="ccy-crypto form-control"
+                        <input  
+                        class="ccy-crypto form-control"
                         id="${item.symbol}"
-                        type="number" 
+                        type="string" 
+                        name="ccy"
                         data-ccy="${item.symbol}"
                         data-priceusd="${item.price_usd}"
                         data-pricebtc="${item.price_btc}"
@@ -131,14 +133,15 @@ helper.getFiatRates=function(){
             
             temp=``;
             rates.map(function(rate){
-         
+                 
                  temp = `
                      <div class="column" data-ccy="${rate.key}">
                         <div class="input-group margin-bottom-sm">
                         <span class="input-group-addon" type="input">${rate.key}</span>
                         <input  class="ccy-fiat form-control"
                         id="${rate.key}"
-                        type="number" 
+                        type="string" 
+                        name="ccy"
                         data-ccy="${rate.key}"
                         data-priceusd="${rate.val}"
                         value="${rate.val}"
@@ -159,7 +162,15 @@ helper.getFiatRates=function(){
      });
 }
 
-helper.calculate=function(e,ccy){
+helper.calculate=function(e,ccy,numberFormater){
+  
+   $('#calcMsg').text("");
+   
+    if (!$.isNumeric($(e).val())){
+    
+      $('#calcMsg').text("invalid input");
+     
+  }
   
   var $item={};
   $item.$priceusd=($(e).data('priceusd')||0.00);
@@ -190,7 +201,7 @@ $('.ccy-crypto').not(e).each(function(item){
    
    
   $(this).val($temp);
-  
+  //$(this).val($.number($temp).format('0,0'));
   
 });
 
@@ -198,12 +209,13 @@ $('.ccy-crypto').not(e).each(function(item){
   
   var $temp=  $item.$totalusd*$(this).data('priceusd') ;
    
+  //$(this).val($.number($temp).format('0,0'));
   $(this).val($temp);
   
   
 });
 
-
+$('input[name="ccy"').formatNumber();
 }
 
 helper.navigate2=function(e){
