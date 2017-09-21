@@ -10,6 +10,7 @@ var users = require('./routes/users');
 var service = require("../service/currentPrice");
 var _=require("underscore");
 var poller = require('./helper/poller.js');
+var news = require('./helper/news.js');
 var app = express();
 
 // view engine setup
@@ -31,7 +32,7 @@ app.set("cache",cache);
         
      app.cache.priceData= data;
      
-     //console.log(_.findWhere(data,{short:'BTC'}));
+   
   })
   .catch(function(err){
     console.log(err);
@@ -55,7 +56,7 @@ app.set("cache",cache);
        
      app.cache.fiatPriceData= data;
      
-     //console.log(_.findWhere(data,{short:'BTC'}));
+    
   })
   .catch(function(err){
     
@@ -75,6 +76,14 @@ app.set("cache",cache);
       console.log(err);
         app.cache.priceData= [];
     });
+    
+    
+    	news.getNews(function(err,result){
+    		if(!err)
+    			app.cache.news= result;
+    		else
+    		app.cache.news= [];
+    	});
     
   }
     ,interval:(30 * 1000)

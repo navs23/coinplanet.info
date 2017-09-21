@@ -13,10 +13,10 @@
    
     <div class="row">
           <div class="col-md-4">
-              
-          
-
-           </div>
+                     
+       <!--<img style="clear:both;" class="pull-left" src="/images/gettingstarted.png" width="500" height="500"/>           -->
+           
+</div>
            
        </div>
    
@@ -24,10 +24,14 @@
    
    })
    @html.block('content', function(model) {
+    
    <h2>Getting started with bitcoins</h2>
+   
    <div class="row">
+       
         <div class="col-md-12">
-       <div>
+       
+           
        <h3><a href='#step1'>Step 1: Create a Bitcoin wallet/address</a></h3>
      <p>
          Having a Bitcoin wallet is like having a Bank account. This is where your bitcoin balance is held. 
@@ -57,8 +61,8 @@ There are two parts to the bitcoin wallet     </p>
     
 </ul>
 
-    </div>
-    <div>
+    
+    
     <h3><a href='#step2'>Step 2: Add Bitcoin to your wallet</a></h3>
     <p>Depending upon your country of residence, there are many exchanges/platforms that allow you to convert your local currency into bitcoins.</p>
     
@@ -73,8 +77,6 @@ There are two parts to the bitcoin wallet     </p>
     
     </ul>
     
-    
-    </div>
      <div>
     <h3><a href='#step3'>Step 3: Send and Receive Bitcoin</a></h3>
     <p>As mentioned in the first step, transacting bitcoins is very easy process.</p>

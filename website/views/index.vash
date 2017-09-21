@@ -174,31 +174,8 @@
   }});
    
     helper.showAll(3);
-     
-    $('input[name="ccy"').on('change',function(){
     
-   
-    });
-    
-    
-    $('.base-ccy').on('change',function(e){
-    
-    var $baseCCY = (this.value);
-    var $usdPrice = $('#' + $baseCCY).data('price');
-    var $toBasePrice = 1/$usdPrice;
-    
-    $('.ccy-price').each(function(item){
-    
-    var $temp= $(this).data('price') * $toBasePrice ;
-    
-    $(this).val($temp);
-    
-    
-    });
-    
-    
-    
-    });
+    helper.loadNews();
     
     
     $("#search").keyup(function() {
@@ -217,19 +194,14 @@
       
   });
   
-   $('a.live-chat').on('click',function(e){
+  $('a.live-chat').on('click',function(e){
       
         
          $('div.divchat').css({"top":"0","bottom":"0","left":"0","right":"0","position":"absolute"});
     
   });
   
-  $('a.most-popular').on('click',function(e){
-      
-   
-      
-  });
-  
+ 
   $('a.top20').on('click',function(e){
    
    helper.renderCryptoData({baseUrl:'/api/getTop20ByVolume/',index:1},null);
@@ -342,20 +314,11 @@
   
   setInterval(function() {
       
-  $.ajax('api/news/' ).then(function(data,status){
-          $('div.btc-news > ul').empty();
-          for(var i =0;i<data.length;i++){
-              
-              $('div.btc-news > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
-              
-          }
-            
-        $('div.btc-news > ul').append('<li><i>Last refreshed @@'+new Date()+'</i></li>');
-         });
+    helper.loadNews();
          
    
     
-  }, 5*1000);
+  }, 30*1000);
   
   
  
@@ -367,7 +330,7 @@
          $('iframe.frame-chat').attr('src',helper.chatlink);
      }());
    
-   // clean up
+   
 
 </script>
 

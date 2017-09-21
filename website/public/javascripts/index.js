@@ -455,3 +455,17 @@ helper.populateCurrenciesDropDown=function(dd){
         
        
 }
+
+helper.loadNews=function(){
+    
+     $.ajax('api/news/' ).then(function(data,status){
+          $('div.btc-news > ul').empty();
+          for(var i =0;i<data.length;i++){
+              
+              $('div.btc-news > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
+              
+          }
+            
+        $('div.btc-news > ul').append('<li><i>Last refreshed @@'+new Date()+'</i></li>');
+         });
+}

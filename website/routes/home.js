@@ -117,48 +117,11 @@ home.init= function(router){
 }); 
 
 	router.get('/api/news/', function(req, res, next) {
-    
-	 var param = {url:'https://cryptocoinsnews.com/widget/bitcoin_widget.js.php',selector:'li>a'}
-	 
-	 news.getCryptocoinsNews(param).then(function(newsItems){
-		//	res.send(newsItems);
-		param={url:'https://cryptoinsider.com/category/news/',selector:'div.post-content > h2 > a',newsItems:newsItems}
-		news.getCryptocoinsNews(param).then(function(newsItems){
-			param={url:'https://cointelegraph.com/tags/bitcoin',selector:'#recent >  a',newsItems:newsItems}
-			
-				news.getCryptocoinsNews(param).then(function(newsItems){
-					
-					param = {url:'https://www.coindesk.com/',selector:'div.post-info > h3'}
-	  
-					news.getCryptocoinsNews(param).then(function(newsItems){
-						res.send(param.newsItems);
-	   
-	    
-					}).catch(function(e){
-	    
-	   	
-					});
-					
-				})
-				.catch(function(err){
-					
-				});
-				
-			
-				
-		}).catch(function(err){	res.send([]);});
-		
-	   
-	   
-	    
-	})
-	.catch(function(e){
-	    
-	   	res.send([]);
-	});
-	    	
-    
+   
     	
+    		
+    			res.send(req.app.cache.news || []);
+    
   
 	}); 
 	

@@ -4,7 +4,6 @@
 var http=require("http");
 var https=require("https");
 var helper =require("./helper");
-//var shapeshift = require('shapeshift.io')
 
 // get current price
 price.getCryptoExchangeRates=function(){

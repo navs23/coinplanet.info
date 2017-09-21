@@ -219,3 +219,13 @@ color:#fab915;
 
 
 
+.btc-news ul li {
+    
+ list-style:none;
+ margin-top:2px;
+}
+
+.btc-news a {
+    
+ font-weight:bold;
+}

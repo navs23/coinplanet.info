@@ -1,10 +1,11 @@
 //
 var https=require("https");
 var cheerio = require('cheerio');
+var async=require('async');
 
 (function(news){
 
-    news.getCryptocoinsNews=function(param){
+    news.scrap=function(param){
          param.newsItems=param.newsItems || [];
         return new Promise((resolve,reject)=>{
         var data;
@@ -48,6 +49,54 @@ var cheerio = require('cheerio');
         });
         
     
+    }
+    news.getNews=function(cb){
+        
+    var urls=[
+		function(cb){
+			var item={url:'https://cryptocoinsnews.com/widget/bitcoin_widget.js.php',selector:'li>a'}
+			 news.scrap(item).then(function(newsItems){ 
+		 	cb(null,newsItems);
+		 });
+		}
+		,
+		function(cb){
+			var item={url:'https://cryptoinsider.com/category/news/',selector:'div.post-content > h2 > a'}
+			 news.scrap(item).then(function(newsItems){ 
+		 	cb(null,newsItems);
+		 });
+		},
+		function(cb){
+			var item={url:'https://cointelegraph.com/tags/bitcoin',selector:'#recent >  a'}
+			 news.scrap(item).then(function(newsItems){ 
+		 	cb(null,newsItems);
+		 });
+		}
+		//url:'https://www.coindesk.com/',selector:'div.post-info > h3'}
+	,
+		function(cb){
+			var item={url:'https://www.coindesk.com/',selector:'div.post-info > h3'}
+			 news.scrap(item).then(function(newsItems){ 
+		 	cb(null,newsItems);
+		 });
+		}
+	];
+	async.series(urls,function(err,data){
+	
+	var news=[];
+	for(var i =0;i<data.length;i++)
+	{
+	//	console.log(data[i]);
+		for(var k =0;k<data[i].length;k++)
+		{
+			//console.log(data[i][k].item);
+			news.push(data[i][k]);
+			
+		}
+		
+	}
+	cb(null,news);
+	});
     }
   
 }(module.exports))
