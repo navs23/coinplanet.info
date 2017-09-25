@@ -14,7 +14,7 @@
     <div class="row">
           <div class="col-md-4">
                      
-       <!--<img style="clear:both;" class="pull-left" src="/images/gettingstarted.png" width="500" height="500"/>           -->
+       <img style="clear:both;" class="pull-left" src="/images/gettingstarted.png" width="500" height="500"/>
            
 </div>
            
@@ -28,11 +28,17 @@
    <h2>Getting started with bitcoins</h2>
    
    <div class="row">
-       
+       <p style="text-align:justify;">
+            
+            This is meant to be a quick reference guide to get you started with Bitcoin. Follow the below instructions to own some bitcoins. In the beginning, start with a small amount and gradually build you bitcoin portfolio as you get confident in accessing, securing, buying and selling process.
+
+            It takes a while to get your head around the whole concept of block chain and crypto currencies but once you get yourself acquainted, it is no different to daily transactions that you perform on the internet when you buy and sell stuff online.
+
+</p>
         <div class="col-md-12">
-       
-           
-       <h3><a href='#step1'>Step 1: Create a Bitcoin wallet/address</a></h3>
+        <h3><a href='#step1'>Step 1: Create a Bitcoin wallet/address</a></h3>
+        
+        
      <p>
          Having a Bitcoin wallet is like having a Bank account. This is where your bitcoin balance is held. 
 There are two parts to the bitcoin wallet     </p>
@@ -58,6 +64,7 @@ There are two parts to the bitcoin wallet     </p>
 <ul>
     <li><a href='http://blockchain.info' target='blank'>blockchain.info</a></li>
     <li><a href='http://bitaddress.org' target='blank'>bitaddress.org</a></li>
+    <li><a href='https://www.exodus.io/' target='blank'>Exodus.org</a></li>
     
 </ul>
 
@@ -66,7 +73,7 @@ There are two parts to the bitcoin wallet     </p>
     <h3><a href='#step2'>Step 2: Add Bitcoin to your wallet</a></h3>
     <p>Depending upon your country of residence, there are many exchanges/platforms that allow you to convert your local currency into bitcoins.</p>
     
-    <h4>Here are some exchanges that you can use to buy bitcoins</h4>
+    <h4>Here are some exchanges that you can use to buy bitcoins for Fiat (USD, GBP, EUR etc.)</h4>
     <ul>
     <li><a href='http://blockchain.info'>blockchain.info</a></li>
     <li><a href='http://coinofwalls.com'>coinofwalls.com</a></li>

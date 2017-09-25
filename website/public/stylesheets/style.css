@@ -178,6 +178,7 @@ ul#bitcoin_news li a:hover{color:#969696;}
 
 .btc-news {
     background-color:none;
+    scroll:auto; 
 }
 
 .fullscreen{

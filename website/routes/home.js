@@ -132,6 +132,14 @@ home.init= function(router){
 	  
 	});  
 
+
+	router.get('/valuation/', function(req, res, next) {
+	 
+	res.render('valuation', {title: 'realtime valution of your digital assets coins'});
+	   
+	  
+	});  
+
 	function getPaginatedItems(items, page) {
 	var page = page || 1,
 	    per_page = 500,

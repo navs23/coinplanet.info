@@ -12,7 +12,7 @@
           <div class="col-md-12">
               
              <div class="btc-news">
-              <h2 class="widget_header">Latest News</h2>
+              <h2 class="widget_header"><i class="fa fa-newspaper-o fa-2x" aria-hidden="true" style="margin-top:5px;"></i>&nbsp;Latest News</h2>
               <ul id="bitcoin_news">
                <i>loading latest news, please wait...</i>
               </ul>
@@ -34,7 +34,7 @@
    @html.block('content', function(model) {
   <div class="row">
        <div class="col-md-12">
-           <h2 class="widget_header">Your Crypto Currency Calculator</h3>
+           <h2 class="widget_header"><i class="fa fa-calculator fa-2x" style="margin-top:5px;" aria-hidden="true"></i>&nbsp;Your Crypto Currency Calculator</h3>
           
            
        </div>
@@ -51,12 +51,12 @@
    <div class="row centred" style="background-color:none;padding:10px;overflow-x: showAll;;height:auto;" >
           
              <div class="col-md-6">
-                 
+                
                  <table class="table tblcalc" border="0" >
                      <th>
                          Fiat (Base:<i class="fa fa-usd fa-1x" aria-hidden="true" ></i>)</th>
                         <th>
-                            Crypto (Base:):<i class="fa fa-btc fa-1x" aria-hidden="true" ></i>)</th>
+                            Crypto (Base:<i class="fa fa-btc fa-1x" aria-hidden="true" ></i>)</th>
                      
                      <tbody>
                           <tr>
@@ -94,7 +94,7 @@
    
    <div class="row">
            <div class="col-md-12" style="background-color:none;">
-             <h2 class="widget_header">Bitcoin videos</h2>
+             <h2 class="widget_header"><i class="fa fa-youtube fa-2x" aria-hidden="true" style="margin-top:5px;"></i>&nbsp;Bitcoin videos</h2>
 <iframe width="100%" height="250px" src="https://www.youtube.com/embed/J0LRyAQ8WD0" 
             frameborder="0" allowfullscreen>
     
