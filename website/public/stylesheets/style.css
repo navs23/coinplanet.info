@@ -230,3 +230,32 @@ color:#fab915;
     
  font-weight:bold;
 }
+.searchbox {
+    border:1px solid #456879;
+    border-radius:6px;
+    height: 22px;
+    width: 200px;
+    margin-top: 5px;
+}
+select#searchResult
+{
+    height: 22px;
+    width: 200px;
+    margin-top: 5px;
+    
+}
+
+.sub-menu{
+
+list-style: none;
+ width: 200px;
+
+}
+
+.sub-menu li{
+    
+    padding: 2px;
+    color: blue;
+    
+    
+}

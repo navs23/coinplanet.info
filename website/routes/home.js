@@ -40,9 +40,10 @@ home.init= function(router){
     	
     	if (searchstr !='all')
     	{
-    	 data = _.filter(req.app.cache.priceData,function(item){
-    	 	
-    		return item.symbol.toString().toLowerCase().indexOf(searchstr.toLowerCase())>=0;	
+    		data = _.filter(req.app.cache.priceData,function(item){
+    	 //	console.log(item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase()));
+    		
+    		return item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase());	
     	 	
     	 });
     	}
@@ -139,6 +140,25 @@ home.init= function(router){
 	   
 	  
 	});  
+	
+	router.get('/api/search/crypto/:symbol', function(req, res, next) {
+    
+    	var data ;
+    	var searchstr = req.params.symbol ;
+    	console.log(req.app.cache.priceData);
+    	 data = _.filter(req.app.cache.priceData,function(item){
+    	 	//console.log('%s, %s',item.symbol.toString().toLowerCase(),searchstr.toString().toLowerCase());
+    		return (item.symbol.toString().toLowerCase()==searchstr.toString().toLowerCase());	
+    	 	
+    	 });
+    
+		 var temp= getPaginatedItems(data,1);
+		
+    	
+    	res.send(temp);
+    	
+  
+});	
 
 	function getPaginatedItems(items, page) {
 	var page = page || 1,
