@@ -237,11 +237,9 @@ color:#fab915;
     width: 200px;
     margin-top: 5px;
 }
-select#searchResult
+#searchResult
 {
-    height: 22px;
-    width: 200px;
-    margin-top: 5px;
+    list-style: none;
     
 }
 

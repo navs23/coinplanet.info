@@ -19,6 +19,7 @@
     <script type="text/javascript" src="/javascripts/underscore-min.js"></script>
     <script type="text/javascript" src="/javascripts/numeral.min.js"></script>
     <script type="text/javascript" src="/javascripts/index.js"></script>
+    <script type="text/javascript" src="/javascripts/localstoragedb.min.js"></script>
        @html.block('js')  
 </head>
 <body>

@@ -49,21 +49,53 @@
                                   <br/>
    <div class="row">
     
-       <table class="table table-bordered" id="tblvaluation">
+          <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i>
+    
+       <table class="table table-bordered negative" id="tblvaluation" style="width:600px;">
            <thead>
+    <tr>
+    <td colspan="3"></td>
+    <td colspan="4" style="text-align:center">Current valuation</td>
+    <td colspan="2" style="text-align:center">Change(%)</td>
+    <td colspan="4" style="text-align:center">7day Pnl</td>
+    </tr>
            <tr>
            <td>Action</td>
+           <td>Symbol</td>
            <td>Qty</td>
-           <td>CCY</td>
+           <td>BTC</td>
            <td>USD</td>
            <td>GBP</td>
            <td>EUR</td>
+           <td>24h</td>
+           <td>7d</td>
+           <td>BTC</td>
+           <td>USD</td>
+           <td>GBP</td>
+           <td>EUR</td>
+           
            </tr>
+          
          </thead>
+          <tfoot>
+            <tr>
+                <th colspan="2" style="text-align:right">Total:</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                
+              
+            </tr>
+        </tfoot>
          
-         <tfooter>
-          <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i>
-         </tfooter>
    </table>
     
     </div>
@@ -143,10 +175,18 @@ numeral
 _
 */
 var cache={};
-  
+var cointrackerDb = new localStorageDB("cointracker", localStorage);
+
 $(document).ready(function(){
-   
-  var promisecrypto = $.ajax('/api/cryptopricefeed/');
+ 
+ 
+
+ var promisecrypto = $.ajax('/api/cryptopricefeed/');
+ 
+ if( cointrackerDb.isNew() ) {
+  
+  cointrackerDb.createTable("coins", ["symbol", "qty"]);
+ }
   
  promisecrypto.then(function(crypto,status){
   cache.crypto=crypto;
@@ -161,7 +201,7 @@ $(document).ready(function(){
  
  
   $('button.btn-save').on('click',function(){
-      
+      save();
   
   });
   
@@ -174,133 +214,40 @@ $(document).ready(function(){
   });
   
   var timeoutID = null;
-
+var throttled = _.throttle(findSymbol, 100);
    $('input.symbol').on('keyup',function(e) {
     
      if (e.target.value == "") 
      return ($('select#searchResult').hide());
-      
-      clearTimeout(timeoutID);
-      
-      timeoutID = setTimeout(() => findSymbol(e.target.value), 100);
-     
-     //console.log($(this).val());
+      throttled(e.target.value);
+   
     });
   
-
-  /*
-  
-  $('ul#searchResult').hover(
-  
-    function(){
-    
-        $('.sub-menu').slideDown('fast');
-    },
-    function () {
-        $('.sub-menu').slideUp('fast');
-    });
-  
- */
- 
- 
  setTimeout(function(){
   
-  $('#tblvaluation').DataTable(
-  {
-        data:getData(),
-        columns: [
-            { data: "symbol" },
-            { data: "qty" },
-            { data: "gbp" },
-            { data: "usd." },
-            { data: "eur" }
-            
-        ]
-    }
-  );
-  
+  refreshData();
   $('#spinner').hide();
- },2* 1000)
+  
+  
+
+  
+ },1* 1000)
  
 });
 
-function showData(){
- 
- //$('#tblvaluation > tbody').empty();
- 
-  var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
-  var valuation={};
-   $.ajax('/api/cryptopricefeed/').then(function(crypto,status){
-   
-     $.ajax('/api/fiatpricefeed/').then(function(fiat,status){
-     
-      
-         data.forEach(function(i,e){
-       
-          var temp = _.findWhere(crypto.data,{symbol:i.symbol});
-          
-          if (temp){
-          
-           valuation.usd=i.qty * temp.price_usd;
-           
-           valuation.gbp= (i.qty * temp.price_usd) * fiat.rates.GBP ;
-           valuation.eur=(i.qty * temp.price_usd) *  fiat.rates.EUR ;
-           
-          }
-          
-          $('#tblvaluation tbody').append(`<tr>
-                  <td><h4>
-                  <button 
-                  class="btn btn-warning"
-                  data-symbol="${i.symbol}"
-                  data-qty="${i.qty}"
-                  onclick="return edit(this);">Edit</button>
-                  &nbsp;
-                  <button 
-                    class="btn btn-danger"
-                  data-symbol="${i.symbol}"
-                  data-qty="${i.qty}"
-                  onclick="return remove(this);" >Delete
-                  </button>
-                  </h4>
-                  </td>
-                  <td> ${i.symbol}
-                  </td><td> 
-                   ${i.qty} </td><td>
-                   ${numeral(valuation.usd ).format('0,0.000')}
-                   </td> <td> 
-                   ${numeral(valuation.gbp ).format('0,0.000')}  
-                   </td><td> 
-                   ${numeral(valuation.eur ).format('0,0.000')} 
-                   </td></tr>`);
-      
-         });
-         
-        });
-    
-    
-     
-   
-    
-   });
- 
- 
- 
- 
- 
-}
 
 function getData(){
  
-        //return cb(null,[{symbol:"btc",qty:1,gbp:10,usd:20,eur:30}]);
-         var valuationArray;
-        var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
-        if (!data) return [];
-       console.log(1);
-  
+       var result={};
+       result.valuationArray=[];
+       result.total={btc:0.000,usd:0.000,gbp:0.000,eur:0.000,pnl_btc_7d:0.000,pnl_usd_7d:0.000,pnl_gbp_7d:0.000,pnl_eur_7d:0.000};
+       
+       
+       var data = cointrackerDb.queryAll("coins");
+       
          var i;
-         valuationArray=[];
-      
+        
+        
          //data.forEach(function(i,e){
          for(var k =0;k<data.length;k++){
           
@@ -312,18 +259,42 @@ function getData(){
            
            valuation.symbol=i.symbol;
            valuation.qty=i.qty;
-           valuation.usd=i.qty * temp.price_usd;
-           valuation.gbp= (i.qty * temp.price_usd) * cache.fiat.rates.GBP ;
-           valuation.eur=(i.qty * temp.price_usd) *  cache.fiat.rates.EUR ;
            
-           valuationArray.push(valuation);
+           valuation.btc=(temp.price_btc * i.qty);
+           valuation.usd=(i.qty * temp.price_usd);
+           valuation.gbp= ((i.qty * temp.price_usd) * cache.fiat.rates.GBP) ;
+           valuation.eur=((i.qty * temp.price_usd) *  cache.fiat.rates.EUR);
+           
+           valuation.percent_change_24h= temp.percent_change_24h;
+           valuation.percent_change_7d= temp.percent_change_7d;
+           
+           // 7day pnl
+           valuation.pnl_btc_7d= (temp.percent_change_7d * .01)*(valuation.btc);
+           valuation.pnl_usd_7d= (temp.percent_change_7d * .01)*(valuation.usd);
+           valuation.pnl_gbp_7d= (temp.percent_change_7d * .01)*(valuation.gbp);
+           valuation.pnl_eur_7d= (temp.percent_change_7d * .01)*(valuation.eur);
+           
+           // total 
+           result.total.btc += valuation.btc;
+           result.total.usd += valuation.usd;
+           result.total.gbp += valuation.gbp;
+           result.total.eur += valuation.eur;
+           // pnl total
+           
+           result.total.pnl_btc_7d += valuation.pnl_btc_7d;
+           result.total.pnl_usd_7d += valuation.pnl_usd_7d;
+           result.total.pnl_gbp_7d += valuation.pnl_gbp_7d;
+           result.total.pnl_eur_7d += valuation.pnl_eur_7d;
+           
+           
+           result.valuationArray.push(valuation);
            
           }
           
   }
   
    //return [{symbol:"btc",qty:1,gbp:10,usd:20,eur:30}];
-   return valuationArray;
+   return result;
 }
 
 function edit(e){
@@ -348,7 +319,7 @@ function remove(e){
   removeItem(data,$(e).data("symbol"));
   localStorage.portfolio=JSON.stringify(data);
  
-  showData();
+  refreshData();
   
 }
 
@@ -400,12 +371,13 @@ function save(){
  
  $('div.message').text("");
  
- var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
+ //var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
  var item={};   
  var bsave=true;
  
  item.symbol= $('input.symbol').val().toLocaleUpperCase();
  item.qty= $('input.qty').val();
+ item.date=new Date();
  
  if (item.symbol.length <3)
  {
@@ -433,19 +405,87 @@ function save(){
    }
    
    // save 
-   removeItem(data,item.symbol);
+   //removeItem(data,item.symbol);
    // add new item
-   data.push(item);
+   //data.push(item);
    
-   localStorage.portfolio=JSON.stringify(data);
-   showData();
-   return true;
+   var rows = [item	];
+
+	// create the table and insert records in one go
+	 cointrackerDb.insertOrUpdate("coins", {symbol: item.symbol}, item);
+
+ cointrackerDb.commit();
+	refreshData();
+ return true;
  
  });
  
  }
  
  return false;
+}
+
+function refreshData(){
+ var coins = getData();
+  $('#tblvaluation').DataTable(
+  {
+        "data":coins.valuationArray,
+        "footerCallback":function(data, type, row, meta){
+         
+          var api = this.api();
+          
+         $(api.column(3).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
+         $(api.column(4).footer()).html(numeral(coins.total.usd).format("0,0.000"));
+         $(api.column(5).footer()).html(numeral(coins.total.gbp).format("0,0.000"));
+         $(api.column(6).footer()).html(numeral(coins.total.eur).format("0,0.000"));
+         // pnl
+         $(api.column(9).footer()).html(numeral(coins.total.pnl_btc_7d).format("0,0.000")); 
+         $(api.column(10).footer()).html(numeral(coins.total.pnl_usd_7d).format("0,0.000"));
+         $(api.column(11).footer()).html(numeral(coins.total.pnl_gbp_7d).format("0,0.000"));
+         $(api.column(12).footer()).html(numeral(coins.total.pnl_eur_7d).format("0,0.000"));
+        
+        },
+        "destroy": true,
+        "columns": [
+         {data:"", "render": function ( data, type, row, meta ) { return   `<button 
+                  class="btn btn-warning"
+                  data-symbol="${row.symbol}"
+                  data-qty="${row.qty}"
+                  onclick="return edit(this);">Edit</button>
+                  &nbsp;
+                  <button 
+                    class="btn btn-danger"
+                  data-symbol="${row.symbol}"
+                  data-qty="${row.qty}"
+                  onclick="return remove(this);" >Delete
+                  </button>`; }},
+            { data: "symbol" },
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.qty).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.btc).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.usd).format("0,0.000");}},
+            { data: "." ,"render":function ( data, type, row, meta ){return numeral(row.gbp).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.eur).format("0,0.000");}},
+            { data: "" ,"render": function ( data, type, row, meta ){
+             var css='';
+                       if (row.percent_change_24h>0) css="text-success"; else css="text-danger";
+                       return `<span class="${css}">${row.percent_change_24h}</span>`;
+            }},
+            { data: "" ,"render": function ( data, type, row, meta ){
+             var css='';
+                       if (row.percent_change_7d>0) css="text-success"; else css="text-danger";
+                       return `<span class="${css}">${row.percent_change_7d}</span>`;
+            }},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.pnl_btc_7d).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.pnl_usd_7d).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.pnl_gbp_7d).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.pnl_eur_7d).format("0,0.000");}},
+            
+            
+        ]
+        
+    }
+  );
+ 
 }
   
 </script>
