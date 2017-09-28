@@ -47,8 +47,9 @@ select {
 
 .navbar-brand{
     color: #fcc118 !important;
-    font-size:1.25em !important;
-   font-variant: small-caps;
+    font-size:1.5em !important;
+    font-variant: small-caps;
+    font-weight: bold;
   
 }
 
