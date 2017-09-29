@@ -19,7 +19,7 @@
    })
    
    @html.block('content', function(model) {
-   <h2 class="pagination-centered" style="float:middle;">Crypto Currency Balance Tracker</h2>
+   <h2 class="pagination-centered" style="float:middle;">Crypto Currency Valuation and P&L Report</h2>
    
    <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;" data-toggle="modal" data-target="#addCoins">
                                       <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
