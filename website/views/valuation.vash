@@ -54,13 +54,14 @@
        <table class="table table-bordered negative" id="tblvaluation" style="width:600px;">
            <thead>
     <tr>
-    <td colspan="3"></td>
-    <td colspan="4" style="text-align:center">Current valuation</td>
-    <td colspan="2" style="text-align:center">Change(%)</td>
-    <td colspan="4" style="text-align:center">7day Pnl</td>
+    <td colspan="4"></td>
+    <td colspan="4" style="text-align:center"><b>Current valuation</b></td>
+    <td colspan="2" style="text-align:center"><b>Change(%)</b></td>
+    <td colspan="4" style="text-align:center"><b>7day Pnl</b></td>
     </tr>
            <tr>
            <td>Action</td>
+           <td>Date</td>
            <td>Symbol</td>
            <td>Qty</td>
            <td>BTC</td>
@@ -79,7 +80,7 @@
          </thead>
           <tfoot>
             <tr>
-                <th colspan="2" style="text-align:right">Total:</th>
+                <th colspan="4" style="text-align:right">Total:</th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -90,7 +91,7 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
+             
                 
               
             </tr>
@@ -185,8 +186,11 @@ $(document).ready(function(){
  
  if( cointrackerDb.isNew() ) {
   
-  cointrackerDb.createTable("coins", ["symbol", "qty"]);
+ 
  }
+  if (!cointrackerDb.tableExists("coins")){
+   cointrackerDb.createTable("coins", ["symbol", "qty","date"]); 
+  }
   
  promisecrypto.then(function(crypto,status){
   cache.crypto=crypto;
@@ -207,9 +211,10 @@ $(document).ready(function(){
   
   $('#aAddCoin').on('click',function(){
    
-   $('input.symbol').val('');
-   $('select#searchResult').empty();
-   ($('select#searchResult').hide());
+    resetInputBox();
+   
+   //$('input.symbol').val('');
+   
    
   });
   
@@ -241,9 +246,14 @@ function getData(){
        var result={};
        result.valuationArray=[];
        result.total={btc:0.000,usd:0.000,gbp:0.000,eur:0.000,pnl_btc_7d:0.000,pnl_usd_7d:0.000,pnl_gbp_7d:0.000,pnl_eur_7d:0.000};
-       
-       
-       var data = cointrackerDb.queryAll("coins");
+        var data ;
+       try{
+         data = cointrackerDb.queryAll("coins") ;
+       }catch(e){
+        
+        data=[];
+       }
+      
        
          var i;
         
@@ -257,9 +267,10 @@ function getData(){
           
           if (temp){
            
+           valuation.id=i.ID;
            valuation.symbol=i.symbol;
            valuation.qty=i.qty;
-           
+           valuation.date=i.date;
            valuation.btc=(temp.price_btc * i.qty);
            valuation.usd=(i.qty * temp.price_usd);
            valuation.gbp= ((i.qty * temp.price_usd) * cache.fiat.rates.GBP) ;
@@ -298,14 +309,14 @@ function getData(){
 }
 
 function edit(e){
-  $('.sub-menu').empty();
  
- $('input.symbol').val('');
- 
- $('input.qty').val('0.000');
+ resetInputBox();
+
+
  
  $('input.symbol').val($(e).data("symbol"));
  $('input.qty').val($(e).data("qty"));
+ $('input.symbol').data("id",$(e).data("id"));
  
  $('#addCoins').modal();
  
@@ -315,18 +326,17 @@ function edit(e){
 }
 function remove(e){
   
-  var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
-  removeItem(data,$(e).data("symbol"));
-  localStorage.portfolio=JSON.stringify(data);
+ var item={};
+ item.id=$(e).data("id");
  
+ cointrackerDb.deleteRows("coins", {ID:item.id});
+ cointrackerDb.commit();
   refreshData();
   
 }
 
-function removeItem(data,symbol){
- var tempIndex= _.findIndex(data,{symbol:symbol});
-        if (tempIndex >=0)
-        data.splice(tempIndex,1);
+function removeItem(data,item){
+
 
 }
 
@@ -376,7 +386,9 @@ function save(){
  var bsave=true;
  
  item.symbol= $('input.symbol').val().toLocaleUpperCase();
+ item.id = $('input.symbol').data('id') || -1;
  item.qty= $('input.qty').val();
+ 
  item.date=new Date();
  
  if (item.symbol.length <3)
@@ -409,10 +421,10 @@ function save(){
    // add new item
    //data.push(item);
    
-   var rows = [item	];
+  // var rows = [item	];
 
 	// create the table and insert records in one go
-	 cointrackerDb.insertOrUpdate("coins", {symbol: item.symbol}, item);
+	 cointrackerDb.insertOrUpdate("coins", {ID:item.id},item);
 
  cointrackerDb.commit();
 	refreshData();
@@ -434,22 +446,23 @@ function refreshData(){
          
           var api = this.api();
           
-         $(api.column(3).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
-         $(api.column(4).footer()).html(numeral(coins.total.usd).format("0,0.000"));
-         $(api.column(5).footer()).html(numeral(coins.total.gbp).format("0,0.000"));
-         $(api.column(6).footer()).html(numeral(coins.total.eur).format("0,0.000"));
+         $(api.column(4).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
+         $(api.column(5).footer()).html(numeral(coins.total.usd).format("0,0.000"));
+         $(api.column(6).footer()).html(numeral(coins.total.gbp).format("0,0.000"));
+         $(api.column(7).footer()).html(numeral(coins.total.eur).format("0,0.000"));
          // pnl
-         $(api.column(9).footer()).html(numeral(coins.total.pnl_btc_7d).format("0,0.000")); 
-         $(api.column(10).footer()).html(numeral(coins.total.pnl_usd_7d).format("0,0.000"));
-         $(api.column(11).footer()).html(numeral(coins.total.pnl_gbp_7d).format("0,0.000"));
-         $(api.column(12).footer()).html(numeral(coins.total.pnl_eur_7d).format("0,0.000"));
+         $(api.column(10).footer()).html(numeral(coins.total.pnl_btc_7d).format("0,0.000")); 
+         $(api.column(11).footer()).html(numeral(coins.total.pnl_usd_7d).format("0,0.000"));
+         $(api.column(12).footer()).html(numeral(coins.total.pnl_gbp_7d).format("0,0.000"));
+         $(api.column(13).footer()).html(numeral(coins.total.pnl_eur_7d).format("0,0.000"));
         
         },
         "destroy": true,
         "columns": [
          {data:"", "render": function ( data, type, row, meta ) { return   `<button 
                   class="btn btn-warning"
-                  data-symbol="${row.symbol}"
+                  data-id="${row.id}"
+                   data-symbol="${row.symbol}"
                   data-qty="${row.qty}"
                   onclick="return edit(this);">Edit</button>
                   &nbsp;
@@ -457,8 +470,17 @@ function refreshData(){
                     class="btn btn-danger"
                   data-symbol="${row.symbol}"
                   data-qty="${row.qty}"
+                  data-id="${row.id}"
                   onclick="return remove(this);" >Delete
-                  </button>`; }},
+                  </button>`; }
+          
+         },
+            {data:"","render":function ( data, type, row, meta ){
+             
+             return (row.date);
+            }
+             
+            },
             { data: "symbol" },
             { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.qty).format("0,0.000");}},
             { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.btc).format("0,0.000");}},
@@ -485,6 +507,16 @@ function refreshData(){
         
     }
   );
+ 
+}
+
+function resetInputBox(){
+ $('.sub-menu').empty();
+ $('input.symbol').data('id',-1);
+ $('input.symbol').val('');
+ $('input.qty').val('0.000');
+ $('select#searchResult').empty();
+ ($('select#searchResult').hide());
  
 }
   
