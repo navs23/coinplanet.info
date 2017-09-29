@@ -12,36 +12,15 @@
     
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
     })
+    
    @html.block('left', function(model) {
    
-    <div class="row">
-          <div class="col-md-12">
-              
-          
-
-           </div>
-           
-       </div>
-    <div class="row">
-          <div class="col-md-12">
-              
-            <hr/>
-                
-           </div>
-           
-       </div>
-    <div class="row">
-           <div class="col-md-12">
-            
-
-           </div>
-       </div>
    
    })
    
    @html.block('content', function(model) {
+   <h2 class="pagination-centered" style="float:middle;">Crypto Currency Balance Tracker</h2>
    
-   <h4>Valution</h4>
    <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;" data-toggle="modal" data-target="#addCoins">
                                       <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
                                       Add coins
@@ -477,7 +456,7 @@ function refreshData(){
          },
             {data:"","render":function ( data, type, row, meta ){
              
-             return (row.date);
+             return (moment(row.date).format("MMM Do YY"));
             }
              
             },
