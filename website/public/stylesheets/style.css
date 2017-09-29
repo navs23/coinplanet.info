@@ -258,11 +258,20 @@ list-style: none;
     
     
 }
+#tblvaluation thead tr:first-child{
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    
+}
 #tblvaluation thead tr td{
     font-weight: bold;
     
 }
-#tblvaluation{
+
+#tblvaluation {
+    width: 100% !important;
+    clear: both;
+    float: left;
     
-    border:1px solid red;
 }

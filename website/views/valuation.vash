@@ -30,10 +30,11 @@
     
           <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i>
     
-       <table class="table table-bordered negative" id="tblvaluation" style="width:600px;">
+       <table class="table table-bordered negative" id="tblvaluation">
            <thead>
     <tr>
     <td colspan="4"></td>
+    <td colspan="2" style="text-align:center"><b>Current Price</b></td>
     <td colspan="4" style="text-align:center"><b>Current valuation</b></td>
     <td colspan="2" style="text-align:center"><b>Change(%)</b></td>
     <td colspan="4" style="text-align:center"><b>7day Pnl</b></td>
@@ -43,6 +44,8 @@
            <td>Date</td>
            <td>Symbol</td>
            <td>Qty</td>
+           <td>BTC</td>
+           <td>USD</td>
            <td>BTC</td>
            <td>USD</td>
            <td>GBP</td>
@@ -60,6 +63,8 @@
           <tfoot>
             <tr>
                 <th colspan="4" style="text-align:right">Total:</th>
+                <th></th>
+                <th></th>
                 <th></th>
                 <th></th>
                 <th></th>
@@ -250,6 +255,8 @@ function getData(){
            valuation.symbol=i.symbol;
            valuation.qty=i.qty;
            valuation.date=i.date;
+           valuation.price_btc=temp.price_btc;
+           valuation.price_usd=temp.price_usd
            valuation.btc=(temp.price_btc * i.qty);
            valuation.usd=(i.qty * temp.price_usd);
            valuation.gbp= ((i.qty * temp.price_usd) * cache.fiat.rates.GBP) ;
@@ -425,15 +432,15 @@ function refreshData(){
          
           var api = this.api();
           
-         $(api.column(4).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
-         $(api.column(5).footer()).html(numeral(coins.total.usd).format("0,0.000"));
-         $(api.column(6).footer()).html(numeral(coins.total.gbp).format("0,0.000"));
-         $(api.column(7).footer()).html(numeral(coins.total.eur).format("0,0.000"));
+         $(api.column(6).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
+         $(api.column(7).footer()).html(numeral(coins.total.usd).format("0,0.000"));
+         $(api.column(8).footer()).html(numeral(coins.total.gbp).format("0,0.000"));
+         $(api.column(9).footer()).html(numeral(coins.total.eur).format("0,0.000"));
          // pnl
-         $(api.column(10).footer()).html(numeral(coins.total.pnl_btc_7d).format("0,0.000")); 
-         $(api.column(11).footer()).html(numeral(coins.total.pnl_usd_7d).format("0,0.000"));
-         $(api.column(12).footer()).html(numeral(coins.total.pnl_gbp_7d).format("0,0.000"));
-         $(api.column(13).footer()).html(numeral(coins.total.pnl_eur_7d).format("0,0.000"));
+         $(api.column(12).footer()).html(numeral(coins.total.pnl_btc_7d).format("0,0.000")); 
+         $(api.column(13).footer()).html(numeral(coins.total.pnl_usd_7d).format("0,0.000"));
+         $(api.column(14).footer()).html(numeral(coins.total.pnl_gbp_7d).format("0,0.000"));
+         $(api.column(15).footer()).html(numeral(coins.total.pnl_eur_7d).format("0,0.000"));
         
         },
         "destroy": true,
@@ -462,6 +469,8 @@ function refreshData(){
             },
             { data: "symbol" },
             { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.qty).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.price_btc).format("0,0.000");}},
+            { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.price_usd).format("0,0.000");}},
             { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.btc).format("0,0.000");}},
             { data: "" ,"render":function ( data, type, row, meta ){return numeral(row.usd).format("0,0.000");}},
             { data: "." ,"render":function ( data, type, row, meta ){return numeral(row.gbp).format("0,0.000");}},
