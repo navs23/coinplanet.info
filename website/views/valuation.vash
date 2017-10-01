@@ -6,6 +6,12 @@
     <meta property="title" content="CryptoCurrency,BITCOIN valuation | coinplanet.info" />
     <meta name="description" content="CryptoCurrency valuation, calculate value of portfolio in different currencies" />
      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+     <style type="text/css">
+      .content{
+       width:100% !important;
+       padding:10px;
+      }
+     </style>
     })
 
     @html.block('js', function(model) {
@@ -13,18 +19,16 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
     })
     
-   @html.block('left', function(model) {
-   
-   
-   })
+  
    
    @html.block('content', function(model) {
    <h2 class="pagination-centered" style="float:middle;">Crypto Currency Valuation and P&L Report</h2>
    
-   <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;" data-toggle="modal" data-target="#addCoins">
+   <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
                                       <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
-                                      Add coins
+                                      Add Your Coins
                                   </a>
+                                  <br/>
                                   <br/>
    <div class="row">
     
@@ -88,13 +92,7 @@
    
     
 })  
-    @html.block('right', function(model) {
-    <div class="row">
-          <div class="col-md-12"></div>
-    </div>
-      
-          
-   })
+    
    
    
 })
@@ -427,6 +425,8 @@ function refreshData(){
  var coins = getData();
   $('#tblvaluation').DataTable(
   {
+       
+        buttons: ['copy', 'csv'],
         "data":coins.valuationArray,
         "footerCallback":function(data, type, row, meta){
          

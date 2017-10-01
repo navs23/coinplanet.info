@@ -4,6 +4,12 @@
     <meta name="description" content="CryptoCurrency live chat, news and more" />
     <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
     <meta property="description" content="chat,share,exchange and learn from fellow crypto currency enthusiast" /> 
+     <style type="text/css">
+      .content{
+       width:95% !important;
+       padding:10px;
+      }
+     </style>
     })
 
     @html.block('js', function(model) {
@@ -15,7 +21,7 @@
    
    })
    @html.block('content', function(model) {
-    <h4>Cryptocoin chat</h4>
+     <h2 class="pagination-centered" style="float:middle;">Cryptocoin chat</h2>
              <i>Share, exchange and learn from fellow crypto currency enthusiast.</i>
             
               

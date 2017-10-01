@@ -61,7 +61,7 @@
          @html.block('left')
         
     </div>
-    <div class="col-md-4" style="background-color:none;margin-bottom:50px;">
+    <div class="col-md-4 content" style="background-color:none;margin-bottom:50px;">
           
             @html.block('content')
           

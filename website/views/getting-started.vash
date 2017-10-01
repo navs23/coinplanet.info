@@ -4,6 +4,15 @@
     <meta name="description" content="CryptoCurrency live chat, news and more" />
     <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
     <meta property="description" content="chat,share,exchange and learn from fellow crypto currency enthusiast" /> 
+    
+         <style type="text/css">
+      .content{
+       width:75% !important;
+       padding:10px;
+       float:middle;
+      }
+     </style>
+
     })
 
     @html.block('js', function(model) {
@@ -11,31 +20,25 @@
     })
    @html.block('left', function(model) {
    
-    <div class="row">
-          <div class="col-md-4">
-                     
-       <img style="clear:both;" class="pull-left" src="/images/gettingstarted.png" width="500" height="500"/>
-           
-</div>
-           
-       </div>
+    
    
    
    
    })
    @html.block('content', function(model) {
     
-   <h2>Getting started with bitcoins</h2>
+    <h2 class="pagination-centered" style="float:middle;">Getting started with bitcoins</h2>
    
    <div class="row">
-       <p style="text-align:justify;">
+     
+        <div class="col-md-12">
+              <p>
             
             This is meant to be a quick reference guide to get you started with Bitcoin. Follow the below instructions to own some bitcoins. In the beginning, start with a small amount and gradually build you bitcoin portfolio as you get confident in accessing, securing, buying and selling process.
 
             It takes a while to get your head around the whole concept of block chain and crypto currencies but once you get yourself acquainted, it is no different to daily transactions that you perform on the internet when you buy and sell stuff online.
 
 </p>
-        <div class="col-md-12">
         <h3><a href='#step1'>Step 1: Create a Bitcoin wallet/address</a></h3>
         
         
