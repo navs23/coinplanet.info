@@ -2,9 +2,9 @@
 @html.extend('layout', function(model) {
 
  @html.block('meta', function(model) {
-    <meta name="description" content="CryptoCurrency live chat, news and more" />
-    <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
-    <meta property="description" content="chat,share,exchange and learn from fellow crypto currency enthusiast" /> 
+     <meta property="title" content="CryptoCurrency,BITCOIN Calculator | coinplanet.info" />
+    <meta name="description" content="bitcoin resources resources | coinplanet.info" />
+    <meta property="description" content="List of useful bitcoin and crypto currency resources | coinplanet.info" /> 
     })
 
     @html.block('js', function(model) {

@@ -1,7 +1,9 @@
 
 @html.extend('layout', function(model) {
     @html.block('meta', function(model) {
-        
+     <meta property="title" content="Crypto Currency,News feed, latest updates , BITCOIN Calculator | coinplanet.info" />
+    <meta name="description" content="bitcoin latest videos and resources | coinplanet.info" />
+ 
     })
      @html.block('js', function(model) {
         

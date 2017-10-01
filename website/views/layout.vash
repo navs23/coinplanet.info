@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CoinPlanet.info | Cryptocurrency calculator | CoinPlanet</title>
+    <title>CoinPlanet.info | Cryptocurrency calculator,current valuation & PnL report | Chat | Bitcoin resources</title>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />        
     
-    <meta name="description" content="CryptoCurrency,BITCOIN,FIAT calculator , live chat, news and more" />
+    <meta name="description" content="CryptoCurrency,BITCOIN,FIAT calculator , BITCOIN chat, news and more" />
+        <meta name="description" content="coinplanet.info,BITCOIN to FIAT calculator, BITCOIN chat, news, resources, getting started and more" />
     <meta property="og:title" content="CryptoCurrency,BITCOIN Calculator | coin9.info" />
-    <meta name="description" content="Calculator tool to convert between fiat and cryptocurrencies" />
+    <meta name="description" content="Crypoto calculator to convert between fiat and cryptocurrencies" />
     <meta property="og:description" content="CryptoCurrency calculator , live chat, news and more" />  
   @html.block('meta')  
   <link rel='stylesheet' href='/stylesheets/style.css' />
