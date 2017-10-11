@@ -22,6 +22,7 @@
     <script type="text/javascript" src="/javascripts/index.js"></script>
     <script type="text/javascript" src="/javascripts/localstoragedb.min.js"></script>
     <script type="text/javascript" src="/javascripts/moment.js"></script>
+    <script src="/socket.io/socket.io.js"></script>            
        @html.block('js')  
 </head>
 <body>
@@ -88,6 +89,8 @@
                         style="text-align:center;margin:10px;clear:both;font-size:12px;font-weight:bold;padding:5px;color:white;" 
                         href="#" data-toggle="modal" data-target="#aboutus">About us
                     </a>
+                    &nbsp;|&nbsp;
+                   <i class="liveconnections" style="text-align:center;margin:10px;clear:both;font-size:11px;font-weight:bold;padding:5px;color:white;"></i>
             </div>
             <div class="col-md-4">
                 <a href='#' style="text-align:center;clear:both;font-size:10px;color:white;font-style:italic;padding:5px 0;">© 2017 coinplanet.info</a>
@@ -193,25 +196,12 @@ We hope you enjoy being here and find our content of great use!
 <script>
 
 
-
-
 /* global $
 */
-/*
- var socket = io.connect('http://localhost:8080');
+
+ var socket = io.connect('/');
   
-  socket.on('connect', function(data) {
-    
-    socket.emit('join', 'Hello World from client');
-
-
- });
-
-socket.on('data', function(data) {
-    $('h3.socket-msg').text(data);                
-
-        });
-*/
+ 
 
 /*
 {
@@ -228,6 +218,12 @@ $(document).ready(function(){
   */
   // helper.getGlobalData();  
    
+   socket.on('data', function(connections) {
+ 
+  $('i.liveconnections').text(connections +' connected users');
+
+    
+});
   
   
 });

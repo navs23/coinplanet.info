@@ -1,0 +1,59 @@
+
+@html.extend('layout', function(model) {
+
+ @html.block('meta', function(model) {
+    
+    <meta property="title" content="CryptoCurrency,BITCOIN valuation and PnL report | coinplanet.info" />
+    <meta name="description" content="CryptoCurrency valuation, calculate value of portfolio in different currencies | coinplanet.info" />
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+     <style type="text/css">
+      .content{
+       width:100% !important;
+       padding:10px;
+      }
+     </style>
+    })
+
+    @html.block('js', function(model) {
+    
+  
+   
+    })
+    
+  
+   
+   @html.block('content', function(model) {
+  
+  
+    <ul class="message"></ul>
+ 
+   
+    
+})  
+    
+   
+   
+})
+
+
+<script type="text/javascript">
+
+  $(document).ready(function(){
+   
+
+socket.on('data', function(connections) {
+ 
+  $('ul.message').append('<li>'+ connections +'</li>');
+
+    
+});
+
+   
+   
+  });
+</script>
+ 
+
+
+ 
+           

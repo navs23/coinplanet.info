@@ -2,22 +2,26 @@
 
 sockertServer.init = function(server){
 
-
+var connections=20;
 var io = require('socket.io')(server);
 
-console.log('ss intialising.');
-io.on('connection', function(client) {  
-    console.log('Client connected...');
-var ctr=1;
-setInterval(function(){
+io.on('connection', function(socket) {  
+    console.log('connected %s',connections);
+    io.emit("data",++connections); 
+
+    socket.on('disconnect', function(){
     
-
-  io.emit("data",ctr++); 
-
-},5*1000);
+    console.log('disconnected %s',connections);
+    
+    io.emit("data",--connections); 
   
+    });
 
+  
+  
 });
+
+
 
 
 };

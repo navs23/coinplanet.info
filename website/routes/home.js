@@ -142,6 +142,13 @@ home.init= function(router){
 	  
 	});  
 	
+	router.get('/socket/', function(req, res, next) {
+	 
+	res.render('socket', {title: 'socket'});
+	   
+	  
+	});  
+	
 	router.get('/api/search/crypto/:symbol', function(req, res, next) {
     
     	var data ;
