@@ -16,22 +16,29 @@
 
     @html.block('js', function(model) {
     
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+    <script type="text/javascript" src="/javascripts/datatables.min.js"></script>
+   
     })
     
   
    
    @html.block('content', function(model) {
+  
+  
    <h2 class="pagination-centered" style="float:middle;">Crypto Currency Valuation and P&L Report</h2>
-   
+   <div class="row">
+  
+  <span><i></i></span>
+  <input type="text" id="btc-searchbox" placeholder="Enter Bitcoin public address,block hash, transaction etc to search" style="width:25%;" name="search">
+  <button type="button" value="Search" id="btc_search_button" class="btn btn-primary">Search</button>
+  <ul class="result"></ul>
+  </div>
+  
+   <div class="row">
    <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
                                       <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
                                       Add Your Coins
                                   </a>
-                                  <br/>
-                                  <br/>
-   <div class="row">
-    
           <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i>
     
        <table class="table table-bordered negative" id="tblvaluation">
@@ -190,7 +197,11 @@ $(document).ready(function(){
       save();
   
   });
+  $('#btc_search_button').on('click',function(){
+      search();
   
+  });
+  //
   $('#aAddCoin').on('click',function(){
    
     resetInputBox();
@@ -498,6 +509,36 @@ function refreshData(){
  
 }
 
+function search(){
+ $('ul.result').empty();
+ var url = '/api/blockexplorer/';
+ var addr = $('#btc-searchbox').val();
+ var promise = $.get(url + addr);
+ 
+ if (addr == undefined || addr =='')
+  return $('ul.result').append('<li style="color:red;">invalid input</li>');
+ 
+ promise.then(function(data){
+ // console.log(data);
+    
+   if (data.err) 
+   
+     $('ul.result').append('<li style="color:red;">'+ data.err + '</li>')
+   
+   else{
+    
+   $('ul.result').append('<li><strong>Total trans:</strong><i>'+ numeral(data[addr].n_tx).format('0,000') + '</i></li>')
+   $('ul.result').append('<li><strong>Total received:</strong><i>'+ numeral(data[addr].total_received / 100000000).format('0.00000') + '</i></li>')
+   $('ul.result').append('<li><strong>Final balance:</strong><i>'+ numeral(data[addr].final_balance / 100000000).format('0.00000') + '</i></li>')
+  
+  }
+ });
+ promise.catch(function(err){
+  
+ $('ul.result').append('<li style="color:red;">Error:'+ err + '</li>')
+  console.log(err)});
+ 
+}
 function resetInputBox(){
  $('.sub-menu').empty();
  $('input.symbol').data('id',-1);

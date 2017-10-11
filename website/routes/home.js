@@ -4,6 +4,7 @@ var service = require("./../../service/currentPrice");
 var data = require("./../../service/data");
 var _=require("underscore");
 var news = require("./../helper/news.js");
+var blockexplorer = require('blockchain.info/blockexplorer')
 
 home.init= function(router){
 	
@@ -159,6 +160,25 @@ home.init= function(router){
     	
   
 });	
+
+	router.get('/api/blockexplorer/:address',function(req,res){
+		var address= req.params.address;
+		var promise = blockexplorer.getBalance(address,null);
+		
+		promise.then(function(data){
+			res.setHeader('Content-Type', 'application/json');
+		
+			res.send(data);
+		});
+		promise.catch(function(err){
+			var obj={};
+			obj.err=err;
+		res.send(obj);	
+		});
+		
+		
+		
+	});
 
 	function getPaginatedItems(items, page) {
 	var page = page || 1,

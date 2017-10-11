@@ -7,8 +7,10 @@
   },
   "dependencies": {
     "bitcoinaverage": "^0.1.4",
+    "blockchain.info": "^2.10.1",
     "body-parser": "~1.17.1",
     "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.0",
     "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "cryptofetch": "^0.1.1",
