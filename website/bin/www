@@ -16,7 +16,7 @@ var socketserver = require('../socket-server.js');
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 var server = http.createServer(app);
-socketserver.init(server);
+var io =socketserver.init(server,app);
 /**
  * Create HTTP server.
  */

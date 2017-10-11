@@ -1,3 +1,4 @@
+const events = require('events');
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -13,6 +14,7 @@ var poller = require('./helper/poller.js');
 var news = require('./helper/news.js');
 var app = express();
 
+//var eventEmitter = new events.EventEmitter();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'vash');
@@ -84,7 +86,8 @@ app.set("cache",cache);
     		else
     		app.cache.news= [];
     	});
-    
+   console.log('event raised');
+   app.emit('cache-refreshed',{}); 
   }
     ,interval:(30 * 1000)
     

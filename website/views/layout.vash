@@ -224,27 +224,35 @@ $(document).ready(function(){
 
     
 });
-  
+
+socket.on('cache', function(d) {
+ 
+  updateData(d.cryptoGlobal);
+    
+});
   
 });
 
- setInterval(function(){
+ setTimeout(function(){
     var url ='/api/getCryptoGloabl/';
          $.ajax(url ).then(function(data,status){
          //alert(1);
-            $('span.total_market_cap_usd').html('Total market cap USD - <i font-color:red !important;>' + numeral(data.total_market_cap_usd).format('($ 0.00 a)') + '</i>');
-            
-            
-            $('span.total_24h_volume_usd').html('Total 24h volume USD - <i font-color:red !important;>' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)') + '</i>');
-            
-            $('span.bitcoin_percentage_of_market_cap').html('BTC % of market cap -  <i font-color:red !important;>'+ numeral(data.bitcoin_percentage_of_market_cap).format('00.00')+ '</i>');
-            
-            
-
+           
+            updateData(data);
          });
     
-  },5* 1000);
+  },1* 1000);
 
- 
+ function updateData(data){
+    $('span.total_market_cap_usd').html('Total market cap USD - <i font-color:red !important;>' + numeral(data.total_market_cap_usd).format('($ 0.00 a)') + '</i>');
+    
+    
+    $('span.total_24h_volume_usd').html('Total 24h volume USD - <i font-color:red !important;>' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)') + '</i>');
+    
+    $('span.bitcoin_percentage_of_market_cap').html('BTC % of market cap -  <i font-color:red !important;>'+ numeral(data.bitcoin_percentage_of_market_cap).format('00.00')+ '</i>');
+
+            
+     
+ }
   
 </script>

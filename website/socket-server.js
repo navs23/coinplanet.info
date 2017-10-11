@@ -1,9 +1,11 @@
 (function(sockertServer){
-
-sockertServer.init = function(server){
+const events = require('events');
+var eventEmitter = new events.EventEmitter();
+var io;
+sockertServer.init = function(server,app){
 
 var connections=20;
-var io = require('socket.io')(server);
+io = require('socket.io')(server);
 
 io.on('connection', function(socket) {  
     console.log('connected %s',connections);
@@ -21,8 +23,11 @@ io.on('connection', function(socket) {
   
 });
 
-
-
+app.on('cache-refreshed',function(){
+  console.log('event captured');
+  io.emit('cache',app.cache);
+});
+return io;
 
 };
 
