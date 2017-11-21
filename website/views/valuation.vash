@@ -53,11 +53,15 @@
        <table class="table table-bordered negative" id="tblvaluation">
            <thead>
     <tr>
-    <td colspan="4">  <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
-                                      <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
-                                      Add Your Coins
-                                  </a>
-       <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i></td>
+    <td colspan="4">
+     <a href="#" class="btn btn-xs btn-info" id="aAddCoin" 
+     style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
+      <i class="fa fa-cog fa-2x" aria-hidden="true" ></i> Add Your Coins</a>&nbsp;
+      |&nbsp;
+      <a href="#" class="btn btn-xs btn-info" id="aDownload" 
+     style="color:none;clear:both;font-weight:bold;">
+      <i class="fa fa-download fa-2x" aria-hidden="true" ></i> Export to csv</a>
+       <i class="fa fa-cog fa-spin fa-2x fa-fw" id="download-spinner"></i></td>
     <td colspan="2" style="text-align:center"><b>Current Price</b></td>
     <td colspan="4" style="text-align:center"><b>Current valuation</b></td>
     <td colspan="2" style="text-align:center"><b>Change(%)</b></td>
@@ -187,7 +191,7 @@ var cache={};
 var cointrackerDb = new localStorageDB("cointracker", localStorage);
 
 $(document).ready(function(){
- 
+  $('#download-spinner').hide();
  
 
  var promisecrypto = $.ajax('/api/cryptopricefeed/');
@@ -232,6 +236,15 @@ $(document).ready(function(){
    
    
   });
+   $('#aDownload').on('click',function(){
+   
+    download();
+   
+  
+   
+   
+  });
+  
   
   var timeoutID = null;
  var throttled = _.throttle(findSymbol, 100);
@@ -636,6 +649,44 @@ function stringToColor(str){
 
   return "#" + '000000'.substring(0, 6 - color.length) + color;
 }
+
+function download(){
+  $('#download-spinner').show();
+  var coins = getData();
+  
+  var csv=coins.valuationArray.map(function(d){
+   
+  return JSON.stringify(Object.values(d));
+   
+  })
+  .join('\n') 
+    .replace(/(^\[)|(\]$)/mg, '');
+    
+    
+    downloadCSV({csv:csv})
+    
+    
+    
+    $('#download-spinner').hide();
+}
+
+function downloadCSV(args) {  
+        var data, filename, link;
+       
+        if (args.csv == null) return;
+
+        filename = args.filename || 'coins.csv';
+
+        if (!args.csv.match(/^data:text\/csv/i)) {
+            args.csv = 'data:text/csv;charset=utf-8,' + args.csv;
+        }
+        data = encodeURI(args.csv);
+
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+    }
 </script>
  
 
