@@ -14,7 +14,8 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css"/>
-   
+   <link rel="stylesheet" href="/font-awesome/css/jquery-comments.css"/>
+   <script type="text/javascript" src="/javascripts/data/data.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="/javascripts/underscore-min.js"></script>
@@ -22,6 +23,10 @@
     <script type="text/javascript" src="/javascripts/index.js"></script>
     <script type="text/javascript" src="/javascripts/localstoragedb.min.js"></script>
     <script type="text/javascript" src="/javascripts/moment.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-comments.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-textcomplete.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
+    
     <script src="/socket.io/socket.io.js"></script>            
        @html.block('js')  
 </head>

@@ -17,34 +17,47 @@
     @html.block('js', function(model) {
     
     <script type="text/javascript" src="/javascripts/datatables.min.js"></script>
-   
+    <script type="text/javascript" src="/javascripts/chart.js"></script>
+   <script type="text/javascript" src="/javascripts/chart.util.js"></script>
     })
     
   
    
    @html.block('content', function(model) {
   
-  
-   <h2 class="pagination-centered" style="float:middle;">Crypto Currency Valuation and P&L Report</h2>
    <div class="row">
-  
-  <span><i></i></span>
+ 
+  <div class="col-md-9"> <span><i></i></span>
   <input type="text" id="btc-searchbox" placeholder="Enter Bitcoin public address,block hash, transaction etc to search" style="width:25%;" name="search">
   <button type="button" value="Search" id="btc_search_button" class="btn btn-primary">Search</button>
-  <ul class="result"></ul>
+  <ul class="result"></ul></div>
+  <div class="col-md-3">
+   <span>Current valuation is :</span>
+   
+ <i class="lbl-valuation"></i>
+ </div>
   </div>
   
-   <div class="row">
-   <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
-                                      <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
-                                      Add Your Coins
-                                  </a>
-          <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i>
+   <div class="row" style="background-color:none;">
+    <div class="col-md-6" style="background-color:none;">
     
+     </div>
+     
+   </div>
+  
+  
+   <div class="row">
+  
+     
+     
        <table class="table table-bordered negative" id="tblvaluation">
            <thead>
     <tr>
-    <td colspan="4"></td>
+    <td colspan="4">  <a href="#" class="btn btn-xs btn-info" id="aAddCoin" style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
+                                      <i class="fa fa-cog fa-2x" aria-hidden="true" ></i>
+                                      Add Your Coins
+                                  </a>
+       <i class="fa fa-cog fa-spin fa-2x fa-fw" id="spinner"></i></td>
     <td colspan="2" style="text-align:center"><b>Current Price</b></td>
     <td colspan="4" style="text-align:center"><b>Current valuation</b></td>
     <td colspan="2" style="text-align:center"><b>Change(%)</b></td>
@@ -95,9 +108,15 @@
    </table>
     
     </div>
- 
-   
+ <div class="row">
+    <div class="md-col-6" style="background-color:none;">
+     
     
+      <div id="canvas-holder" style="width:30%;float:middle;margin-top:0px;">
+        <canvas id="chart-area" />
+    </div>
+  </div>
+    </div>
 })  
     
    
@@ -177,7 +196,8 @@ $(document).ready(function(){
   
  
  }
-  if (!cointrackerDb.tableExists("coins")){
+ 
+ if (!cointrackerDb.tableExists("coins")){
    cointrackerDb.createTable("coins", ["symbol", "qty","date"]); 
   }
   
@@ -186,7 +206,8 @@ $(document).ready(function(){
  });
  
  var promisefiat = $.ajax('/api/fiatpricefeed/');
-  promisefiat.then(function(fiat,status){
+ 
+ promisefiat.then(function(fiat,status){
   cache.fiat=fiat;
  });
    
@@ -197,6 +218,7 @@ $(document).ready(function(){
       save();
   
   });
+  
   $('#btc_search_button').on('click',function(){
       search();
   
@@ -212,7 +234,7 @@ $(document).ready(function(){
   });
   
   var timeoutID = null;
-var throttled = _.throttle(findSymbol, 100);
+ var throttled = _.throttle(findSymbol, 100);
    $('input.symbol').on('keyup',function(e) {
     
      if (e.target.value == "") 
@@ -230,6 +252,11 @@ var throttled = _.throttle(findSymbol, 100);
 
   
  },1* 1000)
+ 
+ 
+ 
+
+  
  
 });
 
@@ -250,8 +277,6 @@ function getData(){
        
          var i;
         
-        
-         //data.forEach(function(i,e){
          for(var k =0;k<data.length;k++){
           
          var valuation={};
@@ -281,9 +306,9 @@ function getData(){
            valuation.pnl_eur_7d= (temp.percent_change_7d * .01)*(valuation.eur);
            
            // total 
-           result.total.btc += valuation.btc;
+           result.total.btc += valuation.btc ;
            result.total.usd += valuation.usd;
-           result.total.gbp += valuation.gbp;
+           result.total.gbp += valuation.gbp ;
            result.total.eur += valuation.eur;
            // pnl total
            
@@ -319,6 +344,7 @@ function edit(e){
  return true;
  
 }
+
 function remove(e){
   
  var item={};
@@ -434,6 +460,7 @@ function save(){
 
 function refreshData(){
  var coins = getData();
+ var api;
   $('#tblvaluation').DataTable(
   {
        
@@ -441,7 +468,7 @@ function refreshData(){
         "data":coins.valuationArray,
         "footerCallback":function(data, type, row, meta){
          
-          var api = this.api();
+          api = this.api();
           
          $(api.column(6).footer()).html(numeral(coins.total.btc).format("0,0.000")); 
          $(api.column(7).footer()).html(numeral(coins.total.usd).format("0,0.000"));
@@ -507,6 +534,10 @@ function refreshData(){
     }
   );
  
+ $('.lbl-valuation').html(numeral(coins.total.usd).format("$0,0.000"));
+ console.log(coins);
+ drawChart(coins);
+ 
 }
 
 function search(){
@@ -539,6 +570,7 @@ function search(){
   console.log(err)});
  
 }
+
 function resetInputBox(){
  $('.sub-menu').empty();
  $('input.symbol').data('id',-1);
@@ -549,6 +581,61 @@ function resetInputBox(){
  
 }
   
+function drawChart(param){
+ var data={};
+ data.valuation=[];
+ data.labels=[];
+ data.colors=[];
+ param.valuationArray.map(function(e,i){
+  var color= window.colors[i];
+  var label=e.symbol ;
+  
+  data.valuation.push(numeral(e.usd).format("00.000"));
+  data.labels.push(label);
+  data.colors.push(color);
+  
+ });
+  // chart config
+  var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data:data.valuation,
+                backgroundColor: data.colors,
+                label: ''
+            }],
+            labels:data.labels
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: false,
+                text: '<h2>Current valuation</h2>'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+ 
+ var ctx = document.getElementById("chart-area").getContext("2d");
+ window.valuationChart = new Chart(ctx, config);
+ 
+}
+
+function stringToColor(str){
+  var hash = 0;
+  for(var i=0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 3) - hash);
+  }
+  var color = Math.abs(hash).toString(16).substring(0, 6);
+
+  return "#" + '000000'.substring(0, 6 - color.length) + color;
+}
 </script>
  
 

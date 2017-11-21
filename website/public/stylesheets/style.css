@@ -276,3 +276,8 @@ list-style: none;
     float: left;
     
 }
+.lbl-valuation{
+    
+    font-size: 1.5em;
+    color:coral;
+}
