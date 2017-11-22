@@ -331,7 +331,7 @@
     
 });
   
-  commentsInit({commentsArray:commentsArray,usersArray:usersArray, commentsContainer:'#comments-container'});
+  //commentsInit({commentsArray:commentsArray,usersArray:usersArray, commentsContainer:'#comments-container'});
  
   });
   
