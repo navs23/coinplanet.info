@@ -558,9 +558,9 @@ function refreshData(){
     }
   );
  
- $('i#lbl-valuation-usd').html(numeral(coins.total.usd).format("0,0.000"));
- $('i#lbl-valuation-gbp').html(numeral(coins.total.gbp).format("0,0.000"));
- $('i#lbl-valuation-eur').html(numeral(coins.total.eur).format("0,0.000"));
+ $('i#lbl-valuation-usd').html(numeral(coins.total.usd || 0).format("0,0.000"));
+ $('i#lbl-valuation-gbp').html(numeral(coins.total.gbp || 0).format("0,0.000"));
+ $('i#lbl-valuation-eur').html(numeral(coins.total.eur || 0).format("0,0.000"));
  console.log(coins);
  drawChart(coins);
  
