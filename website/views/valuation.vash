@@ -32,9 +32,13 @@
   <button type="button" value="Search" id="btc_search_button" class="btn btn-primary">Search</button>
   <ul class="result"></ul></div>
   <div class="col-md-3">
-   <span>Current valuation is :</span>
-   
- <i class="lbl-valuation"></i>
+   <i style="font-size:1.2em;font-weight:bold;text-align:center;width:100%;float:center;" class="text-info">Your current valuation is</i>
+    <ul class="list-inline">
+    <li><i class="fa fa-gbp fa-1x" id="lbl-valuation-gbp"></i></li>
+    <li><i class="fa fa-eur fa-1x" id="lbl-valuation-eur"></i></li>
+    <li><i class="fa fa-usd fa-1x" id="lbl-valuation-usd"></i></li>
+  </ul>
+
  </div>
   </div>
   
@@ -311,12 +315,16 @@ function getData(){
            
            valuation.percent_change_24h= temp.percent_change_24h;
            valuation.percent_change_7d= temp.percent_change_7d;
+          
+           
            
            // 7day pnl
            valuation.pnl_btc_7d= (temp.percent_change_7d * .01)*(valuation.btc);
            valuation.pnl_usd_7d= (temp.percent_change_7d * .01)*(valuation.usd);
            valuation.pnl_gbp_7d= (temp.percent_change_7d * .01)*(valuation.gbp);
            valuation.pnl_eur_7d= (temp.percent_change_7d * .01)*(valuation.eur);
+           
+           
            
            // total 
            result.total.btc += valuation.btc ;
@@ -330,12 +338,15 @@ function getData(){
            result.total.pnl_gbp_7d += valuation.pnl_gbp_7d;
            result.total.pnl_eur_7d += valuation.pnl_eur_7d;
            
+
            
            result.valuationArray.push(valuation);
            
           }
           
   }
+  
+   
   
    //return [{symbol:"btc",qty:1,gbp:10,usd:20,eur:30}];
    return result;
@@ -547,7 +558,9 @@ function refreshData(){
     }
   );
  
- $('.lbl-valuation').html(numeral(coins.total.usd).format("$0,0.000"));
+ $('i#lbl-valuation-usd').html(numeral(coins.total.usd).format("0,0.000"));
+ $('i#lbl-valuation-gbp').html(numeral(coins.total.gbp).format("0,0.000"));
+ $('i#lbl-valuation-eur').html(numeral(coins.total.eur).format("0,0.000"));
  console.log(coins);
  drawChart(coins);
  

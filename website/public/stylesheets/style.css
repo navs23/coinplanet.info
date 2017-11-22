@@ -276,8 +276,21 @@ list-style: none;
     float: left;
     
 }
-.lbl-valuation{
+#lbl-valuation-usd{
     
-    font-size: 1.5em;
+    font-size: 1.2em;
+    font-weight:bold;
     color:coral;
+}
+#lbl-valuation-gbp{
+    
+    font-size: 1.2em;
+    color:OrangeRed ;
+    font-weight:bold;
+}
+#lbl-valuation-eur{
+    
+    font-size: 1.2em;
+    color:RoyalBlue ;
+    font-weight:bold;
 }
