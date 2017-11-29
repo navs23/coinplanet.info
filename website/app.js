@@ -78,14 +78,15 @@ app.set("cache",cache);
       console.log(err);
         app.cache.priceData= [];
     });
-    
-    
+    //	app.cache.news= [];
+
     	news.getNews(function(err,result){
     		if(!err)
     			app.cache.news= result;
     		else
     		app.cache.news= [];
     	});
+    	
    console.log('event raised');
    app.emit('cache-refreshed',{}); 
   }

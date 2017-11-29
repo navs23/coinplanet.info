@@ -24,3 +24,9 @@ service.getFiatExchangeRates().then(function(data){
      console.log(err);
   });
   */
+  
+  var news = require('helper/news.js');
+  news.getNews(function(err, data){
+      
+     console.log(data);
+  });

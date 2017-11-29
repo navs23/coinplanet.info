@@ -20,8 +20,9 @@ var async=require('async');
   
                 res.on('end', () => {
                   
-                      var $ = cheerio.load(data);
-    					//console.log(data);
+                    try{
+                    	var $ = cheerio.load(data);
+    				
                         $(selector).each(function(i,item){
                            
                             newslink = ($(this).closest('a').attr('href') || $(this).find('a').attr('href'));
@@ -38,6 +39,13 @@ var async=require('async');
                         });
                     
                          resolve(param.newsItems);
+                    }
+                    catch(e){
+                    	
+                    	console.log(e);
+                    	 reject(e);
+                    }
+                      
                       
                      });     
             }).on('error', (e) => {
@@ -52,13 +60,14 @@ var async=require('async');
     news.getNews=function(cb){
         
     var urls=[
+	/*
 		function(cb){
 			var item={url:'https://cryptocoinsnews.com/widget/bitcoin_widget.js.php',selector:'li>a'}
 			 news.scrap(item).then(function(newsItems){ 
 		 	cb(null,newsItems);
 		 });
 		}
-		,
+		,*/
 		function(cb){
 			var item={url:'https://cryptoinsider.com/content/category/news/index.html',selector:'div.post-content > h2 > a'}
 			 news.scrap(item).then(function(newsItems){ 
@@ -71,11 +80,9 @@ var async=require('async');
 		 	cb(null,newsItems);
 		 });
 		}
-		//url:'https://www.coindesk.com/',selector:'div.post-info > h3'}
-		//#recent > div:nth-child(1) > figure.col-sm-13 > h2 > a
-	,
+		,
 		function(cb){
-			var item={url:'https://www.coindesk.com/',selector:'div.post-info > h3'}
+			var item={url:'https://www.coindesk.com/',selector:'div.post-info  h3 a'}
 			 news.scrap(item).then(function(newsItems){ 
 		 	cb(null,newsItems);
 		 });
