@@ -32,13 +32,20 @@
   <button type="button" value="Search" id="btc_search_button" class="btn btn-primary">Search</button>
   <ul class="result"></ul></div>
   <div class="col-md-3">
-   <i style="font-size:1.2em;font-weight:bold;text-align:center;width:100%;float:center;" class="text-info">Your current valuation is</i>
     <ul class="list-inline">
+    <li><strong>Current valuation</strong></li>
     <li><i class="fa fa-gbp fa-1x" id="lbl-valuation-gbp"></i></li>
     <li><i class="fa fa-eur fa-1x" id="lbl-valuation-eur"></i></li>
     <li><i class="fa fa-usd fa-1x" id="lbl-valuation-usd"></i></li>
   </ul>
 
+  <ul class="list-inline">
+    <li><strong>24H change</strong></li>
+    <li><i class="fa fa-gbp fa-1x" id="lbl-24h-gbp"></i></li>
+    <li><i class="fa fa-eur fa-1x" id="lbl-24h-eur"></i></li>
+    <li><i class="fa fa-usd fa-1x" id="lbl-24h-usd"></i></li>
+    <li><i class="fa fa-btc fa-1x" id="lbl-24h-btc"></i></li>
+  </ul>
  </div>
   </div>
   
@@ -61,11 +68,13 @@
      <a href="#" class="btn btn-xs btn-info" id="aAddCoin" 
      style="color:none;clear:both;font-weight:bold;" data-toggle="modal" data-target="#addCoins">
       <i class="fa fa-cog fa-2x" aria-hidden="true" ></i> Add Your Coins</a>&nbsp;
-      |&nbsp;
-      <a href="#" class="btn btn-xs btn-info" id="aDownload" 
-     style="color:none;clear:both;font-weight:bold;">
+      |&nbsp; <a href="#" class="btn btn-xs btn-info" id="aDownload" style="color:none;clear:both;font-weight:bold;">
       <i class="fa fa-download fa-2x" aria-hidden="true" ></i> Export to csv</a>
-       <i class="fa fa-cog fa-spin fa-2x fa-fw" id="download-spinner"></i></td>
+       <i class="fa fa-cog fa-spin fa-2x fa-fw" id="download-spinner"></i>
+      
+       
+       
+       </td>
     <td colspan="2" style="text-align:center"><b>Current Price</b></td>
     <td colspan="4" style="text-align:center"><b>Current valuation</b></td>
     <td colspan="2" style="text-align:center"><b>Change(%)</b></td>
@@ -282,7 +291,11 @@ function getData(){
  
        var result={};
        result.valuationArray=[];
-       result.total={btc:0.000,usd:0.000,gbp:0.000,eur:0.000,pnl_btc_7d:0.000,pnl_usd_7d:0.000,pnl_gbp_7d:0.000,pnl_eur_7d:0.000};
+       result.total={btc:0.000,usd:0.000,gbp:0.000,eur:0.000,pnl_btc_7d:0.000,pnl_usd_7d:0.000,pnl_gbp_7d:0.000,pnl_eur_7d:0.000
+        ,pnl_btc_24h:0.000,pnl_usd_24h:0.000,pnl_gbp_24h:0.000,pnl_eur_24h:0.000
+        
+        
+       };
         var data ;
        try{
          data = cointrackerDb.queryAll("coins") ;
@@ -324,19 +337,36 @@ function getData(){
            valuation.pnl_gbp_7d= (temp.percent_change_7d * .01)*(valuation.gbp);
            valuation.pnl_eur_7d= (temp.percent_change_7d * .01)*(valuation.eur);
            
+           //24h
            
-           
+          valuation.pnl_btc_24h = (valuation.btc * (parseFloat(valuation.percent_change_24h) *.01) || 0.00); 
+          valuation.pnl_usd_24h = (valuation.usd * (parseFloat(valuation.percent_change_24h) *.01) || 0.00); 
+          valuation.pnl_gbp_24h = (valuation.gbp * (parseFloat(valuation.percent_change_24h) *.01) || 0.00); 
+          valuation.pnl_eur_24h = (valuation.eur * (parseFloat(valuation.percent_change_24h) *.01) || 0.00); 
+         
            // total 
            result.total.btc += valuation.btc ;
            result.total.usd += valuation.usd;
            result.total.gbp += valuation.gbp ;
            result.total.eur += valuation.eur;
+           
+           
+           
            // pnl total
+           
+           
+           result.total.pnl_btc_24h += valuation.pnl_btc_24h;
+           result.total.pnl_usd_24h += valuation.pnl_usd_24h;
+           result.total.pnl_gbp_24h += valuation.pnl_gbp_24h;
+           result.total.pnl_eur_24h += valuation.pnl_eur_24h;
+           
            
            result.total.pnl_btc_7d += valuation.pnl_btc_7d;
            result.total.pnl_usd_7d += valuation.pnl_usd_7d;
            result.total.pnl_gbp_7d += valuation.pnl_gbp_7d;
            result.total.pnl_eur_7d += valuation.pnl_eur_7d;
+           
+           
            
 
            
@@ -558,9 +588,19 @@ function refreshData(){
     }
   );
  
- $('i#lbl-valuation-usd').html(numeral(coins.total.usd || 0).format("0,0.000"));
- $('i#lbl-valuation-gbp').html(numeral(coins.total.gbp || 0).format("0,0.000"));
- $('i#lbl-valuation-eur').html(numeral(coins.total.eur || 0).format("0,0.000"));
+ $('i#lbl-valuation-usd').html(numeral(coins.total.usd || 0).format("0,0.000")).attr('changeType',coins.total.gbp>0?'pos':'neg');
+ $('i#lbl-valuation-gbp').html(numeral(coins.total.gbp || 0).format("0,0.000")).attr('changeType',coins.total.gbp>0?'pos':'neg');
+ $('i#lbl-valuation-eur').html(numeral(coins.total.eur || 0).format("0,0.000")).attr('changeType',coins.total.eur>0?'pos':'neg');
+ 
+ 
+ $('i#lbl-24h-btc').html(numeral(coins.total.pnl_btc_24h || 0).format("0,0.000")).attr('changeType',coins.total.pnl_btc_24h>0?'pos':'neg');
+ $('i#lbl-24h-gbp').html(numeral(coins.total.pnl_gbp_24h || 0).format("0,0.000")).attr('changeType',coins.total.pnl_gbp_24h>0?'pos':'neg');
+ $('i#lbl-24h-eur').html(numeral(coins.total.pnl_eur_24h || 0).format("0,0.000")).attr('changeType',coins.total.pnl_eur_24h>0?'pos':'neg');
+ $('i#lbl-24h-usd').html(numeral(coins.total.pnl_usd_24h || 0).format("0,0.000")).attr('changeType',coins.total.pnl_usd_24h>0?'pos':'neg');
+ 
+ //lbl-24h-btc
+ 
+ 
  console.log(coins);
  drawChart(coins);
  

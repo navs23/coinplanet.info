@@ -276,21 +276,43 @@ list-style: none;
     float: left;
     
 }
-#lbl-valuation-usd{
+#lbl-valuation-usd,
     
     font-size: 1.2em;
     font-weight:bold;
-    color:coral;
+  
 }
 #lbl-valuation-gbp{
     
     font-size: 1.2em;
-    color:OrangeRed ;
+ 
     font-weight:bold;
 }
 #lbl-valuation-eur{
     
     font-size: 1.2em;
-    color:RoyalBlue ;
+  
     font-weight:bold;
+}
+i#lbl-24h-btc 
+{
+    
+    margin-left:40px;
+}
+/*
+i#lbl-24h-btc , i#lbl-24h-gbp, i#lbl-24h-eur, i#lbl-24h-usd
+{
+    color: green; 
+    font-weight:bold;
+}
+*/
+i[changeType="neg"]
+{
+   color: red; 
+    
+}
+i[changeType="pos"]
+{
+   color: green; 
+    
 }
