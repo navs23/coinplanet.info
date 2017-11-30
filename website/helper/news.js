@@ -60,14 +60,14 @@ var async=require('async');
     news.getNews=function(cb){
         
     var urls=[
-	/*
+/*
 		function(cb){
-			var item={url:'https://cryptocoinsnews.com/widget/bitcoin_widget.js.php',selector:'li>a'}
+			var item={url:'https://cryptocoinsnews.com',selector:'div > h3'}
 			 news.scrap(item).then(function(newsItems){ 
 		 	cb(null,newsItems);
 		 });
-		}
-		,*/
+		},	
+		,
 		function(cb){
 			var item={url:'https://cryptoinsider.com/content/category/news/index.html',selector:'div.post-content > h2 > a'}
 			 news.scrap(item).then(function(newsItems){ 
@@ -80,7 +80,7 @@ var async=require('async');
 		 	cb(null,newsItems);
 		 });
 		}
-		,
+		,*/
 		function(cb){
 			var item={url:'https://www.coindesk.com/',selector:'div.post-info  h3 a'}
 			 news.scrap(item).then(function(newsItems){ 
