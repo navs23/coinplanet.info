@@ -34,8 +34,8 @@ var resourcesJson=
     {"item":"Book flights","link":"http://www.btctrip.com"},
     ]
 ,"news":[
-    {"item":"Prices and charts","link":"https://coinmarketcap.com/"},
-    {"item":"Current price","link":"http://capfeed.com/"},
+{"item":"Prices and charts","link":"https://coinmarketcap.com/"},
+{"item":"Current price","link":"http://capfeed.com/"},
 {"item":"coinmap.org","link":"https://coinmap.org/"},
 {"item":"Projects","link":"http://www.bitcoinprojects.net/"},
 {"item":"CoinTelegraph","link":"http://cointelegraph.com/"},
@@ -43,11 +43,14 @@ var resourcesJson=
 {"item":"Bitcoin Magazine","link":"https://bitcoinmagazine.com"},
 {"item":"CoinJournal","link":"http://coinjournal.net"},
 {"item":"BitcoinTalk press links","link":"https://bitcointalk.org/index.php?board=77.0"},
-{"item":"Blockchain.info","link":"https://blockchain.info/charts/"}
+{"item":"Blockchain.info","link":"https://blockchain.info/charts/"},
+{"item":"Crypto Coin News","link":"https://www.cryptocoinnews.com"},
+{"item":"Bitcoin Wisdom","link":"https://www.bitcoinwisdom.com"},
+{"item":"Coin Market Calendar","link":"https://www.coinmarketcal.com"}
     ]
 ,"others":[
-    {"item":"Wallets","link":"/en/choose-your-wallet"},
-    {"item":"Biteasy","link":"https://www.biteasy.com"},
+{"item":"Wallets","link":"/en/choose-your-wallet"},
+{"item":"Biteasy","link":"https://www.biteasy.com"},
 {"item":"Trade Block","link":"https://tradeblock.com"},
 {"item":"Bitcoincharts.com","link":"https://bitcoincharts.com/charts/"},
 {"item":"GoBitcoin.io","link":"https://gobitcoin.io/en/"},
@@ -59,7 +62,8 @@ var resourcesJson=
 {"item":"Bitrefill","link":"https://www.bitrefill.com/"},
 {"item":"Fold","link":"https://foldapp.com/"},
 {"item":"Gyft","link":"https://gyft.com/bitcoin/"},
-{"item":"Opendime","link":"https://opendime.com/"}
+{"item":"Opendime","link":"https://opendime.com/"},
+{"item":"Coin Hills - Market data","link":"https://www.coinhills.com/"},
     ]
     
 };
