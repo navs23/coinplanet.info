@@ -9,7 +9,7 @@ var helper =require("./helper");
 price.getCryptoExchangeRates=function(){
     return new Promise((resolve,reject)=>{
        
-          var url ='https://api.coinmarketcap.com/v1/ticker/';
+          var url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
           https.get(url,function(res){
              
        
