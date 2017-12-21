@@ -65,8 +65,105 @@ var resourcesJson=
 {"item":"Opendime","link":"https://opendime.com/"},
 {"item":"Coin Hills - Market data","link":"https://www.coinhills.com/"},
     ]
-    
+
 };
+
+var glossaryJson=
+{
+"title":"This quick glossary contains many of the terms used in relation to bitcoin and other crypto currencies.",
+"items":[
+    {
+        item:"bitcoin",
+        description:"The name of the currency unit (the coin), the network, and the software."
+    }
+	,{
+        item:"address",
+        description:"A bitcoin address looks like 1DSrfJdB2AnWaFNgSbv3MZC2m74996JafV. It consists of a string of letters and numbers starting with a “1” (number one). Just like you ask others to send an email to your email address, you would ask others to send you bitcoin to your bitcoin address."
+    }
+	,{
+        item:"bip",
+        description:"Bitcoin Improvement Proposals. A set of proposals that members of the bitcoin community have submitted to improve bitcoin. For example, BIP0021 is a proposalto improve the bitcoin uniform resource identifier (URI) scheme."
+    }
+	
+	,{
+        item:"block",
+        description:"A grouping of transactions, marked with a timestamp, and a fingerprint of the previous block. The block header is hashed to produce a proof of work, thereby validating the transactions. Valid blocks are added to the main blockchain by network consensus."
+    }
+	,{
+        item:"blockchain",
+        description:"A list of validated blocks, each linking to its predecessor all the way to the genesis block."
+    }
+	,{
+        item:"confirmations",
+        description:"Once a transaction is included in a block, it has one confirmation. As soon as another block is mined on the same blockchain, the transaction has two confirmations,and so on. Six or more confirmations is considered sufficient proof that a transaction cannot be reversed."
+    }
+	,{
+        item:"difficulty",
+        description:"A network-wide setting that controls how much computation is required to produce a proof of work."
+    }
+	,{
+        item:"difficulty target",
+        description:"A difficulty at which all the computation in the network will find blocks approximately every 10 minutes."
+    }
+	,{
+        item:"difficulty retargeting",
+        description:"A network-wide recalculation of the difficulty that occurs once every 2,106 blocks and considers the hashing power of the previous 2,106 blocks."
+    }
+	,{
+        item:"fees",
+        description:"The sender of a transaction often includes a fee to the network for processing the requested transaction. Most transactions require a minimum fee of 0.5 mBTC."
+    }
+	,{
+        item:"hash",
+        description:"A digital fingerprint of some binary input."
+    }
+	,{
+        item:"genesis block",
+        description:"The first block in the blockchain, used to initialize the cryptocurrency."
+    }
+	,{
+        item:"miner",
+        description:"A network node that finds valid proof of work for new blocks, by repeated hashing."
+    }
+	,{
+        item:"network",
+        description:"A peer-to-peer network that propagates transactions and blocks to every bitcoin node on the network."
+    }
+	,{
+        item:"Proof-Of-Work",
+        description:"A piece of data that requires significant computation to find. In bitcoin, miners must find a numeric solution to the SHA256 algorithm that meets a network-wide target, the difficulty target."
+    }
+	,{
+        item:"reward",
+        description:"An amount included in each new block as a reward by the network to the miner who found the Proof-Of-Work solution. It is currently 25BTC per block."
+    }
+	,{
+        item:"reward",
+        description:"An amount included in each new block as a reward by the network to the miner who found the Proof-Of-Work solution. It is currently 25BTC per block."
+    }
+	,{
+        item:"secret/pricvate key",
+        description:"The secret number that unlocks bitcoins sent to the corresponding address. A secret key looks like 5J76sF8L5jTtzE96r66Sf8cka9y44wdpJjMwCxR3tzLh3ibVPxh."
+    }
+	,{
+        item:"transaction",
+        description:"An amount included in each new block as a reward by the network to the miner who found the Proof-Of-Work solution. It is currently 25BTC per block."
+    }
+	,{
+        item:"reward",
+        description:"In simple terms, a transfer of bitcoins from one address to another. More precisely,a transaction is a signed data structure expressing a transfer of value. Transactions are transmitted over the bitcoin network, collected by miners, and included into blocks, made permanent on the blockchain."
+    }
+	,{
+        item:"wallet",
+        description:"Software that holds all your bitcoin addresses and secret keys. Use it to send, receive, and store your bitcoin."
+    }
+	
+
+    ]
+
+	
+};
+
 
 data.getData=function(type){
     
@@ -75,7 +172,12 @@ data.getData=function(type){
     else
     return [];
 }
-	 		
 
-    
+
+
+data.getGlossaryItems=function(){
+    return glossaryJson;
+  
+}
+	 		
 }(module.exports))

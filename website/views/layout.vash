@@ -26,7 +26,7 @@
     <script type="text/javascript" src="/javascripts/jquery-comments.min.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-textcomplete.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
-    
+     
     <script src="/socket.io/socket.io.js"></script>            
        @html.block('js')  
 </head>
@@ -49,6 +49,7 @@
          
       <li><a href="/gettingstarted/"><i class="fa fa-leanpub fa-1x" aria-hidden="true"></i>&nbsp;Getting Started</a></li>
       <li><a href="/resources/" ><i class="fa fa-info-circle fa-1x" aria-hidden="true"></i>&nbsp;Resources</a></li>
+      <li><a href="/glossary/" ><i class="fa fa-btc fa-1x" aria-hidden="true"></i>&nbsp;Glossary</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><span class="total_market_cap_usd"></span></a></li>
@@ -94,8 +95,16 @@
                         style="text-align:center;margin:10px;clear:both;font-size:12px;font-weight:bold;padding:5px;color:white;" 
                         href="#" data-toggle="modal" data-target="#aboutus">About us
                     </a>
+                                        &nbsp;|&nbsp;
+                   <a 
+                        style="text-align:center;margin:10px;clear:both;font-size:12px;font-weight:bold;padding:5px;color:white;" 
+                        href="#" data-toggle="modal" data-target="#exchange">Exchange
+                    </a>
+
                     &nbsp;|&nbsp;
                    <i class="liveconnections" style="text-align:center;margin:10px;clear:both;font-size:11px;font-weight:bold;padding:5px;color:white;"></i>
+                   
+                   
             </div>
             <div class="col-md-4">
                 <a href='#' style="text-align:center;clear:both;font-size:10px;color:white;font-style:italic;padding:5px 0;">© 2017 coinplanet.info</a>
@@ -197,6 +206,59 @@ We hope you enjoy being here and find our content of great use!
   
 </div>
 </div>
+<div id="exchange" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:800px;">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-success">Exchange</h3>
+      </div>
+      <div class="container">
+          <div class="row">
+             
+              
+            <div class="setup wizard-step" active="true" data-pos="first">
+                <div class="btn-group">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Separated link</a>
+  </div>
+</div>
+            </div>
+
+           <div class="addresses wizard-step" data-pos="2">
+         addresses
+            </div>
+            
+            <div class="sendFunds wizard-step" data-pos="last">
+             deposit funds
+            </div>
+             
+      </div>
+    </div>
+<div class="modal-footer">
+      
+      <ul class="pager">
+  <li class="previous"><a href="#">Previous</a></li>
+  <li class="next"><a href="#">Next</a></li>
+</ul>
+        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>&nbsp;
+      
+       
+      </div>
+  </div>
+  
+</div>
+</div>
+
 </html>
 <script>
 
@@ -223,20 +285,25 @@ $(document).ready(function(){
   */
   // helper.getGlobalData();  
    
-   socket.on('data', function(connections) {
+    socket.on('data', function(connections) {
  
   $('i.liveconnections').text(connections +' connected users');
 
     
 });
 
-socket.on('cache', function(d) {
+    socket.on('cache', function(d) {
  
   updateData(d.cryptoGlobal);
     
 });
   
+    wireEvents();
+    
+    init();
+    
 });
+
 
  setTimeout(function(){
     var url ='/api/getCryptoGloabl/';
@@ -257,6 +324,78 @@ socket.on('cache', function(d) {
     $('span.bitcoin_percentage_of_market_cap').html('BTC % of market cap -  <i font-color:red !important;>'+ numeral(data.bitcoin_percentage_of_market_cap).format('00.00')+ '</i>');
 
             
+     
+ }
+ 
+ function wireEvents(){
+     $('li.previous a').click(function(){
+         
+          var curr = $('div[active="true"]');
+        if ($(curr).data('pos') ==='first') return;
+       
+        var prev = curr.prev('div.wizard-step');
+       
+        
+        if (prev){
+             
+              curr.removeAttr('active');
+              curr.attr('active','false');
+              
+              curr.hide();
+              prev.attr('active','true');
+              prev.show();
+        }
+         
+       
+     });
+     
+      $('li.next a').click(function(){
+         
+        var curr = $('div[active="true"]');
+        if ($(curr).data('pos') ==='last') return;
+       
+        var next = curr.next('div.wizard-step');
+       
+        
+        if (next){
+             
+              curr.removeAttr('active');
+              curr.attr('active','false');
+              
+              curr.hide();
+              next.attr('active','true');
+              next.show();
+        }
+         
+         
+     });
+     
+ }
+ 
+ function init(){
+     $('div.addresses').hide();
+     $('div.sendFunds').hide();
+     
+     $.ajax(
+            {
+         url:'https://test.evercoin.com/v1/coins',
+         type: "GET",
+         beforeSend: function(xhr){xhr.setRequestHeader('EVERCOIN-API-KEY', '7f878074f09f4f673554f30be51b6a0d');},
+         success: function(data) { 
+             
+             if (data.error !=null) return ($('div.ccy-from').append('<a class="dropdown-item" href="#">' + JSON.stringify(err) + '</a>'));
+             
+            data.result.map(function(item){
+             $('div.ccy-from').append(`
+                    <a class="dropdown-item" href="#">${item.symbol}</a>
+               `);
+                
+               
+           });
+             
+             
+         }
+      });
      
  }
   

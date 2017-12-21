@@ -32,6 +32,13 @@ home.init= function(router){
 	res.render('resources', {title: 'Resources',resources:data.getData("resources")});
 	   
 	  
+	});
+	
+	router.get('/glossary/', function(req, res, next) {
+	 
+	res.render('glossary', {title: 'Bitcoin Glossary',"data":data.getGlossaryItems()});
+	   
+	  
 	});   
 
 	router.get('/api/cryptopricefeed/:searchstr?/:pageIndex?', function(req, res, next) {
@@ -42,8 +49,7 @@ home.init= function(router){
     	if (searchstr !='all')
     	{
     		data = _.filter(req.app.cache.priceData,function(item){
-    	 //	console.log(item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase()));
-    		
+    			
     		return item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase());	
     	 	
     	 });
@@ -51,10 +57,10 @@ home.init= function(router){
     	else
     		data = req.app.cache.priceData;
     	
-		 var temp= getPaginatedItems(data,req.params.pageIndex || 1);
+		 //var temp= getPaginatedItems(data,req.params.pageIndex || 1);
 		
     	
-    	res.send(temp);
+    	res.send(data);
     	
   
 });
@@ -88,6 +94,7 @@ home.init= function(router){
     	
   
 }); 
+
 	router.get('/api/getmostpopular/', function(req, res, next) {
     
 	//"USD","AUD",CAD","CHF","CNY","GBP","INR"
@@ -133,7 +140,6 @@ home.init= function(router){
 	   
 	  
 	});  
-
 
 	router.get('/valuation/', function(req, res, next) {
 	 
