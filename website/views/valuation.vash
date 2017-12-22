@@ -50,14 +50,14 @@
   </div>
   
    <div class="row" style="background-color:none;">
-    <div class="col-md-6" style="background-color:none;">
+   <div class="col-md-6" style="background-color:none;">
     
      </div>
      
    </div>
   
   
-   <div class="row">
+  <div class="row">
   
      
      
@@ -125,15 +125,14 @@
    </table>
     
     </div>
- <div class="row">
-    <div class="md-col-6" style="background-color:none;">
-     
+  <div class="row">
+  <div class="md-col-6" style="background-color:none;">
     
-      <div id="canvas-holder" style="width:30%;float:middle;margin-top:0px;">
+   <div id="canvas-holder" style="width:30%;float:middle;margin-top:0px;">
         <canvas id="chart-area" />
-    </div>
   </div>
-    </div>
+  </div>
+  </div>
 })  
     
    
