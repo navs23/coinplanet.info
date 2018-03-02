@@ -117,18 +117,21 @@
                  </td>
              
                 <td>
+                
                 <select class="tradeDateRange">
-                <option value="1">Last one month</option>
-                 <option value="2">Last tww months</option>
+                <option value="0">all</option>
+                <option value="3">Last 3 months</option>
+                <option value="6">Last 6 months</option>
+                <option value="12">Last 6 months</option>
                 </select>
                 </td>
                 </tr>
                 <tr>
                 <td>
-               <input type="text" class="apikey" placeholder="enter api key"/>
+               <input type="text" class="apikey" placeholder="enter api key" value="YHSE1T8Q-Z55W3H0B-CO3INAPG-L84IKK89"/>
                  </td>
               <td>
-               <input type="text" class="apisecret" placeholder="enter api key secret"/>
+               <input type="text" class="apisecret" placeholder="enter api key secret" value="9dfc9c57a101f77ea1ca96487b78d804c656bb8c2a0e50c3fbcfea53ee4dc8b3fa4fbf09a48cb933a724cceeb88ce156da0f17e8ad179aaade071a0b3687b1a6"/>
                  </td>
                
                 </tr>
@@ -168,28 +171,48 @@ $(document).ready(function(){
  $('table.display').DataTable();
 
 $('button.btn-tradeImport').on('click',function(){
+
+
+  $('div.message').html(null);
+
   var param={}
 
   param.currencyPair= 'all'
-  param.start=new Date(moment().subtract($('select.tradeDateRange').val(), 'months')).getTime() / 1000;
-  param.end=Date.now() / 1000;
+  param.history= $('select.tradeDateRange').val();
   param.key=$('input.apikey').val();
   param.secret=$('input.apisecret').val();
-
-  alert(param);
-  console.log(param);
+  param.endpoint='/api/trade/';
+  
   $.ajax({
   type: "POST",
-  url: url,
+  url: param.endpoint,
   data: param,
   success: function(data){
+    
+    if (data.error){
+      console.log(data.error);
 
-    console.log(data);
-  },
-  dataType: dataType
+      $('div.message').html('<h3 class="text-danger"><i>'+ data.error +'</i></h3>');
+     
+    }
+  //   else
+  //   {
+  //     var cointrackerDb = new localStorageDB("trades", localStorage);
+
+  //     if (!cointrackerDb.tableExists("trades")){
+  //       cointrackerDb.createTable("trades"); 
+
+	//     cointrackerDb.insertOrUpdate("trades", data);
+
+  //     cointrackerDb.commit();
+  //     $('div.message').html('trades imported successfully');
+  //   return false;
+  // }
+    }
+   
 });
-
-  return false;
+ return false;
+  
 });
 
 
