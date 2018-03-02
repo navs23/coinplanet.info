@@ -1,0 +1,223 @@
+
+@html.extend('layout', function(model) {
+
+ @html.block('meta', function(model) {
+    
+    <meta property="title" content="CryptoCurrency,BITCOIN valuation and PnL report | coinplanet.info" />
+    <meta name="description" content="CryptoCurrency valuation, calculate value of portfolio in different currencies | coinplanet.info" />
+     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+     <style type="text/css">
+      .content{
+       width:100% !important;
+       padding:10px;
+      }
+     </style>
+    })
+
+    @html.block('js', function(model) {
+    
+    <script type="text/javascript" src="/javascripts/datatables.min.js"></script>
+    
+    })
+   
+   @html.block('content', function(model) {
+
+     
+<button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades">Import Trades</button>
+     <hr/>
+     <br/>
+     <table id="trades" class="display" width="100%" >
+
+     <thead>
+            <tr>
+                <th>Currency</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>TradeID</th>
+                <th>Order Number</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th>Fee</th>
+                <th>Total</th>
+
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                 <th>Currency</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>TradeID</th>
+                <th>Order Number</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th>Fee</th>
+                <th>Total</th>
+            </tr>
+        </tfoot>
+        <tbody>
+    @model.currencyPairs.forEach(function(cp){
+        
+
+
+      @model.trades[cp].forEach(function(trade){
+        <tr>
+        <td>@cp</td>
+        <td>@trade.date</td>
+        <td>@trade.type</td>
+        <td>@trade.category</td>
+        <td>@trade.tradeID</td>
+        <td>@trade.orderNumber</td>        
+        
+        <td>@trade.rate</td>
+        <td>@trade.amount</td>        
+        <td>@trade.fee</td>
+        <td>@trade.total</td>               
+      </tr>
+          }) 
+
+    }) 
+    </tbody>
+    </table>
+})
+
+    
+   
+   
+})
+
+<div class="modal fade" id="importTrades" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title text-success">Trade Importer</h4>
+        </div>
+        <div class="modal-body">
+          <table  class="table table-striped table-condensed">
+          <thead>
+            <tr>
+               <th>Exchange</th>
+                <th>Date Range</th>
+                             
+                </tr>
+                
+                </thead>
+                <tbody>
+                <tr>
+                <td>
+                <select class="exchange">
+                <option value="poloniex">Poloniex</option>
+              
+                </select>
+                 </td>
+             
+                <td>
+                <select class="tradeDateRange">
+                <option value="1">Last one month</option>
+                 <option value="2">Last tww months</option>
+                </select>
+                </td>
+                </tr>
+                <tr>
+                <td>
+               <input type="text" class="apikey" placeholder="enter api key"/>
+                 </td>
+              <td>
+               <input type="text" class="apisecret" placeholder="enter api key secret"/>
+                 </td>
+               
+                </tr>
+                
+    <tr>
+     <td colspan="2">
+      <div class="message"></div>
+      
+     </td>
+    </tr>     
+
+
+        </tbody>
+    </table>
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>&nbsp;
+           <button type="button" class="btn btn-success btn-tradeImport" data-dismiss="modal">Import</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+<script type="text/javascript">
+/*
+global localStorage
+$
+numeral
+_
+*/
+
+
+
+$(document).ready(function(){
+
+ $('table.display').DataTable();
+
+$('button.btn-tradeImport').on('click',function(){
+  var param={}
+
+  param.currencyPair= 'all'
+  param.start=new Date(moment().subtract($('select.tradeDateRange').val(), 'months')).getTime() / 1000;
+  param.end=Date.now() / 1000;
+  param.key=$('input.apikey').val();
+  param.secret=$('input.apisecret').val();
+
+  alert(param);
+  console.log(param);
+  $.ajax({
+  type: "POST",
+  url: url,
+  data: param,
+  success: function(data){
+
+    console.log(data);
+  },
+  dataType: dataType
+});
+
+  return false;
+});
+
+
+
+});
+
+
+
+function downloadCSV(args) {  
+        var data, filename, link;
+       
+        if (args.csv == null) return;
+
+        filename = args.filename || 'coins.csv';
+
+        if (!args.csv.match(/^data:text\/csv/i)) {
+            args.csv = 'data:text/csv;charset=utf-8,' + args.csv;
+        }
+        data = encodeURI(args.csv);
+
+        link = document.createElement('a');
+        link.setAttribute('href', data);
+        link.setAttribute('download', filename);
+        link.click();
+    }
+</script>
+ 
+
+
+ 
+           

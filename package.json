@@ -26,6 +26,7 @@
     "moment": "^2.18.1",
     "morgan": "~1.8.1",
     "numeral": "^2.0.6",
+    "poloniex-api": "^1.2.4",
     "poloniex.js": "0.0.7",
     "promise-poller": "^1.5.2",
     "serve-favicon": "^2.4.5",
