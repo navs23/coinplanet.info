@@ -26,6 +26,8 @@
 <button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades">Import Trades</button>
      <hr/>
      <br/>
+      <i class="fa fa-cog fa-spin fa-2x fa-fw" id="download-spinner"></i>
+      
      <table id="trades" class="display" width="100%" >
 
      <thead>
@@ -37,48 +39,36 @@
                 <th>TradeID</th>
                 <th>Order Number</th>
                 <th>Rate</th>
-                <th>Amount</th>
+                <th>Qty</th>
                 <th>Fee</th>
                 <th>Total</th>
+                <th>@10%</th>
+                <th>@20%</th>
+                <th>@30%</th>
+                <th>Action</th>  
 
             </tr>
         </thead>
         <tfoot>
             <tr>
-                 <th>Currency</th>
+                <th>Currency</th>
                 <th>Date</th>
                 <th>Type</th>
                 <th>Category</th>
                 <th>TradeID</th>
                 <th>Order Number</th>
                 <th>Rate</th>
-                <th>Amount</th>
+                <th>Qty</th>
                 <th>Fee</th>
                 <th>Total</th>
+                <th>@10%</th>
+                <th>@20%</th>
+                <th>@30%</th>
+                 <th>Action</th>  
             </tr>
         </tfoot>
         <tbody>
-    @model.currencyPairs.forEach(function(cp){
-        
-
-
-      @model.trades[cp].forEach(function(trade){
-        <tr>
-        <td>@cp</td>
-        <td>@trade.date</td>
-        <td>@trade.type</td>
-        <td>@trade.category</td>
-        <td>@trade.tradeID</td>
-        <td>@trade.orderNumber</td>        
-        
-        <td>@trade.rate</td>
-        <td>@trade.amount</td>        
-        <td>@trade.fee</td>
-        <td>@trade.total</td>               
-      </tr>
-          }) 
-
-    }) 
+   
     </tbody>
     </table>
 })
@@ -128,10 +118,10 @@
                 </tr>
                 <tr>
                 <td>
-               <input type="text" class="apikey" placeholder="enter api key" value="YHSE1T8Q-Z55W3H0B-CO3INAPG-L84IKK89"/>
+               <input type="text" class="apikey" placeholder="enter api key" />
                  </td>
               <td>
-               <input type="text" class="apisecret" placeholder="enter api key secret" value="9dfc9c57a101f77ea1ca96487b78d804c656bb8c2a0e50c3fbcfea53ee4dc8b3fa4fbf09a48cb933a724cceeb88ce156da0f17e8ad179aaade071a0b3687b1a6"/>
+               <input type="text" class="apisecret" placeholder="enter api key secret" />
                  </td>
                
                 </tr>
@@ -155,7 +145,66 @@
       
     </div>
   </div>
+<div class="modal fade" id="buysell" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title text-success buysell-title">Trade Manager</h4>
+              hi
+        </div>
+        <div class="modal-body">
+          <table  class="table table-striped table-condensed">
+          
+             <tbody>
+                  <tr>
+                <td>Market</td>
+                <td class="buysell-market"></td>
+                 </tr>
+                 <tr>
+                <td>Asset</td>
+                <td class="buysell-asset"></td>
+                 </tr>
+                  <tr>
+                <td>Amount</td>
+                <td class="buysell-amount"></td>
+                 </tr>
+                <tr>
+                <td>Api key</td>
+                <td>
+               <input type="text" class="apikey" required placeholder="enter api key" />
+                 </td>
+                 </tr>
+                 <tr>
+                     <td>Api secret</td>
+              <td>
+               <input type="text" class="apisecret" placeholder="enter api key secret" />
+                 </td>
+               
+                </tr>
+                
+                <tr>
+                 <td colspan="2">
+                  <div class="message"></div>
+                  
+                 </td>
+                </tr>     
 
+
+        </tbody>
+    </table>
+        </div>
+        <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>&nbsp;
+           <button type="button" class="btn btn-success btn-placeTrade" data-dismiss="modal">Confirm</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 <script type="text/javascript">
 /*
 global localStorage
@@ -167,14 +216,23 @@ _
 
 
 $(document).ready(function(){
+    $('#download-spinner').show();
+    setTimeout(function() {
+        loadTrades();
+        
+         $('table.display').DataTable({responsive:true});
+        $('#download-spinner').hide();
+        
+    }, 10);
+ 
 
- $('table.display').DataTable();
+
 
 $('button.btn-tradeImport').on('click',function(){
 
 
-  $('div.message').html(null);
-
+  $('div.message').html('refresing data, please wait...');
+ 
   var param={}
 
   param.currencyPair= 'all'
@@ -195,19 +253,51 @@ $('button.btn-tradeImport').on('click',function(){
       $('div.message').html('<h3 class="text-danger"><i>'+ data.error +'</i></h3>');
      
     }
-  //   else
-  //   {
-  //     var cointrackerDb = new localStorageDB("trades", localStorage);
+     else
+     {
+        $('div.message').html('<h3 class="text-success"><i>trades imported successfully</i></h3>');
+            localStorage.setItem('currencyPairs',JSON.stringify(data.currencyPairs));
+            localStorage.setItem('trades',JSON.stringify(data.trades));
+            
+   }
+    }
+   
+});
+ return false;
+  
+});
 
-  //     if (!cointrackerDb.tableExists("trades")){
-  //       cointrackerDb.createTable("trades"); 
+$('button.btn-placeTrade').on('click',function(){
 
-	//     cointrackerDb.insertOrUpdate("trades", data);
 
-  //     cointrackerDb.commit();
-  //     $('div.message').html('trades imported successfully');
-  //   return false;
-  // }
+  $('div.message').html('placing trade, please wait...');
+ 
+  var param={}
+
+  param.currencyPair= 'all'
+  param.history= $('select.tradeDateRange').val();
+  param.key=$('input.apikey').val();
+  param.secret=$('input.apisecret').val();
+  param.endpoint='/api/trade/';
+  
+  $.ajax({
+  type: "POST",
+  url: param.endpoint,
+  data: param,
+  success: function(data){
+    
+    if (data.error){
+      console.log(data.error);
+
+      $('div.message').html('<h3 class="text-danger"><i>'+ data.error +'</i></h3>');
+     
+    }
+     else
+     {
+        $('div.message').html('<h3 class="text-success"><i>Order placed successfully</i></h3>');
+            
+            
+   }
     }
    
 });
@@ -216,7 +306,20 @@ $('button.btn-tradeImport').on('click',function(){
 });
 
 
+$('#buysell').on('show.bs.modal', function(e) {
 
+    //get data-id attribute of the clicked element
+    var trade = $(e.relatedTarget).data('trade');
+     $(e.currentTarget).find('h4.buysell-title').html('Trade Manager');
+    
+    var market = trade.currencyPair.split('_')[0];
+    var asset=trade.currencyPair.split('_')[1];
+    $(e.currentTarget).find('td.buysell-market').html(market);
+    //populate the textbox
+    $(e.currentTarget).find('td.buysell-asset').html(asset);
+    $(e.currentTarget).find('td.buysell-amount').html(trade.amount);
+    
+});
 });
 
 
@@ -237,6 +340,87 @@ function downloadCSV(args) {
         link.setAttribute('href', data);
         link.setAttribute('download', filename);
         link.click();
+    }
+    function loadTrades(){
+        var currencyPairs = JSON.parse(localStorage.getItem('currencyPairs'))||[];
+        var trades = JSON.parse(localStorage.getItem('trades'));
+        
+         currencyPairs.map(function(cp){
+        
+                trades[cp].map(function(item){
+                var trade=item;
+                trade.currencyPair=cp;
+                var perc=(item.rate * 1.1).toFixed(8);
+                trade.valueAt10P=perc;
+                var at10PHtml=`
+                <a 
+                class="buysell" 
+                href="#" 
+                data-toggle="modal" 
+                data-price="${perc}" 
+                data-trade='${JSON.stringify(trade)}' 
+                data-target="#buysell">
+                ${trade.valueAt10P}
+                </a>`;
+                
+             
+                perc=(item.rate * 1.2).toFixed(8);
+                
+                trade.valueAt20P=perc;
+                
+                var at20PHtml=`
+                <a 
+                class="buysell" 
+                href="#" 
+                data-toggle="modal" 
+                data-price="${perc}" 
+                data-trade='${JSON.stringify(trade)}' 
+                data-target="#buysell">
+                ${trade.valueAt20P}
+                </a>`;
+                
+                 perc=(item.rate * 1.3).toFixed(8);
+                
+                trade.valueAt30P=perc;
+                
+                var at30PHtml=`
+                <a 
+                class="buysell" 
+                href="#" 
+                data-toggle="modal" 
+                data-price="${perc}" 
+                data-trade='${JSON.stringify(trade)}' 
+                data-target="#buysell">
+                ${trade.valueAt30P}
+                </a>`;
+                
+                
+               
+              
+               
+                $('table.display tbody').append(`
+                <tr>
+                <td>${cp}</td>
+                <td>${trade.date}</td>
+                <td>${trade.type}</td>
+                <td>${trade.category}</td>
+                <td>${trade.tradeID}</td>
+                <td>${trade.orderNumber}</td>        
+                
+                <td>${trade.rate}</td>
+                <td>${trade.amount}</td>        
+                <td>${trade.fee}</td>
+                <td>${trade.total}</td>
+                <td>${at10PHtml}</td>
+                <td>${at20PHtml}</td>
+                <td>${at30PHtml}</td>
+                <td>Buy</td>
+              </tr>
+                `);
+          }) 
+
+            }) 
+        
     }
 </script>
  

@@ -10,5 +10,11 @@
         return TradingApi.create(config.key, config.secret).returnTradeHistory(config)
 //        return tradingApi.returnTradeHistory(config);
     }
+    
+    exchange.buy=function(param){
+        
+         return TradingApi.create(param.key, param.secret).buy(param)
+    }
+    
 }(module.exports))
 

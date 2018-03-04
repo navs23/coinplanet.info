@@ -316,3 +316,7 @@ i[changeType="pos"]
    color: green; 
     
 }
+a.buysell{
+    font-style: italic;
+    font-weight: bold;
+}
