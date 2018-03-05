@@ -320,3 +320,6 @@ a.buysell{
     font-style: italic;
     font-weight: bold;
 }
+i.buysell-total{
+    font-weight: bold;
+}

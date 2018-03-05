@@ -37,7 +37,7 @@
                res.render('trades', {title: 'Trade Manager',error:null ,currencyPairs:[],trades:[]});
       
     });    
-    router.post('/api/trade/', function(req, res, next) {
+    router.post('/api/returnTradeHistory/', function(req, res, next) {
         var param=req.body;
         if(param.history==0) param.history=60;
         param.start=new Date( moment().subtract(param.history || 3, 'months')).getTime() / 1000;
@@ -66,6 +66,38 @@
     
    
  });    
+
+ // orders
+ router.post('/api/returnOpenOrders/', function(req, res, next) {
+  var param=req.body;
+  if(param.history==0) param.history=60;
+  param.start=new Date( moment().subtract(param.history || 3, 'months')).getTime() / 1000;
+  param.end=new Date(Date.now).getTime() / 1000
+  param.currencyPairs='all'
+
+  trader.returnOpenOrders(param)
+     .then(response => {
+       var ordersJson=JSON.parse(response.body);
+       
+        if (!ordersJson.error)           
+          res.send({title: 'Open Orders',error:null ,orders:ordersJson});
+        else {
+          res.send({title: 'Open Orders',error:ordersJson.error ,orders:[]});  
+        }
+     }
+   )
+   .catch(
+       
+       err => {
+          console.error(err);
+           res.send({title: 'Open Orders',trades:[],error:err });
+       })
+    
+
+
+
+
+});    
     
           
     }
