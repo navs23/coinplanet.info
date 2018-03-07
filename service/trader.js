@@ -13,7 +13,7 @@
     
     exchange.buy=function(param){
         //{ currencyPair, amount, rate, fillOrKill, immediateOrCancel, postOnly }
-         return TradingApi.create(param.key, param.secret).buy(param)
+         return TradingApi.create(param.key, param.secret).buy(param);
     }
     exchange.sell=function(param){
         //{ currencyPair, amount, rate, fillOrKill, immediateOrCancel, postOnly }
@@ -21,6 +21,7 @@
     }
     exchange.returnOpenOrders=function(param){
         //{ currencyPair }
+        console.log(param);
          return TradingApi.create(param.key, param.secret).returnOpenOrders(param)
     }
     

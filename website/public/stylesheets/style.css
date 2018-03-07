@@ -276,8 +276,8 @@ list-style: none;
     float: left;
     
 }
-#lbl-valuation-usd,
-    
+#lbl-valuation-usd
+    {
     font-size: 1.2em;
     font-weight:bold;
   
@@ -318,8 +318,21 @@ i[changeType="pos"]
 }
 a.buysell{
     font-style: italic;
-    font-weight: bold;
+    color: black;
+    
 }
 i.buysell-total{
-    font-weight: bold;
+    font-weight: normal;
+    color:#00B7FF;
 }
+.btn-tab{
+margin-left:20px;margin-top:10px;margin-bottom:20px;
+}
+
+div.row{
+margin-top:10px;
+
+}
+
+  .profit {
+    background-color: beige  }

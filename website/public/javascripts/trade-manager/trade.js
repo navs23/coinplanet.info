@@ -8,15 +8,64 @@ _
 $(document).ready(function(){
     $('#download-spinner').show();
     setTimeout(function() {
-        loadTrades();
+        renderTrades();
         
-         $('table.display').DataTable({responsive:true});
+        $('table.display').DataTable({responsive:true});
         $('#download-spinner').hide();
         
     }, 10);
  
 
+$('a.tabs').on('click',function(e){
 
+    $('#download-spinner').show();
+   var tab=$(this).attr('type');
+   if ($('table.display').DataTable())
+    $('table.display').DataTable().destroy();
+    $('div.page-content').empty();
+
+if(tab=="trades"){
+    
+    
+    $('div.container').find('li').removeClass('active');
+    $('#tabTrades').addClass('active');
+    setTimeout(function(){
+        renderTrades();
+        $('table.display').DataTable({responsive:true});
+        $('#download-spinner').hide();
+    },1*500);
+    
+    
+}
+else if(tab=="orders"){
+    
+    $('div.container').find('li').removeClass('active');
+    $('#tabOrders').addClass('active');
+    setTimeout(function(){
+        renderOrders();
+        $('table.display').DataTable({responsive:true});
+        $('#download-spinner').hide();
+    },1*500);
+    
+    
+}
+else if(tab=="config"){
+    //$('table.display').DataTable().destroy();
+   $('div.container').find('li').removeClass('active');
+    
+   $('#config').addClass('active');
+    setTimeout(function(){
+        loadConfig();
+        
+        $('#download-spinner').hide();
+    },1*500);
+    
+    
+}
+//loadConfig
+
+
+});
 
 $('button.btn-tradeImport').on('click',function(){
 
@@ -26,11 +75,28 @@ $('button.btn-tradeImport').on('click',function(){
   var param={}
 
   param.currencyPair= 'all'
-  param.history= $('select.tradeDateRange').val();
-  param.key=$('input.apikey').val();
-  param.secret=$('input.apisecret').val();
+  param.history= $('form#tradeImporter').find('select.tradeDateRange').val();
+  param.key=$('form#tradeImporter').find('input.apikey').val();
+  param.secret=$('form#tradeImporter').find('input.apisecret').val();
   param.endpoint='/api/returnTradeHistory/';
   
+  if (!param.history)
+  {
+    $('div.message').html('invalid trade import period');
+      return false;
+  }
+  else if (!param.key || param.key.length<15)
+  {
+    $('div.message').html('invalid key/secret');
+      return false;
+  }
+  else if (!param.key || param.key.length<15)
+  {
+    $('div.message').html('invalid key/secret');
+      return false;
+  }
+
+
   $.ajax({
   type: "POST",
   url: param.endpoint,
@@ -65,17 +131,27 @@ $('button.btn-openOrderImport').on('click',function(){
     var param={}
   
     param.currencyPair= 'all'
-    param.history= $('select.tradeDateRange').val();
-    param.key=$('input.apikey').val();
-    param.secret=$('input.apisecret').val();
+    param.key=$('form#openOrders').find('input.apikey').val();
+    param.secret=$('form#openOrders').find('input.apisecret').val()
     param.endpoint='/api/returnOpenOrders/';
     
+    if (!param.key || param.key.length<15)
+    {
+      $('div.message').html('invalid key/secret');
+        return false;
+    }
+    else if (!param.key || param.key.length<15)
+    {
+      $('div.message').html('invalid key/secret');
+        return false;
+    }
+
     $.ajax({
     type: "POST",
     url: param.endpoint,
     data: param,
     success: function(data){
-      
+      console.log(data.openOders);
       if (data.error){
         console.log(data.error);
   
@@ -86,8 +162,10 @@ $('button.btn-openOrderImport').on('click',function(){
        {
           $('div.message').html('<h3 class="text-success"><i>orders imported successfully</i></h3>');
               
-              localStorage.setItem('orders',JSON.stringify(data.orders));
-              
+              localStorage.setItem('orders',JSON.stringify(data.openOders));
+              //orderNumber: "8513540944", type: "sell", rate: "0.00000060", startingAmount: "50000.00000000", amount: "50000.00000000", …}
+              renderOrders();
+            
      }
       }
      
@@ -100,17 +178,16 @@ $('button.btn-openOrderImport').on('click',function(){
 $('input.btn-placeTrade').on('click',function(){
 
 
-  $('div.message').html('placing trade, please wait...');
+  $('div.message').html('placing sell order, please wait...');
  
   var param={}
   //{ currencyPair, amount, rate, fillOrKill, immediateOrCancel, postOnly }
   param.currencyPair= 'all'
-  param.amount= $('input.buysell-qty').val();
-  param.rate= $('input.buysell-rate').val();
-  param.history= $('select.tradeDateRange').val();
-  param.key=$('input.apikey').val();
-  param.secret=$('input.apisecret').val();
-  param.endpoint='/api/trade/sell/';
+  param.amount= $('form#buysell').find('input.buysell-qty').val();
+  param.rate= $('form#buysell').find('input.buysell-rate').val();
+  param.key=$('form#buysell').find('input.apikey').val();
+  param.secret=$('form#buysell').find('input.apisecret').val();
+  param.endpoint='/api/sell/';
     
   if (!param.amount || param.amount<=0)
   {
@@ -127,6 +204,8 @@ $('input.btn-placeTrade').on('click',function(){
     $('div.message').html('invalid key/secret');
       return false;
   }
+  console.log(param);
+  // make ajax call
   $.ajax({
   type: "POST",
   url: param.endpoint,
@@ -151,14 +230,24 @@ $('input.btn-placeTrade').on('click',function(){
  return false;
   
 });
+$('#importTrades').on('show.bs.modal', function(e) {
 
-
+   populateApiKey(e);
+         
+    
+});
+$('#importOpenOrders').on('show.bs.modal', function(e) {
+    
+    populateApiKey(e);
+          
+     
+ });
 $('#buysell').on('show.bs.modal', function(e) {
 
     //get data-id attribute of the clicked element
     var trade = $(e.relatedTarget).data('trade');
     trade.price=$(e.relatedTarget).data('price');
-     $(e.currentTarget).find('h4.buysell-title').html('Trade Manager : '+ trade.percText);
+     $(e.currentTarget).find('h4.buysell-title').html('You are about to place a sell order '+ trade.percText  );
     
     var market = trade.currencyPair.split('_')[0];
     var asset=trade.currencyPair.split('_')[1];
@@ -169,6 +258,7 @@ $('#buysell').on('show.bs.modal', function(e) {
     $(e.currentTarget).find('input.buysell-rate').val(trade.price);
     $(e.currentTarget).find('i.buysell-total').html(trade.price * trade.amount);
     
+    populateApiKey(e);
     
     
 });
@@ -181,9 +271,61 @@ $('input.buysell-qty').on('change',function(e){
 
 });
 
+
+
+
 });
 
+function populateApiKey(e){
 
+    $(e.currentTarget).find('input.apikey').val('');
+    $(e.currentTarget).find('input.apisecret').val('');
+    var config=JSON.parse(localStorage.getItem('config'));
+    if(config)
+    {
+        var item=_.find(config["poloniex"]["configItems"],{"item":"apikey"});
+        if (item)
+            $(e.currentTarget).find('input.apikey').val(item.value);
+        
+        item=_.find(config["poloniex"]["configItems"],{"item":"apisecret"});
+        if (item)
+            $(e.currentTarget).find('input.apisecret').val(item.value);
+        
+    }
+}
+
+function saveConfig(e){
+    var config={}
+    var tmp={ }
+    
+    var exchange=$('div#divConfig').find('select.exchange').val();
+
+    //tmp.exchange =exchange
+    tmp.configItems=[];
+    if ($('div#divConfig').find('input.apikey').val())
+    {
+        tmp.configItems.push({
+            item:"apikey",
+            value:$('div#divConfig').find('input.apikey').val()
+
+        });
+    } 
+    if ($('div#divConfig').find('input.apisecret').val())
+    {
+        tmp.configItems.push({
+            item:"apisecret",
+            value:$('div#divConfig').find('input.apisecret').val()
+
+        });
+    } 
+    config[exchange]=tmp;
+    localStorage.removeItem('config'); 
+    localStorage.setItem('config',JSON.stringify(config));
+    loadConfig();
+}
+function deleteConfig(e){
+    localStorage.removeItem('config');
+}
 
 function downloadCSV(args) {  
         var data, filename, link;
@@ -203,31 +345,54 @@ function downloadCSV(args) {
         link.click();
     }
 
-    function loadTrades(){
-        return;
+    function renderTrades(){
+       
         var currencyPairs = JSON.parse(localStorage.getItem('currencyPairs'))||[];
         var trades = JSON.parse(localStorage.getItem('trades'));
 
         $('div.page-content').empty();
-        var html =` <table id="trades" class="display" width="100%" >
-        <thead>
-            <tr>
-                <th>Currency</th>
-                <th>Date</th>
-                <th>Type</th>
-                <th>Category</th>
-                <th>TradeID</th>
-                <th>Order Number</th>
-                <th>Rate</th>
-                <th>Qty</th>
-                <th>Fee</th>
-                <th>Total</th>
-                <th>@10%</th>
-                <th>@20%</th>
-                <th>@30%</th>
-                <th>Action</th>  
 
-            </tr>
+        $('div.page-content').append(`<button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades" 
+        style="margin-left:20px;margin-top:10px;margin-bottom:20px;">Import Trades</button>`); 
+     
+        var html =` <table id="dtTable" class="display" width="100%" >
+        <colgroup>
+        <col class="grey" span="10"/>
+        <col class="profit" span="3" />
+        
+        </colgroup>
+        <thead>
+        <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th colspan="3" style="text-align: center;">Profit projection</th>                
+    </tr>
+            <tr>
+            <th>Currency</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>TradeID</th>
+            <th>Order Number</th>
+            <th>Rate</th>
+            <th>Qty</th>
+            <th>Fee</th>
+            <th>Total</th>
+            <th>@10%</th>
+            <th>@20%</th>
+            <th>@30%</th>
+            
+
+        </tr>
+        
         </thead>
         <tfoot>
             <tr>
@@ -243,8 +408,7 @@ function downloadCSV(args) {
                 <th>Total</th>
                 <th>@10%</th>
                 <th>@20%</th>
-                <th>@30%</th>
-                    <th>Action</th>  
+                <th>@30%</th>             
             </tr>
         </tfoot>
         <tbody>
@@ -252,7 +416,7 @@ function downloadCSV(args) {
         </tbody>
         </table>
 `
-$('div.content').append(html);
+$('div.page-content').append(html);
         
          currencyPairs.map(function(cp){
         
@@ -321,10 +485,10 @@ $('div.content').append(html);
                 <td>${trade.amount}</td>        
                 <td>${trade.fee}</td>
                 <td>${trade.total}</td>
-                <td>${at10PHtml}</td>
-                <td>${at20PHtml}</td>
-                <td>${at30PHtml}</td>
-                <td>Buy</td>
+                <td class="profit">${at10PHtml}</td>
+                <td class="profit">${at20PHtml}</td>
+                <td class="profit">${at30PHtml}</td>
+                
               </tr>
                 `);
           }) 
@@ -333,3 +497,162 @@ $('div.content').append(html);
         
     }
 
+/// load orders
+function renderOrders(){
+       
+    var currencyPairs = JSON.parse(localStorage.getItem('currencyPairs'))||[];
+    var data = JSON.parse(localStorage.getItem('orders'));
+    //orderNumber: "8513540944", type: "sell", rate: "0.00000060", startingAmount: "50000.00000000", amount: "50000.00000000", …}
+    $('div.page-content').empty();
+    
+    $('div.page-content').append(`<button class="btn btn-primary" id="aOrderImporter" data-toggle="modal" data-target="#importOpenOrders" style="margin-left:20px;margin-top:10px;margin-bottom:20px;">Import Orders</button>`);
+    var html =`<table id="dtTable" class="display" width="100%" >
+    <thead>
+        <tr>
+            <th>Currency</th>
+            <th>Order Number</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Rate</th>                                    
+            <th>Qty</th>            
+            <th>Total</th>
+           
+
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+        <th>Currency</th>
+        <th>Order Number</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Rate</th>                                    
+        <th>Qty</th>            
+        <th>Total</th>
+        </tr>
+    </tfoot>
+    <tbody>
+
+    </tbody>
+    </table>
+`
+$('div.page-content').append(html);
+//{"orderNumber":"38054813155","type":"sell","rate":"0.00031576","startingAmount":"100.00000000","amount":"100.00000000","total":"0.03157600","date":"2018-03-01 08:41:34","margin":0}
+     currencyPairs.map(function(cp){
+    
+            data[cp].map(function(item){
+            var order=item;
+            order.currencyPair=cp;                                 
+            $('table.display tbody').append(`
+            <tr>
+            <td>${cp}</td>
+            <td>${order.orderNumber}</td>        
+            <td>${order.date}</td>
+            <td>${order.type}</td>                        
+            
+            
+            <td>${order.rate}</td>            
+            <td>${order.amount}</td>
+            <td>${order.total}</td>
+                        
+          </tr>
+            `);
+      }) ;
+
+        }) ;
+    
+}
+
+function loadConfig(){
+    var config=localStorage.getItem('config') ;
+    console.log(config);
+    var showConfig=(config==null)?'style="display:none;"':'';
+    console.log(showConfig);
+  $('div.page-content').empty();
+    var html =`
+    <br/>
+  <div class="container">
+  <div class="row">
+    <div class="col-md-9">
+
+    <div id="divConfig">
+
+    <div class="row">
+      <div class="col-md-3"><strong>Item</strong></div>
+      <div class="col-md-3"><strong>Value</strong></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Exchange</div>
+      <div class="col-md-3">
+      <select class="exchange" style="width:100%">
+      <option value="poloniex">Poloniex</option>
+  
+      </select></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Api Key</div>
+      <div class="col-md-3"> <input type="text" class="apikey" placeholder="enter api key" style="width:100%"/></div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">Secret</div>
+      <div class="col-md-3"><input type="text" class="apisecret"  placeholder="enter api key secret" style="width:100%" /></div>
+    </div>
+    <div class="row">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-success btn-saveConfig" id="btnSaveConfig" onClick="return saveConfig(this);">Save Config</button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-danger btn-removeConfig" id="btnDeleteConfig" onClick="return deleteConfig(this);">Delete Data</button>
+    </div>
+    </div>
+    
+  </div>
+    
+    </div>
+    <div class="col-md-3">
+
+ <textarea col="35" rows="25" ${showConfig}>
+ ${config}
+ </textarea>
+    
+    </div>
+
+  
+  </div>  
+  <div class="row">
+  <p>
+<B>Important Note</B>
+<ul>
+<li>All config items and related data will be stored locally on your computer</li>
+<li>Make sure you are using computer/device that you own</li>
+<li>Follow instructions on your exchange web site for API keys and how to retrieve them</li>
+<li>Deleting data action will remove all config and trade data from your local computer</li>
+<li>Nothing and absolutely nothing will be saved on the server</li>
+<li>Don't forget to donate few satoshi's/latoshi's to keep the development going so that we can add more exciting stuff</li>
+<li>Most importantly dont invest what you can't afford to loose</li>
+<li>Helping you to get rich with less efforts</li>
+</ul>
+</p>
+  </div>
+</div>
+
+`;
+
+$('div.page-content').append(html);
+
+renderConfig();
+
+}
+
+function renderConfig(){
+
+   // var config = localStorage.getItem('orders');
+   // console.log(config);
+  //  $('div.page-content').append('<div class="text-right">hi</div>');
+
+}
+// extension method
+$.fn.switchClass = function(a, b){
+    var t = $(this).hasClass(a);
+      $(this).addClass( t ? b : a ).removeClass( t ? a : b );
+  }

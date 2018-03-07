@@ -8,33 +8,8 @@
     
     exchnage.init= function(router){
         
-        /* GET home page. */
-
        router.get('/trade/', function(req, res, next) {
-           /*
-           let filter={
-            currencyPair: 'all',
-            start: new Date('2017-01-01 00:00:00').getTime() / 1000,
-            end: new Date('2018-02-28 05:43:30').getTime() / 1000
-          }
-        trader.returnTradeHistory(filter)
-              .then(response => {
-                var tradesJson=JSON.parse(response.body);
-                var currencyPairs=_.keys(tradesJson); 
-               // console.log(currencyPairs);
-                res.render('trades', {title: 'Trade Manager',error:null ,currencyPairs:currencyPairs,trades:tradesJson});
-              }
-            )
-            .catch(
-                
-                err => {
-                        console.error(err);
-                    res.render('trades', {title: 'Trade Manager',trades:[],error:err,currencyPairs:[] });
-                })
-             
-                */
-     
-               res.render('trades', {title: 'Trade Manager',error:null ,currencyPairs:[],trades:[]});
+         res.render('trades', {title: 'Trade Manager',error:null ,currencyPairs:[],trades:[]});
       
     });    
     router.post('/api/returnTradeHistory/', function(req, res, next) {
@@ -61,44 +36,80 @@
                  res.send({title: 'Trade history',trades:[],error:err,currencyPairs:[] });
              })
           
-
-  
-    
-   
  });    
 
  // orders
  router.post('/api/returnOpenOrders/', function(req, res, next) {
   var param=req.body;
-  if(param.history==0) param.history=60;
-  param.start=new Date( moment().subtract(param.history || 3, 'months')).getTime() / 1000;
-  param.end=new Date(Date.now).getTime() / 1000
-  param.currencyPairs='all'
-
-  trader.returnOpenOrders(param)
-     .then(response => {
-       var ordersJson=JSON.parse(response.body);
-       
-        if (!ordersJson.error)           
-          res.send({title: 'Open Orders',error:null ,orders:ordersJson});
-        else {
-          res.send({title: 'Open Orders',error:ordersJson.error ,orders:[]});  
-        }
-     }
-   )
-   .catch(
-       
-       err => {
-          console.error(err);
-           res.send({title: 'Open Orders',trades:[],error:err });
-       })
+   trader.returnOpenOrders(param)
+  .then(response => {
     
+    var ordersJson=JSON.parse(response.body);
+    var currencyPairs=_.keys(ordersJson); 
 
-
-
-
+     if (ordersJson.error)           
+      res.send({title: 'Your Open Orders',error:ordersJson.error ,currencyPairs:[],openOders:[]});              
+     else 
+        res.send({title: 'Your Open Orders',error:null ,currencyPairs:currencyPairs,openOders:ordersJson});     
+  }
+)
+.catch(
+    
+    err => {
+       console.error(err);
+        res.send({title: 'Your Open Orders',openOders:[],error:err,currencyPairs:[] });
+    })
+ 
 });    
+
+// buy
+router.post('/api/buy/', function(req, res, next) {
+  var param=req.body;
+   trader.buy(param)
+  .then(response => {
     
+    var orderJson=JSON.parse(response.body);
+     if (ordersJson.error)           
+      res.send({title: 'Your order details',error:orderJson.error });              
+     else 
+        res.send({title: 'Your order details',error:null,order:orderJson});     
+  }
+)
+.catch(
+    
+    err => {
+       console.error(err);
+        res.send({title: 'Your Open Orders',openOders:[],error:err,currencyPairs:[] });
+    })
+ 
+});    
+
+
+//sell
+
+
+
+router.post('/api/sell/', function(req, res, next) {
+  var param=req.body;
+   trader.sell(param)
+  .then(response => {
+    
+    var orderJson=JSON.parse(response.body);
+     if (ordersJson.error)           
+      res.send({title: 'Your order details',error:orderJson.error });              
+     else 
+        res.send({title: 'Your order details',error:null,order:orderJson});     
+  }
+)
+.catch(
+    
+    err => {
+       console.error(err);
+        res.send({title: 'Your Open Orders',openOders:[],error:err,currencyPairs:[] });
+    })
+ 
+});    
+
           
     }
         
