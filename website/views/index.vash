@@ -179,7 +179,7 @@
    
     helper.showAll(3);
     
-    helper.loadNews();
+    //helper.loadNews();
     
     
    $("#search").keyup(function() {
@@ -318,7 +318,7 @@
   
   setTimeout(function() {
       
-    helper.loadNews();
+   // helper.loadNews();
          
    
     

@@ -5,7 +5,7 @@ var storage = function(){
     return {
         saveItem:function(exchange,key,value){
             var db=localStorage.getItem(db_name) || '{}';
-            data=JSON.parse(db);      
+            var data=JSON.parse(db);      
 
             if (!data[exchange]){
                 data[exchange]={}
@@ -26,10 +26,11 @@ var storage = function(){
            },
         getItem:function(exchange,key){  
             var db=localStorage.getItem(db_name) || '{}'
-
+            //if (db)
             var data=JSON.parse(db);
-            console.log(exchange);
-            return data[exchange][key]
+           // console.log(exchange
+           if (data[exchange]) return data[exchange][key];
+           else null;
               },
         removeAll:function(){
             localStorage.removeItem(db_name)

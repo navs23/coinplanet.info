@@ -390,9 +390,15 @@ function downloadCSV(args) {
     function renderTrades(){
        
         //var currencyPairs = JSON.parse(localStorage.getItem('tradeCurrencyPairs'))||[];
-        var currencyPairs = JSON.parse(storage.getItem("poloniex",'tradeCurrencyPairs'))||[];
-        //var trades = JSON.parse(localStorage.getItem('trades'));
-        var trades = JSON.parse(storage.getItem("poloniex",'trades'))||[];
+        var tmp=storage.getItem("poloniex",'tradeCurrencyPairs');
+        var currencyPairs;
+        currencyPairs=(tmp)?JSON.parse(tmp):[];
+       
+       
+       tmp=storage.getItem("poloniex",'trades');
+       var trades=(tmp)?JSON.parse(tmp):[];
+        //var trades = JSON.parse()||[];
+        
         console.log(currencyPairs);
         $('div.page-content').empty();
 
