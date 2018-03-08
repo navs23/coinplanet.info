@@ -42,9 +42,11 @@ else if(tab=="orders"){
     $('div.container').find('li').removeClass('active');
     $('#tabOrders').addClass('active');
     setTimeout(function(){
+
         renderOrders();
         $('table.display').DataTable({responsive:true});
         $('#download-spinner').hide();
+
     },1*500);
     
     
@@ -55,7 +57,7 @@ else if(tab=="config"){
     
    $('#config').addClass('active');
     setTimeout(function(){
-        loadConfig();
+        loadConfig('poloniex');
         
         $('#download-spinner').hide();
     },1*500);
@@ -73,8 +75,8 @@ $('button.btn-tradeImport').on('click',function(){
   $('div.message').html('refresing data, please wait...');
  
   var param={}
-
   param.currencyPair= 'all'
+  param.exchange=$('form#tradeImporter').find('select.exchange').val();
   param.history= $('form#tradeImporter').find('select.tradeDateRange').val();
   param.key=$('form#tradeImporter').find('input.apikey').val();
   param.secret=$('form#tradeImporter').find('input.apisecret').val();
@@ -111,9 +113,16 @@ $('button.btn-tradeImport').on('click',function(){
     }
      else
      {
+        
         $('div.message').html('<h3 class="text-success"><i>trades imported successfully</i></h3>');
-            localStorage.setItem('currencyPairs',JSON.stringify(data.currencyPairs));
-            localStorage.setItem('trades',JSON.stringify(data.trades));
+            
+            storage.saveItem(param.exchange,"tradeCurrencyPairs",data.currencyPairs);
+            storage.saveItem(param.exchange,"trades",data.trades);
+            //localStorage.setItem('tradeCurrencyPairs',JSON.stringify(data.currencyPairs));
+            //localStorage.setItem('trades',JSON.stringify(data.trades));
+
+            renderTrades();
+            $('table.display').DataTable({responsive:true});
             
    }
     }
@@ -129,7 +138,7 @@ $('button.btn-openOrderImport').on('click',function(){
     $('div.message').html('refresing data, please wait...');
    
     var param={}
-  
+    param.exchange=$('div#importOpenOrders').find('select.exchange').val();
     param.currencyPair= 'all'
     param.key=$('form#openOrders').find('input.apikey').val();
     param.secret=$('form#openOrders').find('input.apisecret').val()
@@ -151,7 +160,7 @@ $('button.btn-openOrderImport').on('click',function(){
     url: param.endpoint,
     data: param,
     success: function(data){
-      console.log(data.openOders);
+      console.log(data);
       if (data.error){
         console.log(data.error);
   
@@ -161,10 +170,15 @@ $('button.btn-openOrderImport').on('click',function(){
        else
        {
           $('div.message').html('<h3 class="text-success"><i>orders imported successfully</i></h3>');
-              
+
+            storage.saveItem(param.exchange,"orderCurrencyPairs",data.currencyPairs);
+            storage.saveItem(param.exchange,"orders",data.openOders);
+            /*  localStorage.setItem('orderCurrencyPairs',JSON.stringify(data.currencyPairs));
               localStorage.setItem('orders',JSON.stringify(data.openOders));
+              */
               //orderNumber: "8513540944", type: "sell", rate: "0.00000060", startingAmount: "50000.00000000", amount: "50000.00000000", …}
               renderOrders();
+              $('table.display').DataTable({responsive:true});
             
      }
       }
@@ -178,18 +192,39 @@ $('button.btn-openOrderImport').on('click',function(){
 $('input.btn-placeTrade').on('click',function(){
 
 
-  $('div.message').html('placing sell order, please wait...');
- 
+  $('div.message').html('placing your order, please wait...');
+var market= $('form#buysell').find('td.buysell-market').text();
+var asset= $('form#buysell').find('td.buysell-asset').text();
+
   var param={}
   //{ currencyPair, amount, rate, fillOrKill, immediateOrCancel, postOnly }
-  param.currencyPair= 'all'
+  param.exchange=$('form#buysell').find('select.exchange').val();
+  param.tradeType=$('form#buysell').find('select.tradeType').val();
+  
+  param.currencyPair= market + '_' + asset;
+
   param.amount= $('form#buysell').find('input.buysell-qty').val();
   param.rate= $('form#buysell').find('input.buysell-rate').val();
   param.key=$('form#buysell').find('input.apikey').val();
   param.secret=$('form#buysell').find('input.apisecret').val();
-  param.endpoint='/api/sell/';
-    
-  if (!param.amount || param.amount<=0)
+
+  
+  if (param.tradeType==='buy')
+    param.endpoint='/api/buy/';
+  else if (param.tradeType==='sell')
+    param.endpoint='/api/sell/';
+
+  if (!param.exchange || param.exchange==='')
+  {
+    $('div.message').html('invalid exchange');
+      return false;
+  }
+  else if (!param.tradeType || param.tradeType==='')
+  {
+    $('div.message').html('invalid trade type');
+      return false;
+  }
+  else if (!param.amount || param.amount<=0)
   {
     $('div.message').html('invalid quantity');
       return false;
@@ -206,15 +241,15 @@ $('input.btn-placeTrade').on('click',function(){
   }
   console.log(param);
   // make ajax call
+  //return;
   $.ajax({
   type: "POST",
   url: param.endpoint,
   data: param,
   success: function(data){
-    
+    console.log(data.error);
     if (data.error){
-      console.log(data.error);
-
+      
       $('div.message').html('<h3 class="text-danger"><i>'+ data.error +'</i></h3>');
      
     }
@@ -231,13 +266,13 @@ $('input.btn-placeTrade').on('click',function(){
   
 });
 $('#importTrades').on('show.bs.modal', function(e) {
-
+    $('div#importTrades').find('div.message').html('');
    populateApiKey(e);
          
     
 });
 $('#importOpenOrders').on('show.bs.modal', function(e) {
-    
+    $('div#importOpenOrders').find('div.message').html('');
     populateApiKey(e);
           
      
@@ -245,6 +280,7 @@ $('#importOpenOrders').on('show.bs.modal', function(e) {
 $('#buysell').on('show.bs.modal', function(e) {
 
     //get data-id attribute of the clicked element
+    $('div#buysell').find('div.message').html('');
     var trade = $(e.relatedTarget).data('trade');
     trade.price=$(e.relatedTarget).data('price');
      $(e.currentTarget).find('h4.buysell-title').html('You are about to place a sell order '+ trade.percText  );
@@ -277,17 +313,20 @@ $('input.buysell-qty').on('change',function(e){
 });
 
 function populateApiKey(e){
-
+    var exchange=$(e.currentTarget).find('select.exchange').val()||'poloniex';
     $(e.currentTarget).find('input.apikey').val('');
     $(e.currentTarget).find('input.apisecret').val('');
-    var config=JSON.parse(localStorage.getItem('config'));
+    var config=JSON.parse(storage.getItem(exchange,'config'));
+
+
     if(config)
     {
-        var item=_.find(config["poloniex"]["configItems"],{"item":"apikey"});
+
+        var item=_.find(config["configItems"],{"item":"apikey"});
         if (item)
             $(e.currentTarget).find('input.apikey').val(item.value);
         
-        item=_.find(config["poloniex"]["configItems"],{"item":"apisecret"});
+        item=_.find(config["configItems"],{"item":"apisecret"});
         if (item)
             $(e.currentTarget).find('input.apisecret').val(item.value);
         
@@ -318,13 +357,16 @@ function saveConfig(e){
 
         });
     } 
-    config[exchange]=tmp;
-    localStorage.removeItem('config'); 
-    localStorage.setItem('config',JSON.stringify(config));
-    loadConfig();
+    //config[exchange]=tmp;
+    //localStorage.removeItem('config'); 
+    //localStorage.setItem('config',JSON.stringify(config));
+    storage.saveItem(exchange,'config',tmp)
+    loadConfig(exchange);
 }
 function deleteConfig(e){
-    localStorage.removeItem('config');
+    var exchange=$('div#divConfig').find('select.exchange').val();
+    //localStorage.removeItem('config');
+    storage.removeItem(exchange,'config')
 }
 
 function downloadCSV(args) {  
@@ -347,9 +389,11 @@ function downloadCSV(args) {
 
     function renderTrades(){
        
-        var currencyPairs = JSON.parse(localStorage.getItem('currencyPairs'))||[];
-        var trades = JSON.parse(localStorage.getItem('trades'));
-
+        //var currencyPairs = JSON.parse(localStorage.getItem('tradeCurrencyPairs'))||[];
+        var currencyPairs = JSON.parse(storage.getItem("poloniex",'tradeCurrencyPairs'))||[];
+        //var trades = JSON.parse(localStorage.getItem('trades'));
+        var trades = JSON.parse(storage.getItem("poloniex",'trades'))||[];
+        console.log(currencyPairs);
         $('div.page-content').empty();
 
         $('div.page-content').append(`<button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades" 
@@ -500,8 +544,10 @@ $('div.page-content').append(html);
 /// load orders
 function renderOrders(){
        
-    var currencyPairs = JSON.parse(localStorage.getItem('currencyPairs'))||[];
-    var data = JSON.parse(localStorage.getItem('orders'));
+    // var currencyPairs = JSON.parse(localStorage.getItem('orderCurrencyPairs'))||[];
+    // var data = JSON.parse(localStorage.getItem('orders'));
+    var currencyPairs = JSON.parse(storage.getItem('poloniex','orderCurrencyPairs')||'[]');
+    var data = JSON.parse(storage.getItem('poloniex','orders')||'[]');
     //orderNumber: "8513540944", type: "sell", rate: "0.00000060", startingAmount: "50000.00000000", amount: "50000.00000000", …}
     $('div.page-content').empty();
     
@@ -563,8 +609,11 @@ $('div.page-content').append(html);
     
 }
 
-function loadConfig(){
-    var config=localStorage.getItem('config') ;
+function loadConfig(exchange){
+    //var config=localStorage.getItem('config') ;
+  
+   // var exchange=$('div#divConfig').find('select.exchange').val();
+    var config=storage.getItem(exchange,'config') ;
     console.log(config);
     var showConfig=(config==null)?'style="display:none;"':'';
     console.log(showConfig);
@@ -611,10 +660,9 @@ function loadConfig(){
     </div>
     <div class="col-md-3">
 
- <textarea col="35" rows="25" ${showConfig}>
- ${config}
- </textarea>
-    
+   <pre>
+    <code>${config}</code>
+    </pre>
     </div>
 
   
@@ -623,14 +671,15 @@ function loadConfig(){
   <p>
 <B>Important Note</B>
 <ul>
-<li>All config items and related data will be stored locally on your computer</li>
+<li>All config items and related data stored locally on your computer</li>
 <li>Make sure you are using computer/device that you own</li>
 <li>Follow instructions on your exchange web site for API keys and how to retrieve them</li>
-<li>Deleting data action will remove all config and trade data from your local computer</li>
+<li>Deleting data action will remove all config</li>
 <li>Nothing and absolutely nothing will be saved on the server</li>
 <li>Don't forget to donate few satoshi's/latoshi's to keep the development going so that we can add more exciting stuff</li>
-<li>Most importantly dont invest what you can't afford to loose</li>
-<li>Helping you to get rich with less efforts</li>
+<li>Most importantly don't invest what you can't afford to loose</li>
+<li>Helping you to get rich</li>
+
 </ul>
 </p>
   </div>

@@ -49,6 +49,7 @@ var async=require('async');
                       
                      });     
             }).on('error', (e) => {
+				console.log(e);
             reject(e);
             
             });
@@ -83,11 +84,19 @@ var async=require('async');
 		,*/
 		function(cb){
 			var item={url:'https://www.coindesk.com/',selector:'div.post-info  h3 a'}
-			 news.scrap(item).then(function(newsItems){ 
-		 	cb(null,newsItems);
-		 });
+			 console.log(item);
+			news.scrap(item).then(function(newsItems){ 
+
+		 		cb(null,newsItems);
+		 })
+		 .catch(function(err){
+			console.log(err);
+			cb(err,[]);
+		 })
+		 ;
 		}
 	];
+	console.log(urls);
 	async.series(urls,function(err,data){
 	
 	var news=[];

@@ -28,7 +28,7 @@
     <script type="text/javascript" src="/javascripts/jquery-textcomplete.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
-     
+     <script type="text/javascript" src="/javascripts/storage.js"></script>
     <script src="/socket.io/socket.io.js"></script>            
        @html.block('js')  
 </head>

@@ -1,7 +1,7 @@
 (function(exchnage){
 
     var service = require("./../../service/currentPrice");
-    var trader = require("./../../service/trader");
+    var factory = require("../../exchanges/factory");
     var _=require("underscore");
 
     var moment=require('moment');
@@ -18,14 +18,15 @@
         param.start=new Date( moment().subtract(param.history || 3, 'months')).getTime() / 1000;
         param.end=new Date(Date.now).getTime() / 1000
         
-     trader.returnTradeHistory(param)
+        factory.createExchange(param.exchnage || 'polo')
+          .returnTradeHistory(param)
            .then(response => {
              var tradesJson=JSON.parse(response.body);
              var currencyPairs=_.keys(tradesJson); 
               if (!tradesJson.error)           
-                res.send({title: 'Trade history',error:null ,currencyPairs:currencyPairs,trades:tradesJson});
+                res.send({title: 'Trade history',error:null ,exchange:param.exchnage,currencyPairs:currencyPairs,trades:tradesJson});
               else {
-                res.send({title: 'Trade history',error:tradesJson.error ,currencyPairs:currencyPairs,trades:[]});  
+                res.send({title: 'Trade history',error:tradesJson.error,exchange:param.exchnage, currencyPairs:currencyPairs,trades:[]});  
               }
            }
          )
@@ -41,16 +42,21 @@
  // orders
  router.post('/api/returnOpenOrders/', function(req, res, next) {
   var param=req.body;
-   trader.returnOpenOrders(param)
+  factory.createExchange(param.exchnage || 'polo')
+   .returnOpenOrders(param)
   .then(response => {
     
     var ordersJson=JSON.parse(response.body);
     var currencyPairs=_.keys(ordersJson); 
 
      if (ordersJson.error)           
-      res.send({title: 'Your Open Orders',error:ordersJson.error ,currencyPairs:[],openOders:[]});              
+      res.send({title: 'Your Open Orders',error:ordersJson.error ,
+      exchange:param.exchnage,
+      currencyPairs:[],openOders:[]});              
      else 
-        res.send({title: 'Your Open Orders',error:null ,currencyPairs:currencyPairs,openOders:ordersJson});     
+        res.send({title: 'Your Open Orders',error:null ,
+        exchange:param.exchnage,
+        currencyPairs:currencyPairs,openOders:ordersJson});     
   }
 )
 .catch(
@@ -65,15 +71,17 @@
 // buy
 router.post('/api/buy/', function(req, res, next) {
   var param=req.body;
-   trader.buy(param)
-  .then(response => {
+
+      factory.createExchange(param.exchnage || 'polo')
+      .buy(param)
+        .then(response => {
     
-    var orderJson=JSON.parse(response.body);
-     if (ordersJson.error)           
-      res.send({title: 'Your order details',error:orderJson.error });              
-     else 
-        res.send({title: 'Your order details',error:null,order:orderJson});     
-  }
+            var orderJson=JSON.parse(response.body);
+            if (ordersJson.error)           
+              res.send({title: 'Your order details',error:orderJson.error });              
+            else 
+              res.send({title: 'Your order details',error:null,order:orderJson});     
+    }
 )
 .catch(
     
@@ -91,20 +99,26 @@ router.post('/api/buy/', function(req, res, next) {
 
 router.post('/api/sell/', function(req, res, next) {
   var param=req.body;
-   trader.sell(param)
-  .then(response => {
-    
-    var orderJson=JSON.parse(response.body);
-     if (ordersJson.error)           
-      res.send({title: 'Your order details',error:orderJson.error });              
-     else 
-        res.send({title: 'Your order details',error:null,order:orderJson});     
+  console.log('placing sell order');
+  console.log(param);
+  factory.createExchange(param.exchnage || 'polo')
+    .sell(param)
+    .then(response => {
+      console.log('order placed');
+        var orderJson=JSON.parse(response.body);
+        console.log(orderJson);
+        if (orderJson.error)           
+          res.send({title: 'Error',error:orderJson.error });              
+        else 
+          res.send({title: 'Your order details',error:null,order:orderJson});     
   }
 )
 .catch(
     
     err => {
-       console.error(err);
+      console.log('error occued while placing order');
+      console.log(err);
+       //console.error(err);
         res.send({title: 'Your Open Orders',openOders:[],error:err,currencyPairs:[] });
     })
  
