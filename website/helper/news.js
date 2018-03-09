@@ -1,118 +1,29 @@
 //
-var https=require("https");
-var cheerio = require('cheerio');
-var async=require('async');
+
+
 
 (function(news){
+const NewsAPI = require('newsapi');
+const newsapi = new NewsAPI('89a7e14a30bf4eff8031538728c027ac');
+  news.getNews=function(cb){
 
-    news.scrap=function(param){
-         param.newsItems=param.newsItems || [];
-        return new Promise((resolve,reject)=>{
-        var data;
-        var selector = param.selector;
-        var url =param.url;
-        var newslink;
-        var img;
-        https.get(url,function(res){
-                 res.on('data', (chunk) => {
-                 	
-                 	data += chunk; });
-  
-                res.on('end', () => {
-                  
-                    try{
-                    	var $ = cheerio.load(data);
-    				
-                        $(selector).each(function(i,item){
-                           
-                            newslink = ($(this).closest('a').attr('href') || $(this).find('a').attr('href'));
-                            
-                            param.newsItems.push( 
-                                {
-                                    
-                                    item:$(this).text(),
-                                    newsLink:newslink
-                                  
-                                });
-                            
-                            
-                        });
-                    
-                         resolve(param.newsItems);
-                    }
-                    catch(e){
-                    	
-                    	console.log(e);
-                    	 reject(e);
-                    }
-                      
-                      
-                     });     
-            }).on('error', (e) => {
-				console.log(e);
-            reject(e);
-            
-            });
-        
-        });
-        
-    
-    }
-    news.getNews=function(cb){
-        
-    var urls=[
-/*
-		function(cb){
-			var item={url:'https://cryptocoinsnews.com',selector:'div > h3'}
-			 news.scrap(item).then(function(newsItems){ 
-		 	cb(null,newsItems);
-		 });
-		},	
-		,
-		function(cb){
-			var item={url:'https://cryptoinsider.com/content/category/news/index.html',selector:'div.post-content > h2 > a'}
-			 news.scrap(item).then(function(newsItems){ 
-		 	cb(null,newsItems);
-		 });
-		},
-		function(cb){
-			var item={url:'https://cointelegraph.com/tags/bitcoin',selector:'div.result a'}
-			 news.scrap(item).then(function(newsItems){ 
-		 	cb(null,newsItems);
-		 });
-		}
-		,*/
-		function(cb){
-			var item={url:'https://www.coindesk.com/',selector:'div.post-info  h3 a'}
-			 console.log(item);
-			news.scrap(item).then(function(newsItems){ 
-
-		 		cb(null,newsItems);
-		 })
-		 .catch(function(err){
-			console.log(err);
-			cb(err,[]);
-		 })
-		 ;
-		}
-	];
-	console.log(urls);
-	async.series(urls,function(err,data){
-	
-	var news=[];
-	for(var i =0;i<data.length;i++)
-	{
-	//	console.log(data[i]);
-		for(var k =0;k<data[i].length;k++)
-		{
-			//console.log(data[i][k].item);
-			news.push(data[i][k]);
-			
-		}
-		
-	}
-	cb(null,news);
-	});
-    }
+	newsapi.v2.everything({
+		q: 'bitcoin',
+		//sources: 'bbc-news,the-verge',
+		//domains: 'bbc.co.uk, techcrunch.com',
+		//from: '2017-12-01',
+		//to: '2017-12-12',
+		language: 'en',
+		sortBy: 'publishedAt',
+		page: 5
+	  }).then(response => {
+		console.log(response);
+		return cb(null,response.articles);
+	  })
+	 .catch(function(err){
+		 console.log('error');
+		return cb(err,[]);
+	 });
+  }
   
 }(module.exports))

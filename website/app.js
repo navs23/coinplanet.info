@@ -10,7 +10,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var service = require("../service/currentPrice");
 var _=require("underscore");
-var poller = require('./helper/poller.js');
+//var poller = require('./helper/poller.js');
 var news = require('./helper/news.js');
 var app = express();
 
@@ -30,107 +30,107 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set("cache",cache);
 
 
-  service.getCryptoExchangeRates().then(function(data){
+  // service.getCryptoExchangeRates().then(function(data){
         
-     app.cache.priceData= data;
+  //    app.cache.priceData= data;
      
    
-  })
-  .catch(function(err){
-    console.log(err);
-      app.cache.priceData= [];
-  });
+  // })
+  // .catch(function(err){
+  //   console.log(err);
+  //     app.cache.priceData= [];
+  // });
   
   
-   service.getGlobalData().then(function(data){
+  //  service.getGlobalData().then(function(data){
      
-     console.log('getting gloabl data')  ;
-     app.cache.cryptoGlobal= data;
+  //    console.log('getting gloabl data')  ;
+  //    app.cache.cryptoGlobal= data;
      
      
-  })
-  .catch(function(err){
+  // })
+  // .catch(function(err){
     
-      app.cache.cryptoGlobal= [];
-  });
+  //     app.cache.cryptoGlobal= [];
+  // });
   
-  service.getFiatExchangeRates().then(function(data){
+  // service.getFiatExchangeRates().then(function(data){
        
-     app.cache.fiatPriceData= data;
+  //    app.cache.fiatPriceData= data;
      
     
-  })
-  .catch(function(err){
+  // })
+  // .catch(function(err){
     
-      app.cache.fiatPriceData= [];
-  });
+  //     app.cache.fiatPriceData= [];
+  // });
   
  
 
-  poller.poll({fn:function(){
+  // poller.poll({fn:function(){
     
-      service.getCryptoExchangeRates().then(function(data){
+  //     service.getCryptoExchangeRates().then(function(data){
           
-       app.cache.priceData= data;
+  //      //app.cache.priceData= data;
        
-    })
-    .catch(function(err){
-      console.log(err);
-        app.cache.priceData= [];
-    });
-    //	app.cache.news= [];
+  //   })
+  //   .catch(function(err){
+  //     console.log(err);
+  //       app.cache.priceData= [];
+  //   });
+  //   //	app.cache.news= [];
 
-    	news.getNews(function(err,result){
-    		if(!err)
-    			app.cache.news= result;
-    		else
-    		app.cache.news= [];
-    	});
+  //   	news.getNews(function(err,result){
+  //   		if(!err)
+  //   			app.cache.news= result;
+  //   		else
+  //   		app.cache.news= [];
+  //   	});
     	
-   console.log('event raised');
-   app.emit('cache-refreshed',{}); 
-  }
-    ,interval:(30 * 1000)
+  //  console.log('event raised');
+  //  app.emit('cache-refreshed',{}); 
+  // }
+  //   ,interval:(30 * 1000)
     
-  });
+  // });
   
-  poller.poll({fn:function(){
+  // poller.poll({fn:function(){
     
-       service.getFiatExchangeRates().then(function(data){
+  //      service.getFiatExchangeRates().then(function(data){
          
-       app.cache.fiatPriceData= data;
+  //      app.cache.fiatPriceData= data;
        
-       //console.log(_.findWhere(data,{short:'BTC'}));
-    })
-    .catch(function(err){
-        console.log('error getting fiat price %s',err);
-        app.cache.fiatPriceData= [];
-    });
+  //      //console.log(_.findWhere(data,{short:'BTC'}));
+  //   })
+  //   .catch(function(err){
+  //       console.log('error getting fiat price %s',err);
+  //       app.cache.fiatPriceData= [];
+  //   });
     
-  }
-    ,interval:(60 * 60 * 1000)
+  // }
+  //   ,interval:(60 * 60 * 1000)
     
-  });
+  // });
   
-  poller.poll({fn:function(){
+  // poller.poll({fn:function(){
     
-      service.getGlobalData().then(function(data){
+  //     service.getGlobalData().then(function(data){
        
-       console.log('getting gloabl data')  ;
-       app.cache.cryptoGlobal= data;
+  //      console.log('getting gloabl data')  ;
+  //      app.cache.cryptoGlobal= data;
        
        
-    })
-    .catch(function(err){
+  //   })
+  //   .catch(function(err){
       
-        app.cache.cryptoGlobal= [];
-    });
+  //       app.cache.cryptoGlobal= [];
+  //   });
     
     
-  }
-    ,interval:(30 * 1000)
+  // }
+  //   ,interval:(30 * 1000)
     
-  });
+  // });
 
 
 

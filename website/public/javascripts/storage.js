@@ -18,6 +18,7 @@ var storage = function(){
          },
         removeItem:function(exchange,key){
             var db=localStorage.getItem(db_name) || '{}'
+
             var data=JSON.parse(db);
 
             delete data[exchange][key];
@@ -28,8 +29,13 @@ var storage = function(){
             var db=localStorage.getItem(db_name) || '{}'
 
             var data=JSON.parse(db);
-            console.log(exchange);
-            return data[exchange][key]
+            //console.log(exchange);
+            try{
+                return data[exchange][key]
+            }catch(e){
+                    return [];
+            };
+                
               },
         removeAll:function(){
             localStorage.removeItem(db_name)

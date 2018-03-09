@@ -41,95 +41,99 @@ home.init= function(router){
 	  
 	});   
 
-	router.get('/api/cryptopricefeed/:searchstr?/:pageIndex?', function(req, res, next) {
+// 	router.get('/api/cryptopricefeed/:searchstr?/:pageIndex?', function(req, res, next) {
     
-    	var data;
-    	var searchstr = req.params.searchstr || 'all';
+//     	var data;
+//     	var searchstr = req.params.searchstr || 'all';
     	
-    	if (searchstr !='all')
-    	{
-    		data = _.filter(req.app.cache.priceData,function(item){
+//     	if (searchstr !='all')
+//     	{
+//     		data = _.filter(req.app.cache.priceData,function(item){
     			
-    		return item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase());	
+//     		return item.symbol.toString().toLowerCase().startsWith(searchstr.toLowerCase());	
     	 	
-    	 });
-    	}
-    	else
-    		data = req.app.cache.priceData;
+//     	 });
+//     	}
+//     	else
+//     		data = req.app.cache.priceData;
     	
-		 //var temp= getPaginatedItems(data,req.params.pageIndex || 1);
+// 		 //var temp= getPaginatedItems(data,req.params.pageIndex || 1);
 		
     	
-    	res.send(data);
+//     	res.send(data);
     	
   
-});
+// });
 
-	router.get('/api/getTop20ByVolume?/:pageIndex?/:pageIndex?', function(req, res, next) {
+// 	router.get('/api/getTop20ByVolume?/:pageIndex?/:pageIndex?', function(req, res, next) {
     
-    	var data;
+//     	var data;
     	
-    	 data = _.filter(req.app.cache.priceData,function(item){
-    	 	console.log(item.rank);
-    		return item.rank<=20;
+//     	 data = _.filter(req.app.cache.priceData,function(item){
+//     	 	console.log(item.rank);
+//     		return item.rank<=20;
     	 	
-    	 });
+//     	 });
     	
-		 var temp= getPaginatedItems(data,req.params.pageIndex || 1);
+// 		 var temp= getPaginatedItems(data,req.params.pageIndex || 1);
 		
     	
-    	res.send(temp);
+//     	res.send(temp);
     	
   
-});
+// });
 
-	router.get('/api/fiatpricefeed/', function(req, res, next) {
+// 	router.get('/api/fiatpricefeed/', function(req, res, next) {
     
 	
-		var data = req.app.cache.fiatPriceData || [];
+// 		var data = req.app.cache.fiatPriceData || [];
 		
-		//console.log(data);
-    	//var temp= getPaginatedItems(data.rates,req.params.pageIndex || 1);
-    	res.send(data);
+// 		//console.log(data);
+//     	//var temp= getPaginatedItems(data.rates,req.params.pageIndex || 1);
+//     	res.send(data);
     	
   
-}); 
+// }); 
 
-	router.get('/api/getmostpopular/', function(req, res, next) {
+// 	router.get('/api/getmostpopular/', function(req, res, next) {
     
-	//"USD","AUD",CAD","CHF","CNY","GBP","INR"
+// 	//"USD","AUD",CAD","CHF","CNY","GBP","INR"
 	
-    		var data;
+//     		var data;
     	
-    	 data = _.filter(req.app.cache.fiatPriceData,function(item){
-    	 	console.log(item.rank);
-    		//return item.rank<=20;
+//     	 data = _.filter(req.app.cache.fiatPriceData,function(item){
+//     	 	console.log(item.rank);
+//     		//return item.rank<=20;
     	 	
-    	 });
+//     	 });
     	
 	
 		
     	
-    	res.send(data);
+//     	res.send(data);
     	
   
-}); 
+// }); 
 
-	router.get('/api/getCryptoGloabl/', function(req, res, next) {
+// 	router.get('/api/getCryptoGloabl/', function(req, res, next) {
     
 	
-		var temp = req.app.cache.cryptoGlobal || [];
+// 		var temp = req.app.cache.cryptoGlobal || [];
     	
-    	res.send(temp);
+//     	res.send(temp);
     	
   
-}); 
+// }); 
 
 	router.get('/api/news/', function(req, res, next) {
    
-    	
-    		
-    			res.send(req.app.cache.news || []);
+    	//'https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=89a7e14a30bf4eff8031538728c027ac'
+    	news.getNews(function(err,articles){
+			if(err) return res.send(err)
+			return 	res.send(articles);
+
+		})	
+    	 
     
   
 	}); 
@@ -148,12 +152,12 @@ home.init= function(router){
 	  
 	});  
 	
-	router.get('/socket/', function(req, res, next) {
+	// router.get('/socket/', function(req, res, next) {
 	 
-	res.render('socket', {title: 'socket'});
+	// res.render('socket', {title: 'socket'});
 	   
 	  
-	});  
+	// });  
 	
 	router.get('/api/search/crypto/:symbol', function(req, res, next) {
     

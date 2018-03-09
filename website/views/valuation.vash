@@ -305,12 +305,14 @@ function getData(){
       
        
          var i;
-        
+        console.log(data);
+        var crypto=JSON.parse(storage.getItem("rates","crypto"));
+        var fiat = JSON.parse(storage.getItem("rates","fx"));
          for(var k =0;k<data.length;k++){
-          
+
          var valuation={};
          i=data[k];
-          var temp = _.findWhere(cache.crypto.data,{symbol:i.symbol});
+          var temp = _.findWhere(crypto,{symbol:i.symbol});
           
           if (temp){
            
@@ -322,8 +324,8 @@ function getData(){
            valuation.price_usd=temp.price_usd
            valuation.btc=(temp.price_btc * i.qty);
            valuation.usd=(i.qty * temp.price_usd);
-           valuation.gbp= ((i.qty * temp.price_usd) * cache.fiat.rates.GBP) ;
-           valuation.eur=((i.qty * temp.price_usd) *  cache.fiat.rates.EUR);
+           valuation.gbp= ((i.qty * temp.price_usd) * fiat.GBP) ;
+           valuation.eur=((i.qty * temp.price_usd) *  fiat.EUR);
            
            valuation.percent_change_24h= temp.percent_change_24h;
            valuation.percent_change_7d= temp.percent_change_7d;
@@ -415,30 +417,39 @@ function removeItem(data,item){
 }
 
 function findSymbol(str) {
- var url = '/api/cryptopricefeed/' + str;
- var promise = $.ajax(url);
+
+ //var url = '/api/cryptopricefeed/' + str;
+ //var promise = $.ajax(url);
  
  var $list = $('.sub-menu');
  $list.empty();
  $list.show();
- promise.then(function(result,status){
-  
-  result.data.forEach(function(i,e){
+ //promise.then(function(result,status){
+  var data = JSON.parse(storage.getItem("rates","crypto"));
+  var temp=_.filter(data,function(i){
+
+    return (
+     
+    (i.symbol.toLowerCase().indexOf(str.toLowerCase())>-1)
+    ||
+    (i.name.toLowerCase().indexOf(str.toLowerCase())>-1)
+    )
+  });
+console.log(temp);
+  temp.forEach(function(i,e){
    
    $list.append(`<li><a href='#' onclick="return selectSearchItem(this);" class="search-item" data-symbol="${i.symbol}"> ${i.name} | ${i.symbol}</a></li>`);
    
   
    
-  });
+  //});
   
  });
- promise.catch(function(err){
-  console.log(err);
+//  promise.catch(function(err){
+//   console.log(err);
   
- });
-     
-     
-      console.log('search: ' + str);
+//  });
+     console.log('search: ' + str);
     }
   
 function selectSearchItem(e){
@@ -452,7 +463,7 @@ function selectSearchItem(e){
 }
 
 function save(){
- 
+
  $('div.message').text("");
  
  //var data = (localStorage.portfolio) ? JSON.parse(localStorage.portfolio):[];
@@ -464,8 +475,8 @@ function save(){
  item.qty= $('input.qty').val();
  
  item.date=new Date();
- 
- if (item.symbol.length <3)
+ console.log(item);
+ if (item.symbol.toString().length < 3)
  {
    $('div.message').text('invalid symbol');
    bsave=false;
@@ -476,21 +487,8 @@ function save(){
    bsave=false;
  }
  
- if (bsave)
- {
-  
- var url ='/api/search/crypto/' + item.symbol;
- var promise = $.ajax(url);
- 
- promise.then(function(result,statuscode){
-  
-   if ((result.data.length || 0)==0){
-    
-    $('div.message').text('invalid symbol');
-    return false;
-   }
    
-   // save 
+  // save 
    //removeItem(data,item.symbol);
    // add new item
    //data.push(item);
@@ -498,15 +496,16 @@ function save(){
   // var rows = [item	];
 
 	// create the table and insert records in one go
-	 cointrackerDb.insertOrUpdate("coins", {ID:item.id},item);
+	cointrackerDb.insertOrUpdate("coins", {ID:item.id},item);
 
- cointrackerDb.commit();
+  cointrackerDb.commit();
+  console.log('saved');
 	refreshData();
  return true;
  
- });
+ //});
  
- }
+ //}
  
  return false;
 }

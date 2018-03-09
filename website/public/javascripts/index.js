@@ -8,6 +8,24 @@ var helper=helper || {};
 
 helper.chatlink='https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin';
 
+helper.cacheRates=function(){
+   var url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
+    $.getJSON(url ).then(function(data){
+        storage.saveItem("rates","crypto",data);
+
+    })
+    var url ='https://api.fixer.io/latest?base=USD';
+    $.getJSON(url ).then(function(data){
+        storage.saveItem("rates","fx",data.rates);
+
+    });
+    url ='https://api.coinmarketcap.com/v1/global/';
+    $.getJSON(url ).then(function(data){
+        storage.saveItem("rates","global",data);
+
+    });
+}
+
 helper.renderCryptoData=function(param,e){
  
  
@@ -20,20 +38,20 @@ helper.renderCryptoData=function(param,e){
        
     }
    
-    var baseUrl = param.baseUrl || '/api/cryptopricefeed/' ;
+   // var baseUrl = param.baseUrl || '/api/cryptopricefeed/' ;
+    //https://api.coinmarketcap.com/v1/ticker/?limit=0
     var searchstr = $("#search").text() || "all";
-    var url = baseUrl + searchstr +'/' + (param.index);
-  
-    $.ajax(url ).then(function(result,status){
-      
+    //var url = baseUrl + searchstr +'/' + (param.index);
+    url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
+   // $.getJSON(url ).then(function(data){
+      var data=JSON.parse(storage.getItem("rates","crypto"));
         $('.price-grid').empty();
-        
-        
+                
          var temp='';
          var _userSelectedCrypo=JSON.parse(localStorage.topTenCrypto);
-       
+           //console.log(_userSelectedCrypo) ;
          
-            result.data.map(function(item){
+            data.map(function(item){
                 
                  if (_.contains(_userSelectedCrypo,item.symbol)) {
                     
@@ -52,7 +70,7 @@ helper.renderCryptoData=function(param,e){
                         data-ccy="${item.symbol}"
                         data-priceusd="${item.price_usd}"
                         data-pricebtc="${item.price_btc}"
-                        data-baseurl="${baseUrl}"
+                        data-baseurl="${url}"
                         value="${item.price_btc}"
                         
                         onchange="helper.calculate(this,'crypto');"
@@ -68,7 +86,7 @@ helper.renderCryptoData=function(param,e){
                 
               
              
-    });
+   // });
     
     
    return false;
@@ -112,17 +130,18 @@ helper.renderPagination=function(params){
 
 helper.getFiatRates=function(){
   
-    var url ='api/fiatpricefeed/';
+    //var url ='api/fiatpricefeed/';
+    //var url ='https://api.fixer.io/latest?base=USD';
     var selectedCurrencies = JSON.parse(localStorage.topTenFiat);
-     $.ajax(url ).then(function(result,status){
-
+    // $.getJSON(url ).then(function(result){
+     var fxRates=JSON.parse(storage.getItem("rates","fx"));
       $('.fiatPrice-grid').empty();
         
          var temp=``;
          var rates=[];
          rates.push({key:'USD',val:1});
          
-          _.mapObject(result.rates,function(val,key){
+          _.mapObject(fxRates,function(val,key){
               
               if (_.contains(selectedCurrencies,key)) {
                     rates.push({key:key,val:val});
@@ -159,7 +178,7 @@ helper.getFiatRates=function(){
               
             });
          
-     });
+   //  });
 }
 
 helper.calculate=function(e,ccy,numberFormater){
@@ -303,7 +322,7 @@ else  if (mode==3)
 {
     
     helper.renderCryptoData(param,null);
-     helper.getFiatRates();
+    helper.getFiatRates();
 }
 
 return false;
@@ -397,9 +416,9 @@ helper.populateCurrenciesDropDown=function(dd){
          url ='api/fiatpricefeed/';
          selectedCurrencies = JSON.parse(localStorage.topTenFiat);
          
-          $.ajax(url ).then(function(result,status){
-           
-              _.mapObject(result.rates || result.data,function(val,key){
+         // $.ajax(url ).then(function(result,status){
+           var rates =JSON.parse(storage.getItem("rates","fx"));
+              _.mapObject(rates || [],function(val,key){
                   
                   var option =`<option value="${key}">${key}</option>`;
                  
@@ -416,20 +435,21 @@ helper.populateCurrenciesDropDown=function(dd){
                   
               });
                 
-         });
+        // });
     }
  else if (dd =='crypto')
     {
         $ddAll=$('select.crypto-all');
         $ddSelected=$('select.crypto-selected');
-        url='/api/cryptopricefeed/all/1';
+       // url='/api/cryptopricefeed/all/1';
        // alert($ddAll.children().length);
         selectedCurrencies = JSON.parse(localStorage.topTenCrypto);
         $ddAll.empty();
         $ddSelected.empty();
-         $.ajax(url ).then(function(result,status){
+        var rates =JSON.parse(storage.getItem("rates","crypto"));
+         //$.ajax(url ).then(function(result,status){
            
-              result.data.map(function(item){
+              rates.map(function(item){
                   
                   var option =`<option value="${item.symbol}">${item.symbol}</option>`;
                  // alert(option);
@@ -447,7 +467,7 @@ helper.populateCurrenciesDropDown=function(dd){
                   
               });
                 
-         });
+        // });
         
     }
   
@@ -458,16 +478,33 @@ helper.populateCurrenciesDropDown=function(dd){
 
 helper.loadNews=function(){
     
-     $.ajax('api/news/' ).then(function(data,status){
-        helper.displayNews(data);
-         });
+   //  $.ajax('api/news/' ).then(function(data,status){
+   //     helper.displayNews(data);
+    //     });
+   $.getJSON('/api/news/')
+   .then(function(response){
+        //console.log(response);
+        helper.displayNews(response.articles);
+
+   })
+   
 }
 helper.displayNews=function(data){
     
       $('div.btc-news > ul').empty();
-          for(var i =0;i<data.length;i++){
-              
-              $('div.btc-news > ul').append('<li><a href="' + data[i].newsLink +'" target="_blank">'+data[i].item +'</a></li>');
+     
+          for(var i =0;i<10;i++){
+              var item =data[i];
+               var source=item.source.name;
+              //$('div.btc-news > ul').append(`<li><a href="  ${data[i].url}  target="_blank">$data[i].title +'</a></li>`);
+              $('div.btc-news > ul').append(`<li>
+              <article>
+                <h2>${source}</h2>
+                <p>${item.title}</p>
+            </article>
+            <p>${item.description}</p>
+            </li>
+            `)
               
           }
             

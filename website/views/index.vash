@@ -165,7 +165,7 @@
         socket
 */
   
-    helper.configureLocalStorage();
+   helper.configureLocalStorage();
   $(document).ready(function(){
       
   $.fn.extend({formatNumber :  function(){
@@ -176,10 +176,13 @@
       });
       
   }});
-   
-    helper.showAll(3);
+   helper.cacheRates();
+   setTimeout(function(){
+        helper.showAll(3);
+   },1*1000);
+  
     
-    helper.loadNews();
+  //  helper.loadNews();
     
     
    $("#search").keyup(function() {
@@ -198,25 +201,11 @@
       
   });
   
-  $('a.live-chat').on('click',function(e){
-      
-        
-         $('div.divchat').css({"top":"0","bottom":"0","left":"0","right":"0","position":"absolute"});
-    
-  });
   
  
-  $('a.top20').on('click',function(e){
-   
-   helper.renderCryptoData({baseUrl:'/api/getTop20ByVolume/',index:1},null);
-   return false;
-      
-  });
   
-  $('a.showAll').on('click',function(e){
-        return helper.showAll(1);
-      
-  });
+  
+  
   //
   
  
@@ -325,11 +314,11 @@
   }, 2*1000);
   
   
-  socket.on('cache', function(d) {
+//   socket.on('cache', function(d) {
  
-  helper.displayNews(d.news);
+//   helper.displayNews(d.news);
     
-});
+// });
   
   //commentsInit({commentsArray:commentsArray,usersArray:usersArray, commentsContainer:'#comments-container'});
  

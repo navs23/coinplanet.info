@@ -388,12 +388,27 @@ function downloadCSV(args) {
     }
 
     function renderTrades(){
-       
+        var currencyPairs,trades ;
         //var currencyPairs = JSON.parse(localStorage.getItem('tradeCurrencyPairs'))||[];
-        var currencyPairs = JSON.parse(storage.getItem("poloniex",'tradeCurrencyPairs'))||[];
+        var temp =storage.getItem("poloniex",'tradeCurrencyPairs') ;
+        if (typeof(temp)=='string')
+        {
+            var currencyPairs = JSON.parse(temp);
+        }
+        else
+        currencyPairs =[];
+        temp =storage.getItem("poloniex",'trades') ;
+        if (typeof(temp)=='string')
+        {
+            var trades = JSON.parse(temp);
+        }
+        else
+         trades =[];
+        
+       // var currencyPairs = JSON.parse(temp);
         //var trades = JSON.parse(localStorage.getItem('trades'));
-        var trades = JSON.parse(storage.getItem("poloniex",'trades'))||[];
-        console.log(currencyPairs);
+        //var trades = JSON.parse(storage.getItem("poloniex",'trades'))||[];
+        //console.log(currencyPairs);
         $('div.page-content').empty();
 
         $('div.page-content').append(`<button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades" 
@@ -543,11 +558,24 @@ $('div.page-content').append(html);
 
 /// load orders
 function renderOrders(){
-       
-    // var currencyPairs = JSON.parse(localStorage.getItem('orderCurrencyPairs'))||[];
-    // var data = JSON.parse(localStorage.getItem('orders'));
-    var currencyPairs = JSON.parse(storage.getItem('poloniex','orderCurrencyPairs')||'[]');
-    var data = JSON.parse(storage.getItem('poloniex','orders')||'[]');
+    var currencyPairs,orders;   
+    var temp =storage.getItem("poloniex",'orderCurrencyPairs') ;
+    if (typeof(temp)=='string')
+    {
+        var currencyPairs = JSON.parse(temp);
+    }
+    else
+    currencyPairs =[];
+   // var currencyPairs = JSON.parse(storage.getItem('poloniex','orderCurrencyPairs')||'[]');
+    temp =storage.getItem("poloniex",'orders') ;
+    if (typeof(temp)=='string')
+    {
+        data = JSON.parse(temp);
+    }
+    else
+    data =[];
+   
+   // var data = JSON.parse(storage.getItem('poloniex','orders')||'[]');
     //orderNumber: "8513540944", type: "sell", rate: "0.00000060", startingAmount: "50000.00000000", amount: "50000.00000000", …}
     $('div.page-content').empty();
     

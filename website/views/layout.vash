@@ -29,7 +29,7 @@
     <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
      <script type="text/javascript" src="/javascripts/storage.js"></script>
-    <script src="/socket.io/socket.io.js"></script>            
+
        @html.block('js')  
 </head>
 <body>
@@ -269,7 +269,7 @@ We hope you enjoy being here and find our content of great use!
 /* global $
 */
 
- var socket = io.connect('/');
+ //var socket = io.connect('/');
   
  
 
@@ -288,19 +288,25 @@ $(document).ready(function(){
   */
   // helper.getGlobalData();  
    
-    socket.on('data', function(connections) {
+//     socket.on('data', function(connections) {
  
-  $('i.liveconnections').text(connections +' connected users');
+//   $('i.liveconnections').text(connections +' connected users');
 
     
-});
+// });
 
-    socket.on('cache', function(d) {
+//     socket.on('cache', function(d) {
  
-  updateData(d.cryptoGlobal);
+   setTimeout(function(){
+     console.log('global data');
+     var data = JSON.parse(storage.getItem("rates","global"));
+      console.log(data);
+       updateData(data);
+   },1*1000);
     
-});
-  
+// });
+//https://api.coinmarketcap.com/v1/global/
+  helper.loadNews();
     wireEvents();
     
     init();
@@ -308,26 +314,15 @@ $(document).ready(function(){
 });
 
 
- setTimeout(function(){
-    var url ='/api/getCryptoGloabl/';
-         $.ajax(url ).then(function(data,status){
-         //alert(1);
-           
-            updateData(data);
-         });
-    
-  },1* 1000);
 
  function updateData(data){
+  // console.log(data.total_market_cap_usd);
     $('span.total_market_cap_usd').html('Total market cap USD - <i font-color:red !important;>' + numeral(data.total_market_cap_usd).format('($ 0.00 a)') + '</i>');
-    
-    
+        
     $('span.total_24h_volume_usd').html('Total 24h volume USD - <i font-color:red !important;>' + numeral(data.total_24h_volume_usd).format('($ 0.00 a)') + '</i>');
     
     $('span.bitcoin_percentage_of_market_cap').html('BTC % of market cap -  <i font-color:red !important;>'+ numeral(data.bitcoin_percentage_of_market_cap).format('00.00')+ '</i>');
-
-            
-     
+                 
  }
  
  function wireEvents(){
