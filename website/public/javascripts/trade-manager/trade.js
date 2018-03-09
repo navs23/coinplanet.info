@@ -313,10 +313,16 @@ $('input.buysell-qty').on('change',function(e){
 });
 
 function populateApiKey(e){
+    var config;
     var exchange=$(e.currentTarget).find('select.exchange').val()||'poloniex';
     $(e.currentTarget).find('input.apikey').val('');
     $(e.currentTarget).find('input.apisecret').val('');
-    var config=JSON.parse(storage.getItem(exchange,'config'));
+    var temp = storage.getItem(exchange,'config');
+    if (typeof temp=="string")
+    config=JSON.parse(temp);
+    else
+     config=[];
+
 
 
     if(config)
