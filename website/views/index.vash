@@ -182,7 +182,11 @@
    },1*1000);
   
     
+<<<<<<< HEAD
   //  helper.loadNews();
+=======
+    //helper.loadNews();
+>>>>>>> 6542154d2037349ccfe6c942e1583c4dbfca684e
     
     
    $("#search").keyup(function() {
@@ -307,7 +311,7 @@
   
   setTimeout(function() {
       
-    helper.loadNews();
+   // helper.loadNews();
          
    
     
