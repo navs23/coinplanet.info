@@ -182,11 +182,7 @@
    },1*1000);
   
     
-<<<<<<< HEAD
-  //  helper.loadNews();
-=======
-    //helper.loadNews();
->>>>>>> 6542154d2037349ccfe6c942e1583c4dbfca684e
+    helper.loadNews();
     
     
    $("#search").keyup(function() {

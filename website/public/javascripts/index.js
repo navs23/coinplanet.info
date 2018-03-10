@@ -478,36 +478,34 @@ helper.populateCurrenciesDropDown=function(dd){
 
 helper.loadNews=function(){
     
-   //  $.ajax('api/news/' ).then(function(data,status){
-   //     helper.displayNews(data);
-    //     });
+  
    $.getJSON('/api/news/')
    .then(function(response){
-        //console.log(response);
-        helper.displayNews(response.articles);
+        storage.saveItem("coinplanet","news",response);
+        helper.displayNews(0);
 
    })
    
 }
-helper.displayNews=function(data){
-    
+helper.displayNews=function(startIndex){
+     var news=JSON.parse(storage.getItem("coinplanet","news"));
+      var endIndex=startIndex + 15;
       $('div.btc-news > ul').empty();
-     
-          for(var i =0;i<10;i++){
-              var item =data[i];
-               var source=item.source.name;
+         
+          for(var i =startIndex||0;i<endIndex;i++){
+              var item =news[i];
+              if (item){
+               var source=item.source.name || item.author;
               //$('div.btc-news > ul').append(`<li><a href="  ${data[i].url}  target="_blank">$data[i].title +'</a></li>`);
               $('div.btc-news > ul').append(`<li>
-              <article>
-                <h2>${source}</h2>
-                <p>${item.title}</p>
-            </article>
-            <p>${item.description}</p>
+             
+                <a href='${item.url}' target='_blank'>
+                ${item.title}</a>&nbsp;-<i style="font-size:9px;color:#696969;">${source}, ${item.publishedAt}</i>
             </li>
             `)
-              
+              }
           }
             
-        $('div.btc-news > ul').append('<li><i>Last refreshed @@'+new Date()+'</i></li>');
+        $('div.btc-news > ul').append(`<li><buton class="btn btn-success" style="width:100%;" onclick="return helper.displayNews(${endIndex})">Next..</button></li>`);
     
 }
