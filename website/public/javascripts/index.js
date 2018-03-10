@@ -489,23 +489,32 @@ helper.loadNews=function(){
 }
 helper.displayNews=function(startIndex){
      var news=JSON.parse(storage.getItem("coinplanet","news"));
-      var endIndex=startIndex + 15;
-      $('div.btc-news > ul').empty();
+     var newsCount=news.length;
+     console.log(news.length);
+      var endIndex=startIndex + 10;
+      //$('div.btc-news').empty();
+      $('div.btc-news >ul').empty();
          
-          for(var i =startIndex||0;i<endIndex;i++){
+          for(var i =startIndex||0;i<endIndex || i<newsCount;i++){
               var item =news[i];
               if (item){
                var source=item.source.name || item.author;
               //$('div.btc-news > ul').append(`<li><a href="  ${data[i].url}  target="_blank">$data[i].title +'</a></li>`);
               $('div.btc-news > ul').append(`<li>
              
-                <a href='${item.url}' target='_blank'>
+                <a href='${item.url}' target='_blank' class="pager">
                 ${item.title}</a>&nbsp;-<i style="font-size:9px;color:#696969;">${source}, ${item.publishedAt}</i>
             </li>
             `)
               }
           }
-            
-        $('div.btc-news > ul').append(`<li><buton class="btn btn-success" style="width:100%;" onclick="return helper.displayNews(${endIndex})">Next..</button></li>`);
+            /*
+        $('div.btc-news').after(`<ul class="pager"
+        <li><a href=#' class="btn btn-success" style="width:50%;" 
+        onclick="return helper.displayNews(${endIndex})">
+        Next..
+        </a></li></ul>
+        `);*/
+       
     
 }
