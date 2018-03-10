@@ -25,6 +25,7 @@
    
    @html.block('content', function(model) {
 <div class="container">  
+
   <ul class="nav nav-tabs">    
     <li id="tabTrades" class="active"><a  type="trades" href="#" class="tabs"><b>My Trade History</b></a></li>
     <li id="tabOrders"><a href="#" type="orders" class="tabs">My Open Orders</a></li>
@@ -38,7 +39,18 @@
 
 <i class="fa fa-cog fa-spin fa-2x fa-fw" id="download-spinner"></i>
      
-    
+<p><b>Important Note</b>
+<ul>
+ <li>Follow instructions on your exchange web site for API keys and how to retrieve them</li>
+<li>All config items and related data is stored locally on your computer</li>
+<li>Make sure you are using computer/device that you own</li>
+<li>Nothing and absolutely nothing will be saved on the server</li>
+<li>Don't forget to donate few satoshi's/latoshi's to keep the development going so that we can add more exciting stuff</li>
+<li>Most importantly don't invest what you can't afford to loose</li>
+
+
+</ul>
+    </p>
 })
 
     

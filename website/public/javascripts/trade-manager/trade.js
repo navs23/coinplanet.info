@@ -703,18 +703,7 @@ function loadConfig(exchange){
   </div>  
   <div class="row">
   <p>
-<B>Important Note</B>
-<ul>
-<li>All config items and related data stored locally on your computer</li>
-<li>Make sure you are using computer/device that you own</li>
-<li>Follow instructions on your exchange web site for API keys and how to retrieve them</li>
-<li>Deleting data action will remove all config</li>
-<li>Nothing and absolutely nothing will be saved on the server</li>
-<li>Don't forget to donate few satoshi's/latoshi's to keep the development going so that we can add more exciting stuff</li>
-<li>Most importantly don't invest what you can't afford to loose</li>
-<li>Helping you to get rich</li>
 
-</ul>
 </p>
   </div>
 </div>
