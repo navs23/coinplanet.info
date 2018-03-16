@@ -99,12 +99,7 @@
                         href="#" data-toggle="modal" data-target="#aboutus">About us
                     </a>
                                         &nbsp;|&nbsp;
-                   <a 
-                        style="text-align:center;margin:10px;clear:both;font-size:12px;font-weight:bold;padding:5px;color:white;" 
-                        href="#" data-toggle="modal" data-target="#exchange">Exchange
-                    </a>
-
-                    &nbsp;|&nbsp;
+                   
                    <i class="liveconnections" style="text-align:center;margin:10px;clear:both;font-size:11px;font-weight:bold;padding:5px;color:white;"></i>
                    
                    
@@ -298,10 +293,12 @@ $(document).ready(function(){
 //     socket.on('cache', function(d) {
  
    setTimeout(function(){
-     console.log('global data');
-     var data = JSON.parse(storage.getItem("rates","global"));
-      console.log(data);
-       updateData(data);
+     
+    var data ;
+      
+      data = storage.getItem("rates","global");
+      updateData(data);     
+      
    },1*1000);
     
 // });

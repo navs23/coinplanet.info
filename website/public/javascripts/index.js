@@ -44,7 +44,7 @@ helper.renderCryptoData=function(param,e){
     //var url = baseUrl + searchstr +'/' + (param.index);
     url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
    // $.getJSON(url ).then(function(data){
-      var data=JSON.parse(storage.getItem("rates","crypto"));
+      var data=storage.getItem("rates","crypto");
         $('.price-grid').empty();
                 
          var temp='';
@@ -134,7 +134,7 @@ helper.getFiatRates=function(){
     //var url ='https://api.fixer.io/latest?base=USD';
     var selectedCurrencies = JSON.parse(localStorage.topTenFiat);
     // $.getJSON(url ).then(function(result){
-     var fxRates=JSON.parse(storage.getItem("rates","fx"));
+     var fxRates=storage.getItem("rates","fx");
       $('.fiatPrice-grid').empty();
         
          var temp=``;
@@ -417,7 +417,7 @@ helper.populateCurrenciesDropDown=function(dd){
          selectedCurrencies = JSON.parse(localStorage.topTenFiat);
          
          // $.ajax(url ).then(function(result,status){
-           var rates =JSON.parse(storage.getItem("rates","fx"));
+           var rates =storage.getItem("rates","fx");
               _.mapObject(rates || [],function(val,key){
                   
                   var option =`<option value="${key}">${key}</option>`;
@@ -446,7 +446,7 @@ helper.populateCurrenciesDropDown=function(dd){
         selectedCurrencies = JSON.parse(localStorage.topTenCrypto);
         $ddAll.empty();
         $ddSelected.empty();
-        var rates =JSON.parse(storage.getItem("rates","crypto"));
+        var rates =storage.getItem("rates","crypto");
          //$.ajax(url ).then(function(result,status){
            
               rates.map(function(item){
@@ -488,7 +488,7 @@ helper.loadNews=function(){
    
 }
 helper.displayNews=function(startIndex){
-     var news=JSON.parse(storage.getItem("coinplanet","news"));
+     var news=storage.getItem("coinplanet","news");
      var newsCount=news.length;
      console.log(news.length);
       var endIndex=startIndex + 10;

@@ -26,15 +26,25 @@ var storage = function(){
             //return db[key];
            },
         getItem:function(exchange,key){  
-            var db=localStorage.getItem(db_name) || '{}'
-
-            var data=JSON.parse(db);
-            //console.log(exchange);
+            var db=localStorage.getItem(db_name); 
+            var temp;            
+            var data;
             try{
-                return data[exchange][key]
+               
+                if (typeof(db)=='string')
+                    data=JSON.parse(db);
+                    temp= data[exchange][key]
             }catch(e){
-                    return [];
+                  
             };
+
+            if (temp =="undefined") 
+                return []
+    
+            if (typeof(temp)=='string')
+                return JSON.parse(temp);
+            
+            return [];
                 
               },
         removeAll:function(){

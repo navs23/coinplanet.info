@@ -123,6 +123,25 @@ router.post('/api/sell/', function(req, res, next) {
     })
  
 });    
+// import 
+router.post('/exchange/import/', function(req, res, next) {
+  console.log('server...');
+  console.log(req.body.file);
+  console.log(req.body.files);
+  fs = require('fs');
+  fs.readFile(req.files.file, function (err, data) {
+    if (err) return res.send({title: 'Trade importer',error:err,recordCount:0});   
+    // data will contain your file contents
+    console.log(data)
+  
+    // // delete file
+    // fs.unlink(req.files.path, function (err) {
+    //   if (err) throw err;
+    //   console.log('successfully deleted ' + req.files.path);
+    // });      
+  res.send({title: 'Trade importer',error:null,recordCount:1});    
+  });
+});    
 
           
     }
