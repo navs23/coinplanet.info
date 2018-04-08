@@ -38,7 +38,13 @@ $('button.btn-tradeImport').on('click',function(){
  var mode = $('form#tradeImporter').find('select.import-mode').val();
  //console.log(mode);
  if (mode==="manual")
-    return importTradeManually();
+ {
+    importTradeManually();
+     $('div.message').html('');
+     
+    renderTrades(_exchanges,'div.page-content');
+     return;
+ }
  else if (mode==="auto")
     return importTrade();
  
@@ -488,7 +494,8 @@ function importTradeManually(){
     
             storage.saveItem(param.exchange,"tradeCurrencyPairs",result.currencyPairs);
             storage.saveItem(param.exchange,"trades",groupedTrade);
-            console.log('end');
+           
+            
         
 
         })
