@@ -14,7 +14,7 @@
   <link rel='stylesheet' href='/stylesheets/style.css' />
    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
    <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css"/>
-   <link rel="stylesheet" href="/font-awesome/css/jquery-comments.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
    <script type="text/javascript" src="/javascripts/data/data.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
     <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
@@ -29,6 +29,7 @@
     <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>
      <script type="text/javascript" src="/javascripts/storage.js"></script>
+     
      
      <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-117085206-1"></script>
@@ -382,26 +383,26 @@ $(document).ready(function(){
      $('div.addresses').hide();
      $('div.sendFunds').hide();
      
-     $.ajax(
-            {
-         url:'https://test.evercoin.com/v1/coins',
-         type: "GET",
-         beforeSend: function(xhr){xhr.setRequestHeader('EVERCOIN-API-KEY', '7f878074f09f4f673554f30be51b6a0d');},
-         success: function(data) { 
+    //  $.ajax(
+    //         {
+    //      url:'https://test.evercoin.com/v1/coins',
+    //      type: "GET",
+    //      beforeSend: function(xhr){xhr.setRequestHeader('EVERCOIN-API-KEY', '7f878074f09f4f673554f30be51b6a0d');},
+    //      success: function(data) { 
              
-             if (data.error !=null) return ($('div.ccy-from').append('<a class="dropdown-item" href="#">' + JSON.stringify(err) + '</a>'));
+    //          if (data.error !=null) return ($('div.ccy-from').append('<a class="dropdown-item" href="#">' + JSON.stringify(err) + '</a>'));
              
-            data.result.map(function(item){
-             $('div.ccy-from').append(`
-                    <a class="dropdown-item" href="#">${item.symbol}</a>
-               `);
+    //         data.result.map(function(item){
+    //          $('div.ccy-from').append(`
+    //                 <a class="dropdown-item" href="#">${item.symbol}</a>
+    //           `);
                 
                
-           });
+    //       });
              
              
-         }
-      });
+    //      }
+    //   });
      
  }
   

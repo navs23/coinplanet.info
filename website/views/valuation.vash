@@ -5,7 +5,7 @@
     
     <meta property="title" content="CryptoCurrency,BITCOIN valuation and PnL report | coinplanet.info" />
     <meta name="description" content="CryptoCurrency valuation, calculate value of portfolio in different currencies | coinplanet.info" />
-     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+   
      <style type="text/css">
       .content{
        width:100% !important;
@@ -306,8 +306,8 @@ function getData(){
        
          var i;
         console.log(data);
-        var crypto=JSON.parse(storage.getItem("rates","crypto"));
-        var fiat = JSON.parse(storage.getItem("rates","fx"));
+        var crypto=storage.getItem("rates","crypto");
+        var fiat = storage.getItem("rates","fx");
          for(var k =0;k<data.length;k++){
 
          var valuation={};
@@ -425,7 +425,7 @@ function findSymbol(str) {
  $list.empty();
  $list.show();
  //promise.then(function(result,status){
-  var data = JSON.parse(storage.getItem("rates","crypto"));
+  var data = storage.getItem("rates","crypto");
   var temp=_.filter(data,function(i){
 
     return (
