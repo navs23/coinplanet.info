@@ -660,23 +660,27 @@ function percentageMarkup(trade,percentageValue){
     if (percentageValue==10){
         perc=(temp.rate * 1.1).toFixed(8);
         temp.percText="@10% profit";
+         temp.valueAt10P=perc;
     }
     
     else if (percentageValue==20){
         perc=(temp.rate * 1.2).toFixed(8);
         temp.percText="@20% profit";
+          temp.valueAt10P=perc;
     }
     
     else if (percentageValue==30){
         perc=(temp.rate * 1.3).toFixed(8);
         temp.percText="@30% profit";
+         temp.valueAt10P=perc;
     }
     
     else{
         temp.percText="@10% profit";
+        temp.valueAt10P=perc;
     }
 
-    var perc=(temp.rate * 1.1).toFixed(8);
+    //var perc=(temp.rate * 1.1).toFixed(8);
     temp.valueAt10P=perc;
 
     return `
