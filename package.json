@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prestart": "gulp",
+    
     "start": "node ./website/bin/www"
   },
   "dependencies": {
