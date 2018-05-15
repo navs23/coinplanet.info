@@ -59,7 +59,7 @@
   
      
      
-       <table class="table table-bordered negative" id="tblvaluation">
+       <table class="table table-bordered" id="tblvaluation">
            <thead>
     <tr>
     <td colspan="4">
