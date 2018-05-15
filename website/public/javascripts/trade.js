@@ -39,10 +39,15 @@ $('button.btn-tradeImport').on('click',function(){
  //console.log(mode);
  if (mode==="manual")
  {
+    $('div.message').html('refreshing data, please wait..');
+    
     importTradeManually();
-     $('div.message').html('');
-     
-    renderTrades(_exchanges,'div.page-content');
+  
+    
+
+    $('div.message').html('');        
+    
+    
      return;
  }
  else if (mode==="auto")
@@ -95,6 +100,20 @@ $('input.buysell-qty').on('change',function(e){
 });
 
 
+// custom fitler
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+     
+        var filterValue= $('select#buysellFilter').val();
+        var buysell =  data[2] ; // use data for the age column
+        //console.log(filterValue);
+        if ( (filterValue==buysell)||filterValue=='All' )
+            return true;
+        else
+            return false;
+    }
+);
+ 
 
 
 });
@@ -223,34 +242,7 @@ function downloadCSV(args) {
                 subTotalArr.push(subTotal);
               
                 }); 
-            //   //  console.log(subTotalArr);
-            //   subTotalArr.map(function(st){
-            //     $('table.display tbody').append(`
-            //     <tr class="subtotal">
-            //     <td>Total</td>
-            //     <td></td>
-            //     <td></td>
-            //     <td></td>
-                
-            //     <td></td>        
-                
-            //     <td></td>
-            //     <td>${st.qty}</td>        
-            //     <td></td>
-            //     <td>${st.total}</td>
-            //     <td></td>
-            //     <td></td>
-            //     <td></td>
-                
-            //   </tr>
-
-            //     `);
-            //   });
-                
-                
-                
-
-               // },500);
+           
         });
       
         $('table.display').DataTable({responsive:true});
@@ -261,7 +253,7 @@ function downloadCSV(args) {
 function renderOrders(exchanges,element){
    // var currencyPairs,orders;   
     
-    renderTableHeaderMarkup('trade',$(element));
+    renderTableHeaderMarkup('order',$(element));
 
     
    // var currencyPairs = JSON.parse(storage.getItem('poloniex','orderCurrencyPairs')||'[]');
@@ -451,12 +443,14 @@ function poloniexImport(){
 return false;
 }
 function importTradeManually(){
+ 
     var exchange = $('div#importTrades').find('select.exchange').val();
     var exchange_desc = $('div#importTrades').find('select.exchange').text();
     var files =document.getElementById('tradeFiles').files;
 
     $('form#tradeImporter').find('input.apikey').val();
-    console.log(exchange);
+    
+    console.log("exchage = %s",exchange);
     
     var param={};
     param.exchange=exchange;
@@ -484,8 +478,8 @@ function importTradeManually(){
             return false;
         }
         var trades=_.last(fileData, fileData.length -1 ) ;        
-        //g_data=fileData;
-       // console.log(trades);
+       console.log("trades = %s",trades);
+       
         tradeMapper(exchange,trades)
         .then(function(result){
 
@@ -494,11 +488,11 @@ function importTradeManually(){
     
             storage.saveItem(param.exchange,"tradeCurrencyPairs",result.currencyPairs);
             storage.saveItem(param.exchange,"trades",groupedTrade);
-           
-            
+           console.log('refreshing grid..');
+            renderTrades(_exchanges,'div.page-content');    
         
 
-        })
+        });
 
       
        
@@ -518,6 +512,7 @@ function importTradeManually(){
 function readTextFile(files,opt_startByte, opt_stopByte) {
     var resolve =(data)=>{};
     var reject =(err)=>{};
+    
 return new Promise(function(resolve,reject){
     var file = files[0];
     var start = parseInt(opt_startByte) || 0;
@@ -527,9 +522,10 @@ return new Promise(function(resolve,reject){
     var fileData=[];
     // If we use onloadend, we need to check the readyState.
     reader.onloadend = function(evt) {
-      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+      if (evt.target.readyState == FileReader.DONE) { 
+          // DONE == 2
         var text = evt.target.result;
-        //console.log(evt.target.result);
+        console.log(evt.target.result);
         var lines = text.split(/[\r\n]+/g); // tolerate both Windows and Unix linebreaks
         
         lines.map(function(row) { 
@@ -542,7 +538,7 @@ return new Promise(function(resolve,reject){
          resolve(fileData);
       }
     };
-    reader.onerror=()=>{
+    reader.onerror=(err)=>{
         reject(err);
     }
     var blob = file.slice(start, stop + 1);
@@ -623,7 +619,7 @@ return new Promise(function(resolve,reject){
     setTimeout(function(){
         resolve(result);
 
-    },1*1000);
+    },10*1000);
 
 });
 
@@ -631,22 +627,7 @@ return new Promise(function(resolve,reject){
 
 
 // database extension methods for custom filtering
-  $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = parseInt( $('#min').val(), 10 );
-        var max = parseInt( $('#max').val(), 10 );
-        var qty = parseFloat( data[6] ) || 0; // use data for the qty column
  
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && qty <= max ) ||
-             ( min <= qty   && isNaN( max ) ) ||
-             ( min <= qty   && qty <= max ) )
-        {
-            return true;
-        }
-        return false;
-    }
-);
 
 
 function filter(){
@@ -698,16 +679,39 @@ function renderTableHeaderMarkup(type,e){
     if(type=='trade'){
         e.append(`
             <div class="row">
-            <div>
-            <button class="btn btn-primary" id="aTraderImporter" data-toggle="modal" data-target="#importTrades" style="margin-left:20px;margin-top:10px;margin-bottom:20px;">
-            Import Trades
-            </button>
-
-            </div>
-
+                <div class="col-md-3">
+                <button class="btn btn-primary" 
+                id="aTraderImporter" 
+                data-toggle="modal" 
+                data-target="#importTrades" 
+                style="margin-left:20px;margin-top:10px;margin-bottom:20px;">
+                Import Trades
+                </button>
+               
+                </div>
+             
             </div>`
         );
-        e.append(` <table id="dtTable" class="display" width="100%" >
+        e.append(` 
+        
+        <table class="table table-striped table-condensed" style="width:25%;" id="tblFilter">
+        <tbody>
+        <tr>
+            <td>
+             <label for="buysellFilter">Filter</label>
+            </td>
+            <td> 
+                <select id="buysellFilter" onchange="return filter();">
+                <option>All</option>
+                <option>Buy</option>
+                <option>Sell</option>
+                </select>
+            </td>
+        </tr>
+       
+        </tbody></table>
+        
+        <table id="dtTable" class="display" width="100%" >
         <colgroup>
         <col class="grey" span="10"/>
         <col class="profit" span="3" />
@@ -732,9 +736,12 @@ function renderTableHeaderMarkup(type,e){
             <th>Date</th>
             <th>Type</th>
             <th>Category</th>
-            <th>Rate</th>
-            <th>Qty</th>
-            <th>Fee</th>
+             <th>Current Price</th>
+            <th>Trade Price</th>
+            <th>Difference</th>
+           
+            <th>%(gain/loss)</th>
+             <th>Qty</th>
             <th>Total</th>
             <th>@10%</th>
             <th>@20%</th>
@@ -748,11 +755,11 @@ function renderTableHeaderMarkup(type,e){
                 <th>Date</th>
                 <th>Type</th>
                 <th>Category</th>
-            
-            
+                 <th>Current Rate</th>
                 <th>Rate</th>
-                <th>Qty</th>
-                <th>Fee</th>
+                <th>Difference</th>
+                <th>%(gain/loss)</th>
+                  <th>Qty</th>
                 <th>Total</th>
                 <th>@10%</th>
                 <th>@20%</th>
@@ -766,7 +773,9 @@ function renderTableHeaderMarkup(type,e){
     `);
     }
     else if (type=="order"){
-        e.append(`<button class="btn btn-primary" id="aOrderImporter" data-toggle="modal" data-target="#importOpenOrders" style="margin-left:20px;margin-top:10px;margin-bottom:20px;">Import Orders</button>`);
+        
+        e.append(`<button 
+        class="btn btn-primary" id="aOrderImporter" data-toggle="modal" data-target="#importOpenOrders" style="margin-left:20px;margin-top:10px;margin-bottom:20px;">Import Orders</button>`);
         e.append(`<table id="dtTable" class="display" width="100%" >
         <thead>
             <tr>
@@ -805,17 +814,35 @@ function renderTableRow(trade){
     var at10PHtml=percentageMarkup(trade,10);
     var at20PHtml=percentageMarkup(trade,20);
     var at30PHtml=percentageMarkup(trade,30);
-
+   
+    var current_price_btc=0.000;
+    var diff=0.0000;
+    var record;
+    var ccy = trade.currencyPair.split("/")[0].toString();
+    var className='positive';
+    var percentageGainLoss=0.00000;
+    if (ccy){
+        if (ccy=="STR") ccy="XRP";
+        record = _.find(storage.getItem("rates","crypto"),function(row){return (row.symbol === ccy) });
+        
+        current_price_btc=(record)?record.price_btc:0.00000;
+        diff= parseFloat(current_price_btc - trade.rate ).toFixed(8);
+        className=(diff<0?"negative":"positive");
+        
+        percentageGainLoss= ((diff/trade.rate) * 100).toFixed(2);
+    }
     $('table.display tbody').append(`
                 <tr id="row_${trade.rowId}">
                 <td>${trade.currencyPair}</td>
                 <td>${trade.date}</td>
                 <td>${trade.type}</td>
                 <td>${trade.category}</td>
-                
+                <td>${current_price_btc}</td>
                 <td>${trade.rate}</td>
+                <td class="${className}">${diff}</td>
+              
+                <td class="${className}">${percentageGainLoss}</td>
                 <td>${trade.amount}</td>        
-                <td>${trade.fee}</td>
                 <td>${trade.total}</td>
                 <td class="profit">${at10PHtml}</td>
                 <td class="profit">${at20PHtml}</td>

@@ -10,21 +10,24 @@
     <meta name="description" content="Crypoto calculator to convert between fiat and cryptocurrencies" />
     <meta property="og:description" content="CryptoCurrency calculator , live chat, news and more" />  
     
-  @html.block('meta')  
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
-   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css"/>
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
-   <script type="text/javascript" src="/javascripts/data/data.js"></script>
-    <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
-    <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+  @html.block('meta') 
+  
+  <link rel='stylesheet' href='/stylesheets/site.css' />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/stylesheets/fontawesome/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="/stylesheets/datatables.min.css"/>
+   
+   <script type="text/javascript" src="/javascripts/data.js"></script>
+   <script type="text/javascript" src="/javascripts/jquery.min.js"></script>
+   <script type="text/javascript" src="/javascripts/jquery.dataTables.js"></script>
+   <script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
     <script type="text/javascript" src="/javascripts/underscore-min.js"></script>
     <script type="text/javascript" src="/javascripts/numeral.min.js"></script>
-      <script type="text/javascript" src="/javascripts/bignumber.js"></script>
+    <script type="text/javascript" src="/javascripts/bignumber.min.js"></script>
     <script type="text/javascript" src="/javascripts/index.js"></script>
     <script type="text/javascript" src="/javascripts/localstoragedb.min.js"></script>
     <script type="text/javascript" src="/javascripts/moment.js"></script>
-    <script type="text/javascript" src="/javascripts/jquery-comments.min.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-comments.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-textcomplete.js"></script>
     <script type="text/javascript" src="/javascripts/jquery-comments.helper.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.validate.min.js"></script>

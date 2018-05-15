@@ -16,8 +16,8 @@
 
     @html.block('js', function(model) {
     
-    <script type="text/javascript" src="/javascripts/datatables.min.js"></script>
-    <script type="text/javascript" src="/javascripts/trade-manager/trade.js"></script>
+    
+    <script type="text/javascript" src="/javascripts/trade.js"></script>
     
 
     
@@ -304,6 +304,8 @@ _
 */
 
 $(document).ready(function(){
+
+
 
 });
 

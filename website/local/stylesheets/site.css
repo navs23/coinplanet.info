@@ -333,6 +333,16 @@ div.row{
 margin-top:10px;
 
 }
-
   .profit {
     background-color: beige  }
+    
+.negative{
+    color:red;
+}   
+.positive{
+    color:green;
+}
+select#buysellFilter{
+    
+    left: 10px;
+}

@@ -15,10 +15,8 @@
     })
 
     @html.block('js', function(model) {
-    
-    <script type="text/javascript" src="/javascripts/datatables.min.js"></script>
     <script type="text/javascript" src="/javascripts/chart.js"></script>
-   <script type="text/javascript" src="/javascripts/chart.util.js"></script>
+    <script type="text/javascript" src="/javascripts/chart.util.js"></script>
     })
     
   
