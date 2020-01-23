@@ -40,10 +40,10 @@ price.getFiatExchangeRates=function(){
          
           //var url ='https://api.fixer.io/latest?base=USD';
          var url ='http://data.fixer.io/api/latest?access_key=1b932a8e363d1b6a5d1a51a7a778d581';
-          https.get(url,function(res){
+          http.get(url,function(res){
            
            helper.getData({contentType:'json',res:res}).then(function(data){
-                            
+             //console.log(data);                 
                resolve(data);
                                              
            })
