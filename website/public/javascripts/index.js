@@ -164,7 +164,7 @@ helper.getFiatRates=function(){
                         type="string" 
                         name="ccy"
                         data-ccy="${rate.key}"
-                        data-priceusd="${rate.val}"
+                        data-price="${rate.val}"
                         value="${rate.val}"
                         onchange="helper.calculate(this,'fiat');"
                         />
