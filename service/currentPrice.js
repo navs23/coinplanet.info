@@ -49,8 +49,7 @@ price.getFiatExchangeRates=function(){
            
            helper.getData({contentType:'json',res:res}).then(function(data){
              //console.log(data);                 
-               resolve(data);
-                                             
+               resolve(data);                                             
            })
            .catch(function(err){
                reject(err);
