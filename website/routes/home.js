@@ -21,7 +21,7 @@ home.init= function(router){
   
 });    
     	
-    router.get('/chat/', function(req, res, next) {
+router.get('/chat/', function(req, res, next) {
         res.render('chat', {title: 'Live chat' });
    
   
