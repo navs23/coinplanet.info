@@ -136,11 +136,13 @@ helper.getFiatRates=function(){
     var selectedCurrencies = JSON.parse(localStorage.topTenFiat);
     // $.getJSON(url ).then(function(result){
      var fxRates=storage.getItem("rates","fx");
+  
+    //console.log(fxRates.base);
       $('.fiatPrice-grid').empty();
         
          var temp=``;
          var rates=[];
-         rates.push({key:fxRates.base,val:1});
+      //   rates.push({key:fxRates.base,val:1});
          
           _.mapObject(fxRates.rates,function(val,key){
               
@@ -182,7 +184,7 @@ helper.getFiatRates=function(){
 }
 
 helper.calculate=function(e,ccy,numberFormater){
-  
+  alert(ccy);
    $('#calcMsg').text("");
    
     if (!$.isNumeric($(e).val())){
