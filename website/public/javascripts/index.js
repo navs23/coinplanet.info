@@ -17,7 +17,7 @@ helper.cacheRates=function(){
     })
     var url ='_api/fiatrates/:CCY?';
     $.getJSON(url ).then(function(data){
-        storage.saveItem("rates","fx",data.rates);
+        storage.saveItem("rates","fx",data);
 
     });
     url ='https://api.coinmarketcap.com/v1/global/';
@@ -140,13 +140,12 @@ helper.getFiatRates=function(){
         
          var temp=``;
          var rates=[];
-         rates.push({key:'USD',val:1});
+         rates.push({key:fxRates.base,val:1});
          
-          _.mapObject(fxRates,function(val,key){
+          _.mapObject(fxRates.rates,function(val,key){
               
               if (_.contains(selectedCurrencies,key)) {
-                    rates.push({key:key,val:val});
-                  
+                    rates.push({key:key,val:val});                  
               }
               
           });
@@ -488,6 +487,7 @@ helper.loadNews=function(){
    })
    
 }
+
 helper.displayNews=function(startIndex){
      var news=storage.getItem("coinplanet","news");
      var newsCount=news.length;
