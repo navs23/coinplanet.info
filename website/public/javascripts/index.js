@@ -9,6 +9,7 @@ var helper=helper || {};
 helper.chatlink='https://www.tradingview.com/chatwidgetembed/?utm_source=www.cryptocoinsnews.com&amp;utm_medium=widget&amp;utm_campaign=chat-embed&amp;locale=en#bitcoin';
 
 helper.cacheRates=function(){
+  
    var url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
     $.getJSON(url ).then(function(data){
         storage.saveItem("rates","crypto",data);
