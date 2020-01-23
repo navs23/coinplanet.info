@@ -15,7 +15,7 @@ helper.cacheRates=function(){
         storage.saveItem("rates","crypto",data);
 
     })
-    var url ='https://api.fixer.io/latest?base=USD';
+    var url ='_api/fiatrates/:CCY?';
     $.getJSON(url ).then(function(data){
         storage.saveItem("rates","fx",data.rates);
 
