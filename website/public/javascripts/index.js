@@ -142,8 +142,10 @@ helper.getFiatRates=function(){
         
          var temp=``;
          var rates=[];
+         let baseCCY = fxRates.base;
       //   rates.push({key:fxRates.base,val:1});
-         
+         let usdVal = +fxRates.rates[baseCCY] / +fxRates.rates["USD"] ;
+        alert(usdVal);
           _.mapObject(fxRates.rates,function(val,key){
               
               if (_.contains(selectedCurrencies,key)) {
@@ -164,7 +166,7 @@ helper.getFiatRates=function(){
                         type="string" 
                         name="ccy"
                         data-ccy="${rate.key}"
-                        data-price="${rate.val}"
+                        data-priceusd="${rate.val * usdVal}"
                         value="${rate.val}"
                         onchange="helper.calculate(this,'fiat');"
                         />
