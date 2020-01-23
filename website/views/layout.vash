@@ -386,26 +386,7 @@ $(document).ready(function(){
      $('div.addresses').hide();
      $('div.sendFunds').hide();
      
-    //  $.ajax(
-    //         {
-    //      url:'https://test.evercoin.com/v1/coins',
-    //      type: "GET",
-    //      beforeSend: function(xhr){xhr.setRequestHeader('EVERCOIN-API-KEY', '7f878074f09f4f673554f30be51b6a0d');},
-    //      success: function(data) { 
-             
-    //          if (data.error !=null) return ($('div.ccy-from').append('<a class="dropdown-item" href="#">' + JSON.stringify(err) + '</a>'));
-             
-    //         data.result.map(function(item){
-    //          $('div.ccy-from').append(`
-    //                 <a class="dropdown-item" href="#">${item.symbol}</a>
-    //           `);
-                
-               
-    //       });
-             
-             
-    //      }
-    //   });
+   
      
  }
   
