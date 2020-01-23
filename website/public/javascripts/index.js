@@ -10,7 +10,7 @@ helper.chatlink='https://www.tradingview.com/chatwidgetembed/?utm_source=www.cry
 
 helper.cacheRates=function(){
   
-   var url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
+   var url ='_api/cryptorates';
     $.getJSON(url ).then(function(data){
         storage.saveItem("rates","crypto",data);
 
@@ -20,7 +20,7 @@ helper.cacheRates=function(){
         storage.saveItem("rates","fx",data);
 
     });
-    url ='https://api.coinmarketcap.com/v1/global/';
+    url ='_api/cryptoglobal/';
     $.getJSON(url ).then(function(data){
         storage.saveItem("rates","global",data);
 
@@ -131,8 +131,6 @@ helper.renderPagination=function(params){
 
 helper.getFiatRates=function(){
   
-    //var url ='api/fiatpricefeed/';
-    //var url ='https://api.fixer.io/latest?base=USD';
     var selectedCurrencies = JSON.parse(localStorage.topTenFiat);
     // $.getJSON(url ).then(function(result){
      var fxRates=storage.getItem("rates","fx");
@@ -308,7 +306,6 @@ helper.navigate2=function(e){
      renderCryptoData(option,'');
     return false;
 }
-
 
 helper.showAll=function(mode){
 var fiatccy=[];
