@@ -255,7 +255,7 @@ $(document).ready(function(){
   });
   
   
-  var timeoutID = null;
+ var timeoutID = null;
  var throttled = _.throttle(findSymbol, 100);
    $('input.symbol').on('keyup',function(e) {
     
@@ -594,9 +594,7 @@ function refreshData(){
  $('i#lbl-24h-usd').html(numeral(coins.total.pnl_usd_24h || 0).format("0,0.000")).attr('changeType',coins.total.pnl_usd_24h>0?'pos':'neg');
  
  //lbl-24h-btc
- 
- 
- console.log(coins);
+
  drawChart(coins);
  
 }
