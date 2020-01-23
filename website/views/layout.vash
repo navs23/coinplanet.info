@@ -79,20 +79,20 @@
   
 <!-- navigation end-->
 <!-- content -->
- <div class="container-fluid" style="margin-top:10px;display:flex;">
+ <div class="container-fluid" style="margin-top:10px;">
     
-  <div class="col-1">
-    <div class="col-md-4" style="background-color:skyblue;">
+  <div class="row">
+    <div class="col-md-4" style="background-color:none;">
         
          @html.block('left')
         
     </div>
-    <div class="col-2 content" style="background-color:green;margin-bottom:50px;">
+    <div class="col-md-4 content" style="background-color:none;margin-bottom:50px;">
           
             @html.block('content')
           
     </div>
-    <div class="col-3" style="background-color:orange;">
+    <div class="col-md-4" style="background-color:none;">
       
           @html.block('right')  
     </div>
