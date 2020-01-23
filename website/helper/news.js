@@ -17,7 +17,7 @@ const newsapi = new NewsAPI('89a7e14a30bf4eff8031538728c027ac');
 		sortBy: 'publishedAt',
 		page: 5
 	  }).then(response => {
-		console.log(response);
+		
 		return cb(null,response.articles);
 	  })
 	 .catch(function(err){
