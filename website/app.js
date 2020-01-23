@@ -30,6 +30,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set("cache",cache);
 
 
+if (!process.env.DISABLE_XORIGIN) {
+  app.use(function(req, res, next) {
+    var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com','https://navs23-coinplanet-info.glitch.me','http://data.fixer.io'];
+    var origin = req.headers.origin || '*';
+    if(!process.env.XORIG_RESTRICT || allowedOrigins.indexOf(origin) > -1){
+         console.log(origin);
+         res.setHeader('Access-Control-Allow-Origin', origin);
+         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    }
+    next();
+  });
+}
+
   // service.getCryptoExchangeRates().then(function(data){
         
   //    app.cache.priceData= data;

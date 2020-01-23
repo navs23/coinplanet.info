@@ -36,9 +36,7 @@
    @html.block('content', function(model) {
   <div class="row">
        <div class="col-md-12">
-           <h2 class="widget_header"><i class="fa fa-calculator fa-2x" style="margin-top:5px;" aria-hidden="true"></i>&nbsp;Your Crypto Currency Calculator</h3>
-          
-           
+           <h2 class="widget_header"><i class="fa fa-calculator fa-2x" style="margin-top:5px;" aria-hidden="true"></i>&nbsp;Your Crypto Currency Calculator</h3>                     
        </div>
    </div>
    <div class="row">
