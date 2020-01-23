@@ -145,7 +145,7 @@ helper.getFiatRates=function(){
          let baseCCY = fxRates.base;
       //   rates.push({key:fxRates.base,val:1});
          let usdVal = +fxRates.rates[baseCCY] / +fxRates.rates["USD"] ;
-        alert(usdVal);
+        
           _.mapObject(fxRates.rates,function(val,key){
               
               if (_.contains(selectedCurrencies,key)) {
