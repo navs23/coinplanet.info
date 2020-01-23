@@ -186,7 +186,7 @@ helper.getFiatRates=function(){
 }
 
 helper.calculate=function(e,ccy,numberFormater){
-  alert(ccy);
+ // alert(ccy);
    $('#calcMsg').text("");
    
     if (!$.isNumeric($(e).val())){
