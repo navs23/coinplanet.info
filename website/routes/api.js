@@ -49,10 +49,11 @@ router.get('/_api/cryptoglobal', function(req, res) {
   
 });  
     
-  router.get('/_api',(req,res)=>{
+  router.get('/_api',(req,res,next)=>{
    
-        let entponits = listEndpoints(router);
-        res.json(entponits);
+        let endponits = listEndpoints(router);
+        res.render('routes',{routes:endponits});
+        //res.json(entponits);
     
       });
     }
