@@ -4,7 +4,7 @@
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(process.env.NES_API_KEY);
 
-  const getNews=function(filter){
+  news.getNews=function(filter){
 
 	return newsapi.v2.everything({
 		q: 'bitcoin',

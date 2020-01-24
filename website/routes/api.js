@@ -82,9 +82,15 @@ router.get('/_api/cryptoglobal',cacheMiddleware(cacheExpireTiem), function(req, 
       });
   //response.articles
      router.get('/_api/news',(req,res)=>{
-      getNews().then(news=>{
+      let newsPromise =news.getNews();
+       
+       newsPromise.then(news=>{
         res.json(news.articles);
-      })
+      });
+       
+        newsPromise.catch(err=>{
+        res.json({"error":err});
+      });
     });
 }
 }(module.exports))
