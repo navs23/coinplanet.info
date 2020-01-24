@@ -1,8 +1,8 @@
-//
+
 (function(news){
 
 const NewsAPI = require('newsapi');
-const newsapi = new NewsAPI(process.env.NES_API_KEY);
+const newsapi = new NewsAPI(process.env.NEWS_API_KEY);
 
   news.getNews=function(filter){
 

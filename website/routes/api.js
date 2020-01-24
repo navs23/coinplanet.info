@@ -81,7 +81,8 @@ router.get('/_api/cryptoglobal',cacheMiddleware(cacheExpireTiem), function(req, 
     
       });
   //response.articles
-     router.get('/_api/news',(req,res)=>{
+     router.get('/_api/news',cacheMiddleware(cacheExpireTiem),(req,res,next)=>{
+       
       let newsPromise =news.getNews();
        
        newsPromise.then(news=>{
@@ -91,6 +92,7 @@ router.get('/_api/cryptoglobal',cacheMiddleware(cacheExpireTiem), function(req, 
         newsPromise.catch(err=>{
         res.json({"error":err});
       });
+      
     });
 }
 }(module.exports))

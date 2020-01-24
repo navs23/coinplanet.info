@@ -1,7 +1,5 @@
 //
 
-
-
 (function(news){
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI('89a7e14a30bf4eff8031538728c027ac');
