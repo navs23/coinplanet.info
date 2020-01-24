@@ -1,9 +1,10 @@
 (function(home){
 
 var service = require("./../../service/currentPrice");
+const newsService =require("./../../service/news");
 var data = require("./../../service/data");
 var _=require("underscore");
-var news = require("./../helper/news.js");
+//var news = require("./../helper/news.js");
 var blockexplorer = require('blockchain.info/blockexplorer')
 var path = require('path')
 home.init= function(router){
@@ -46,7 +47,7 @@ router.get('/chat/', function(req, res, next) {
 	   
 	  
 	});   
-
+/*
 	router.get('/api/news/', function(req, res, next) {
    
     	//'https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=89a7e14a30bf4eff8031538728c027ac'
@@ -59,12 +60,11 @@ router.get('/chat/', function(req, res, next) {
     
   
 	}); 
-	
+	*/
 	router.get('/gettingstarted/', function(req, res, next) {
 	 
 	res.render('getting-started', {title: 'Getting started with bitcoin'});
 	   
-	  
 	});  
 
 	router.get('/valuation/', function(req, res, next) {

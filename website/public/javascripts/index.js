@@ -480,7 +480,7 @@ helper.populateCurrenciesDropDown=function(dd){
 helper.loadNews=function(){
     
   
-   $.getJSON('/api/news/')
+   $.getJSON('/_api/news/')
    .then(function(response){
         storage.saveItem("coinplanet","news",response);
         helper.displayNews(0);
