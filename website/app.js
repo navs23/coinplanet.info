@@ -14,10 +14,15 @@ var service = require("../service/currentPrice");
 var _=require("underscore");
 //var poller = require('./helper/poller.js');
 var news = require('./helper/news.js');
-
+let ips  =[];
 const logger = (req,res,next)=>{
    let {ip} = req;
-  console.log("ip address is %s",ip);
+   // console.log("ip address is %s",ip);
+  if (ips.some(add=>add !== ip) == false){
+    ips.push(ip);
+  }
+  
+  console.log(ips);
   next();
 }
 
