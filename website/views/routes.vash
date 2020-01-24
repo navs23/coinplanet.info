@@ -1,8 +1,9 @@
 @html.extend('layout', function(model) {
   @html.block('content', function(model) {
+  <h2>application end points</h2>
     <ul class="route">
           @model.routes.forEach(function(r){
-            <li><a href="/" + @r.path>@r.path</a></li>
+            <li><a href='@r.path'>@r.path</a></li>
           })
 </ul>
   })
