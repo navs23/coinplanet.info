@@ -1,0 +1,9 @@
+@html.extend('layout', function(model) {
+  @html.block('content', function(model) {
+    <ul class="route">
+	@model.forEach(function(m){
+		<li>@m.path</li>
+	})
+</ul>
+  })
+})

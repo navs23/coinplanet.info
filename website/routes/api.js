@@ -1,6 +1,6 @@
 (function(api){
-
-var service = require("./../../service/currentPrice");
+ const listEndpoints = require('express-list-endpoints')
+ var service = require("./../../service/currentPrice");
 
 api.init= function(router){
 	
@@ -50,12 +50,12 @@ router.get('/_api/cryptoglobal', function(req, res) {
 });  
     
   router.get('/_api',(req,res)=>{
-    console.log(JSON.stringify(router))
-    res.json(router);
-  })
-}
-
-
+   
+        let entponits = listEndpoints(router);
+        res.json(entponits);
+    
+      });
+    }
     
 }(module.exports))
 

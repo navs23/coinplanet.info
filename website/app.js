@@ -5,7 +5,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-const listEndpoints = require('express-list-endpoints')
+
 var cache={};
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -48,7 +48,10 @@ if (!process.env.DISABLE_XORIGIN) {
 
 index.init(app);
 
-let entponits = listEndpoints(app);
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
