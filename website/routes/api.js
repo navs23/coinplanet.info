@@ -2,7 +2,7 @@
  const listEndpoints = require('express-list-endpoints')
  const memCache = require('memory-cache');
  var service = require("./../../service/currentPrice");
-
+ const news = require('../../service/news');
   
   // cache
 let cacheMiddleware = (duration) => {
@@ -80,8 +80,13 @@ router.get('/_api/cryptoglobal',cacheMiddleware(cacheExpireTiem), function(req, 
         //res.json(entponits);
     
       });
-    }
-    
+  //response.articles
+     router.get('/_api/news',(req,res)=>{
+      getNews().then(news=>{
+        res.json(news.articles);
+      })
+    });
+}
 }(module.exports))
 
 

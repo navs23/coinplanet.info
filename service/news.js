@@ -1,12 +1,12 @@
 //
-
+(function(news){
 
 const NewsAPI = require('newsapi');
 const newsapi = new NewsAPI(process.env.NES_API_KEY);
 
-  let getNews=function(cb){
+  const getNews=function(filter){
 
-	newsapi.v2.everything({
+	return newsapi.v2.everything({
 		q: 'bitcoin',
 		//sources: 'bbc-news,the-verge',
 		//domains: 'bbc.co.uk, techcrunch.com',
@@ -15,14 +15,8 @@ const newsapi = new NewsAPI(process.env.NES_API_KEY);
 		language: 'en',
 		sortBy: 'publishedAt',
 		page: 5
-	  }).then(response => {
-		
-		return cb(null,response.articles);
-	  })
-	 .catch(function(err){
-		 console.log('error');
-		return cb(err,[]);
-	 });
+	  });
+    
   }
   
-export {getNews}
+}(module.exports))
