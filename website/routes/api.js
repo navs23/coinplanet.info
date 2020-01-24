@@ -16,7 +16,6 @@ api.init= function(router){
         res.json({"error":err});    
     })
   
-  
 });    
     	
 //url ='https://api.coinmarketcap.com/v1/global/';
@@ -50,6 +49,10 @@ router.get('/_api/cryptoglobal', function(req, res) {
   
 });  
     
+  router.get('/_api',(req,res)=>{
+    console.log(JSON.stringify(router))
+    res.json(router);
+  })
 }
 
 
