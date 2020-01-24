@@ -2,7 +2,7 @@
  const listEndpoints = require('express-list-endpoints')
  const memCache = require('memory-cache');
  var service = require("./../../service/currentPrice");
- const news = require('../../service/news');
+ const news = require('./../../service/news');
   
   // cache
 let cacheMiddleware = (duration) => {
