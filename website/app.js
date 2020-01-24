@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+
 var cache={};
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -44,13 +45,10 @@ if (!process.env.DISABLE_XORIGIN) {
   });
 }
 
+
  
 
 index.init(app);
-
-
-
-
 
 
 // catch 404 and forward to error handler

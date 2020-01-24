@@ -1,10 +1,31 @@
 (function(api){
  const listEndpoints = require('express-list-endpoints')
+ const memCache = require('memory-cache');
  var service = require("./../../service/currentPrice");
 
+  
+  // cache
+let cacheMiddleware = (duration) => {
+    return (req, res, next) => {
+        let key =  '__express__' + req.originalUrl || req.url
+        let cacheContent = memCache.get(key);
+        if(cacheContent){
+            res.send( cacheContent );
+            return
+        }else{
+            res.sendResponse = res.send
+            res.send = (body) => {
+                memCache.put(key,body,duration*1000);
+                res.sendResponse(body)
+            }
+            next()
+        }
+    }
+}
 api.init= function(router){
-	
-	router.get('/_api/fiatrates/:CCY?', function(req, res) {
+	let cacheExpireTiem = 60* 20;
+  
+	router.get('/_api/fiatrates/:CCY?',cacheMiddleware(cacheExpireTiem), function(req, res) {
     let {CCY} = req.params;
     let url ='http://data.fixer.io/api/latest?access_key=' + process.env.DATA_FIXER_KEY;
     let ratesPromise = service.getFiatExchangeRates(url);
@@ -19,7 +40,7 @@ api.init= function(router){
 });    
     	
 //url ='https://api.coinmarketcap.com/v1/global/';
-router.get('/_api/cryptoglobal', function(req, res) {
+router.get('/_api/cryptoglobal',cacheMiddleware(cacheExpireTiem), function(req, res) {
     let {CCY} = req.params;
      var url ='https://api.coinmarketcap.com/v1/global/';
     let ratesPromise = service.getGlobalData(url);
@@ -34,7 +55,7 @@ router.get('/_api/cryptoglobal', function(req, res) {
   
 });    
   
-  router.get('/_api/cryptorates', function(req, res) {
+  router.get('/_api/cryptorates',cacheMiddleware(cacheExpireTiem), function(req, res) {
     let {CCY} = req.params;
     let url ='https://api.coinmarketcap.com/v1/ticker/?limit=0';
     let ratesPromise = service.getCryptoExchangeRates(url);
@@ -49,7 +70,7 @@ router.get('/_api/cryptoglobal', function(req, res) {
   
 });  
     
-  router.get('/_api',(req,res,next)=>{
+  router.get('/_api',cacheMiddleware(cacheExpireTiem),(req,res,next)=>{
    
         let endponits = listEndpoints(router);
         res.render('routes',{routes:endponits});
