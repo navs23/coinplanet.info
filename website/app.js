@@ -14,6 +14,13 @@ var service = require("../service/currentPrice");
 var _=require("underscore");
 //var poller = require('./helper/poller.js');
 var news = require('./helper/news.js');
+
+const logger = (req,res,next)=>{
+   let {ip} = req;
+  console.log("ip address is %s",ip);
+  next();
+}
+
 var app = express();
 
 //var eventEmitter = new events.EventEmitter();
@@ -23,19 +30,18 @@ app.set('view engine', 'vash');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
-app.use(morgan('dev'));
+app.set('trust proxy', true)
+//app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.set("cache",cache);
-
-app.use(morgan('common', {
-  stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
-}))
+console.log("setting up logger")
+app.use(logger);
 
 
+console.log("logger set up complete")
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {

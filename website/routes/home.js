@@ -5,7 +5,7 @@ var data = require("./../../service/data");
 var _=require("underscore");
 var news = require("./../helper/news.js");
 var blockexplorer = require('blockchain.info/blockexplorer')
-
+var path = require('path')
 home.init= function(router){
 	
 	/* GET home page. */
@@ -27,10 +27,9 @@ router.get('/chat/', function(req, res, next) {
   
 });   
 
-  router.get('/chat/', function(req, res, next) {
-        res.render('chat', {title: 'Live chat' });
+  router.get('/logs/', function(req, res, next) {
+        res.send(path.join(__dirname, 'access.log'));
    
-  
 });   
   //path.join(__dirname, 'access.log')
 
