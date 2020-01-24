@@ -18,7 +18,7 @@ let ips  =[];
 const logger = (req,res,next)=>{
    let {ip} = req;
    // console.log("ip address is %s",ip);
-  if (ips.some(add=>add !== ip) == false){
+  if (ips.some(add=>add == ip) == false){
     ips.push(ip);
   }
   
@@ -27,7 +27,9 @@ const logger = (req,res,next)=>{
 }
 
 var app = express();
-
+app.get('/_api/ip',(req,res)=>{
+  res.json(ips);
+})
 //var eventEmitter = new events.EventEmitter();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
