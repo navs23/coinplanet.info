@@ -9,13 +9,16 @@ let cacheMiddleware = (duration) => {
     return (req, res, next) => {
         let key =  '__express__' + req.originalUrl || req.url
         let cacheContent = memCache.get(key);
+      
         if(cacheContent){
+            console.log("serving from cache");
             res.send( cacheContent );
             return
         }else{
+          console.log("first request - building cache");
             res.sendResponse = res.send
             res.send = (body) => {
-                memCache.put(key,body,duration*1000);
+                memCache.put(key,body,duration * 1000);
                 res.sendResponse(body)
             }
             next()
@@ -23,7 +26,7 @@ let cacheMiddleware = (duration) => {
     }
 }
 api.init= function(router){
-	let cacheExpireTiem = 60* 20;
+	let cacheExpireTiem = 60 * 20;
   
 	router.get('/_api/fiatrates/:CCY?',cacheMiddleware(cacheExpireTiem), function(req, res) {
     let {CCY} = req.params;
