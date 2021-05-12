@@ -11,7 +11,7 @@
     "blockchain.info": "^2.10.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^3.4.1",
-    "chart.js": "^2.7.0",
+    "chart.js": "^2.9.4",
     "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "cryptofetch": "^0.1.1",
