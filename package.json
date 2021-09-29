@@ -15,7 +15,7 @@
     "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "~1.4.3",
     "cryptofetch": "^0.1.1",
-    "datatables.net": "^1.10.16",
+    "datatables.net": "^1.11.3",
     "datatables.net-dt": "^1.10.16",
     "debug": "~2.6.3",
     "express": "^4.17.1",
